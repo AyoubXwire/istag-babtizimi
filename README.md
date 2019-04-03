@@ -1,1 +1,1 @@
-"# istag-babtizimi" 
+# istag-babtizimi
