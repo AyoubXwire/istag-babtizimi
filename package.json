@@ -1,0 +1,29 @@
+{
+  "name": "istag-babtizimi",
+  "version": "1.0.0",
+  "description": "\"# istag-babtizimi\"",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AyoubXwire/istag-babtizimi.git"
+  },
+  "author": "ayoub benabid & abdssamad el aouad",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AyoubXwire/istag-babtizimi/issues"
+  },
+  "homepage": "https://github.com/AyoubXwire/istag-babtizimi#readme",
+  "dependencies": {
+    "bcrypt": "^3.0.5",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "morgan": "^1.9.1",
+    "mysql": "^2.16.0",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0"
+  }
+}
