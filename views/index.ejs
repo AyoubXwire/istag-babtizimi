@@ -10,6 +10,9 @@
                 <li><a href="/">ACTUALITES</a></li>
                 <li><a href="/">COURS/EXERCICES</a></li>
                 <li><a href="/">COMPTE</a></li>
+                <% if(locals.user) { %>
+                    <li><a href="/logout"><%= user.username %></a></li>
+                <% } %>
             </ul>
             <a class="mobile-nav-icon js--nav-icon"><i class="ion-navicon-round"></i></a>
         </div>    
@@ -36,10 +39,14 @@
 
 <section class="section-actualites">
     <h2>ACTUALITES</h2> 
-    <%- include components/newsCard %>
-    <%- include components/newsCard %>
-    <%- include components/newsCard %>
-    <%- include components/newsCard %>
+    <% posts.forEach(post => { %>
+        <div class="row news">
+            <img width="30px" height="30px" style="float:right" src="./resources/img/new.png">
+            <a style="border-bottom: none;" href="#"><i class="fas fa-arrow-alt-circle-right icon-click"></i></a>
+            <span style="display:inline-blo ;margin-bottom:10px"><%= post.title %></span>
+            <P style="margin-bottom:10px"><%= post.content %></P>
+        </div>
+    <% }) %>
 </section>
 
 <section style="padding-bottom: 80px;" class="section-features js--section-features" id="features">

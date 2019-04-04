@@ -6,7 +6,11 @@ const passport = require('passport')
 const connection = require('../config/connection')
 
 router.get('/', (req, res) => {
-    res.render('index')
+    const command = 'SELECT title, content FROM posts ORDER BY id DESC'
+    connection.query(command, (error, rows, fields) => {
+        if(error) throw error
+        res.render('index', { user: req.user, posts: rows })
+    })
 })
 
 router.get('/register', (req, res) => {
@@ -24,7 +28,7 @@ router.post('/register', (req, res) => {
         .then(hash => {
             const command = 'INSERT INTO users (username, password) VALUES (?, ?)'
             const params = [req.body.username, hash]
-            connection.query(command, params, (error, rows) => {
+            connection.query(command, params, (error, rows, fields) => {
                 if(error) throw error
                 passport.authenticate('local')(req, res, () => {
                     res.redirect('/feed')
