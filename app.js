@@ -1,6 +1,5 @@
 const path = require('path')
 const express = require('express')
-const session = require('express-session')
 const passport = require('passport')
 const morgan = require('morgan')
 
@@ -19,11 +18,7 @@ app.use(morgan('short'))
 require('./config/connection')
 
 // Session
-app.use(session({
-    secret: 'cosmicsecret',
-    resave: false,
-    saveUninitialized: false,
-}))
+app.use(require('./config/session'))
 
 // Passport
 require('./config/passport')

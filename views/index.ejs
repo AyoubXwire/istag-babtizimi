@@ -20,8 +20,11 @@
             
     <div class="hero-text-box">
         <h1>BIENVENUE A L'ISTAG BAB TIZIMI.</h1>
-        <a class="btn btn-full js--scroll-to-plans" href="/login">CONNEXION</a>
-        <a class="btn btn-ghost js--scroll-to-start" href="/register">INSCRIPTION</a>
+        <% if(!locals.user) { %>
+            <a class="btn btn-full js--scroll-to-plans" href="/login">CONNEXION</a>
+            <a class="btn btn-ghost js--scroll-to-start" href="/register">INSCRIPTION</a>
+        <% } %>
+        
     </div>
 </header>
 
