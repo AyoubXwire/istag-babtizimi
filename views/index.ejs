@@ -1,230 +1,209 @@
-<%- include components/header %>
+    <%- include components/header %>
+    <%- include components/navbar %>
 
-<header>
-    <nav>
-        <div class="row">
-            <a href="/"><img src="resources/img/logo.png" class="logo"></a>
-            <a href="/"><img src="resources/img/logo - white.png"  class="logo-black"></a>
-            <ul class="main-nav js--main-nav">
-                <li><a href="/">ACCEUIL</a></li>
-                <li><a href="/">ACTUALITES</a></li>
-                <li><a href="/">COURS/EXERCICES</a></li>
-                <li><a href="/">COMPTE</a></li>
-                <% if(locals.user) { %>
-                    <li><a href="/logout"><%= user.username %></a></li>
-                <% } %>
-            </ul>
-            <a class="mobile-nav-icon js--nav-icon"><i class="ion-navicon-round"></i></a>
-        </div>    
-    </nav>
+    <!-- ##### Hero Area Start ##### -->
+    <section class="hero-area">
+        <div class="hero-slides owl-carousel">
+
+            <!-- Single Hero Slide -->
+            <div class="single-hero-slide bg-img" style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(img/bg-img/bg-1.jpg);">
+                <div class="container h-100">
+                    <div class="row h-100 align-items-center">
+                        <div class="col-12">
+                            <div class="hero-slides-content">
+                                <h4 data-animation="fadeInUp" data-delay="100ms">  MEKNES</h4>
+                                <h2 data-animation="fadeInUp" data-delay="400ms">  BIENVENUE A ISTAG BAB TIZIMI</h2>
+                                <a href="#" class="btn academy-btn" data-animation="fadeInUp" data-delay="700ms">PLUS</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Single Hero Slide -->
+            <div class="single-hero-slide bg-img" style="background-image:linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(img/bg-img/bg-2.jpg);">
+                <div class="container h-100">
+                    <div class="row h-100 align-items-center">
+                        <div class="col-12">
+                            <div class="hero-slides-content">
+                                <h4 data-animation="fadeInUp" data-delay="100ms">   MEKNES</h4>
+                                <h2 data-animation="fadeInUp" data-delay="400ms">   BIENVENUE A ISTAG BAB TIZIMI</h2>
+                                <a href="#" class="btn academy-btn" data-animation="fadeInUp" data-delay="700ms">PLUS</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Hero Area End ##### -->
+
+    <!-- ##### Top Feature Area Start ##### -->
+    <div class="top-features-area wow fadeInUp" data-wow-delay="300ms">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="features-content">
+                        <div class="row no-gutters">
+                            <!-- Single Top Features -->
+                            <div class="col-12 col-md-4">
+                                <div class="single-top-features d-flex align-items-center justify-content-center">
+                                    <i class="icon-agenda-1"></i>
+                                    <h5>20 Filiéres</h5>
+                                </div>
+                            </div>
+                            <!-- Single Top Features -->
+                            <div class="col-12 col-md-4">
+                                <div class="single-top-features d-flex align-items-center justify-content-center">
+                                    <i class="icon-assistance"></i>
+                                    <h5>30 Formateurs</h5>
+                                </div>
+                            </div>
+                            <!-- Single Top Features -->
+                            <div class="col-12 col-md-4">
+                                <div class="single-top-features d-flex align-items-center justify-content-center">
+                                    <i class="icon-telephone-3"></i>
+                                    <h5>14501 Stagiéres</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Top Feature Area End ##### -->
+
+    <!-- ##### Course Area Start ##### -->
+    <div class="academy-courses-area section-padding-100-0">
+        <div class="container">
+            <div class="row">
+                <!-- Single Course Area -->
+
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="single-course-area d-flex align-items-center mb-100 wow fadeInUp" data-wow-delay="700ms">
+                        <div class="course-icon">
+                            <i class="icon-responsive"></i>
+                        </div>
+                        <div class="course-content">
+                            <h4>NTIC</h4>
+                            <p>Developpement Informatique , Réseaux informatique , Maintenance Informatique.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="single-course-area d-flex align-items-center mb-100 wow fadeInUp" data-wow-delay="300ms">
+                        <div class="course-icon">
+                            <i class="icon-id-card"></i>
+                        </div>
+                        <div class="course-content">
+                            <h4>MGC</h4>
+                            <p>Gestion , Comptabilités.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Single Course Area -->
+
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="single-course-area d-flex align-items-center mb-100 wow fadeInUp" data-wow-delay="400ms">
+                        <div class="course-icon">
+                            <i class="icon-worldwide"></i>
+                        </div>
+                        <div class="course-content">
+                            <h4>THB</h4>
+                            <p>Thc , Thm , Thq</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Single Course Area -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ##### a propos ##### -->
+    <div class="testimonials-area section-padding-100" style="background-color:rgb(220, 230, 231);">
+        <div class="container">
+            <h2 style="color:rgb(2, 2, 2)" class="h2-polish">A PROPOS</h2>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam laborum maxime cumque molestias asperiores impedit quidem soluta incidunt nisi, dicta blanditiis odit, nobis eius sapiente illo. Dolorem alias minima sequi consequuntur ullam voluptatibus excepturi quibusdam maxime unde nihil temporibus, distinctio accusantium sit odio accusamus, sunt officiis. Quia atque voluptates porro. Asperiores ab tempora alias maiores dicta adipisci magni similique nostrum!</p> 
+        </div>
+    </div>
+
+    <!-- ##### actualites##### -->
+    <div class="testimonials-area section-padding-100" style="background-color:rgb(242, 243, 243);">
+        <section class="section-actualites">
+            <h2 style="color:black ; margin-top: 50px" class="h2-polish">ACTUALITES</h2> 
+
+            <% posts.forEach(post => { %>
+                <div class="container news">
+                    <div>
+                        <img class="new float-right" src="/img/gallery/new.png"/>
+                        <P style="margin-bottom:10px"><%= post.created_at %></P>
+                        <a href="/actualite/<%= post.id %>" style="display:inline-blo ;margin-bottom:10px"><%= post.title %></a>
+                    </div>
+                </div>
+            <% }) %>
             
-    <div class="hero-text-box">
-        <h1>BIENVENUE A L'ISTAG BAB TIZIMI.</h1>
-        <% if(!locals.user) { %>
-            <a class="btn btn-full js--scroll-to-plans" href="/login">CONNEXION</a>
-            <a class="btn btn-ghost js--scroll-to-start" href="/register">INSCRIPTION</a>
-        <% } %>
-        
-    </div>
-</header>
-
-<section class="section-intro">
-    <div class="row">
-        <h2>ISTAG BAB TIZIMI</h2>
-        <img id="istag" src="resources/img/istag.jpg"/>
-        <div id="brief-intro">
-            <h3>Brief Introduction</h3>
-            <p>Istag bab tizimi est une institue de Technologie Applique et de gestion basé sur meknes , suivie le grand réseau des institue au maroc connais par OFPPT</p>
-        </div>
-        
-    </div>
-</section>
-
-<section class="section-actualites">
-    <h2>ACTUALITES</h2> 
-    <% posts.forEach(post => { %>
-        <div class="row news">
-            <img width="30px" height="30px" style="float:right" src="./resources/img/new.png">
-            <a style="border-bottom: none;" href="#"><i class="fas fa-arrow-alt-circle-right icon-click"></i></a>
-            <span style="display:inline-blo ;margin-bottom:10px"><%= post.title %></span>
-            <P style="margin-bottom:10px"><%= post.content %></P>
-        </div>
-    <% }) %>
-</section>
-
-<section style="padding-bottom: 80px;" class="section-features js--section-features" id="features">
-    <div class="row">
-        <h2>Filieres</h2>
-        <p class="long-copy">
-            un enssemble des meilleur filieres specialisé.soiyez sur que vous trouvera la bonne filiére.
-        </p>    
+        </section>
     </div>
     
-    <div style="padding-bottom: 80px;" class="row js--wp-1">
-        <div class="col span-1-of-3 box">
-            <a><img class="img" src="resources/img/gallery/nos_produits/1.png"></a>
-            <h3>TRI</h3>
-            <p>
-                Techniques des réseaux informatiques.
-            </p>
-            <a style="margin-top:15px;background-color: rgb(18, 18, 145)" class="btn btn-full js--scroll-to-plans" href="#">LIRE PLUS</a>
+    <!-- ##### localisation ##### -->
+    <div class="testimonials-area section-padding-100 bg-img bg-overlay" style="background-color:rgb(185, 226, 231);">
+        <div class="container">
+            <h2 class="h2-polish">LOCALISATION</h2>
+            <iframe width="100%" id="Localisation-gps" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13246.239657274818!2d-5.564702815950974!3d33.90098629035586!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xda05b2b7ca1f5a3%3A0x8ead1a31a5875504!2sOfppt+ISTA+bab+Tizimi!5e0!3m2!1sen!2sma!4v1554412140661!5m2!1sen!2sma" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
         </div>
-        <div class="col span-1-of-3 box">
-            <a><img class="img" src="resources/img/gallery/nos_produits/2.png"></a>
-            <h3>TMSIR</h3>
-            <p>
-                Technique de maintenance informatique.
-            </p>
-            <a style="margin-top:15px;background-color: rgb(18, 18, 145)" class="btn btn-full js--scroll-to-plans" href="#">LIRE PLUS</a>
-        </div>
-        <div  class="col span-1-of-3 box">
-            <a><img class="img" src="resources/img/gallery/nos_produits/9.png"></a>
-            <h3>TDI</h3>
-            <p>
-                Technique de developpement informatique.
-            </p>
-            <a style="margin-top:15px;background-color: rgb(18, 18, 145)" class="btn btn-full js--scroll-to-plans" href="#">LIRE PLUS</a>
-        </div>
-    </div>  
-    
-    <div style="padding-bottom: 80px;" class="row js--wp-1">
-        <div class="col span-1-of-3 box">
-            <a><img class="img" src="resources/img/gallery/nos_produits/4.png"></a>
-            <h3>THC</h3>
-            <p>
-                Technique d'habiellement communist.
-            </p>
-            <a style="margin-top:15px;background-color: rgb(18, 18, 145)" class="btn btn-full js--scroll-to-plans" href="#">LIRE PLUS</a>
-        </div>
-        <div class="col span-1-of-3 box">
-            <a><img class="img" src="resources/img/gallery/nos_produits/5.png"></a>
-            <h3>THQ</h3>
-            <p>
-                Techniques d'habillement Quotidient. .
-            </p>
-            <a style="margin-top:15px;background-color: rgb(18, 18, 145)" class="btn btn-full js--scroll-to-plans" href="#">LIRE PLUS</a>
-        </div>
-        <div class="col span-1-of-3 box">
-            <a><img class="img" src="resources/img/gallery/nos_produits/6.png"></a>
-            <h3>TMQ</h3>
-            <p>
-                Technique De motirization Quotidient.
-            </p>
-            <a style="margin-top:15px;background-color: rgb(18, 18, 145)" class="btn btn-full js--scroll-to-plans" href="#">LIRE PLUS</a>
-        </div>
-    </div>  
-
-    <div style="padding-bottom: 80px;" class="row js--wp-1">
-        <div class="col span-1-of-3 box">
-            <a><img class="img" src="resources/img/gallery/nos_produits/7.png"></a>
-            <h3>TMC</h3>
-            <p>
-                Techniques de maintenance comique.
-            </p>
-            <a style="margin-top:15px;background-color: rgb(18, 18, 145)" class="btn btn-full js--scroll-to-plans" href="#">LIRE PLUS</a>
-        </div>
-        <div class="col span-1-of-3 box">
-            <a><img class="img" src="resources/img/gallery/nos_produits/8.png"></a>
-            <h3>TMZ</h3>
-            <p>
-                Technique de monopolie zoolien .
-            </p>
-            <a style="margin-top:15px;background-color: rgb(18, 18, 145)" class="btn btn-full js--scroll-to-plans" href="#">LIRE PLUS</a>
-        </div>
-        <div class="col span-1-of-3 box">
-            <a><img class="img" src="resources/img/gallery/nos_produits/3.png"></a>
-            <h3>TBM</h3>
-            <p>
-                Technique de i run out of ideas.
-            </p>
-            <a style="margin-top:15px;background-color: rgb(18, 18, 145)" class="btn btn-full js--scroll-to-plans" href="#">LIRE PLUS</a>
-        </div>
-    </div>  
-</section>
-
-<section class="section-meals">
-    <h2 id="exemplaire">La Bauté de notre Etablisement</h2>
-    <ul class="meals-showcase clearfix">
-        <li>
-            <figure class="meal-photo">
-                <img id="test" src="resources/img/1.jpg" alt="Korean bibimbap with egg and vegetables">
-            </figure>
-        </li>
-        <li>
-            <figure class="meal-photo">
-                <img src="resources/img/2.jpg" alt="Simple italian pizza with cherry tomatoes">
-            </figure>
-        </li>
-        <li>
-            <figure class="meal-photo">
-                <img src="resources/img/3.jpg" alt="Chicken breast steak with vegetables">
-            </figure>
-        </li>    
-    </ul>
-</section>        
-
-<section class="section-steps" id="works">
-    <div class="row">
-        <h2>LOCATION</h2>
     </div>
-    <div class="row">
-        <iframe id="frame" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d293.79105881426597!2d-7.620073631970384!3d33.5828179259378!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xda7d2a2f2d445cd%3A0x955a303c249dd117!2s46+Boulevard+Mohamed+Zerktouni%2C+Casablanca+20250!5e0!3m2!1sen!2sma!4v1553455265266" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
-    </div>
-</section>
 
-<section class="section-form">
-    <div class="row">
-        <h2>Nous Contacter</h2>
+    <div class="testimonials-area section-padding-100" style="background-color:rgb(197, 211, 212);">
+        <div class="container">
+            <h2 style="color:black ; margin-top: 50px" class="h2-polish">LA BEAUTE DE NOTRE ETABLISSMENT</h2>
+            <ul class="etablismenet-pictures clearfix">
+                <li>
+                    <figure class="istag-photo">
+                        <img src="/img/gallery/1.jpg">
+                    </figure>
+                </li>
+                <li>
+                    <figure class="istag-photo">
+                            <img src="/img/gallery/2.jpg">
+                    </figure>
+                </li>
+                <li>
+                    <figure class="istag-photo">
+                            <img src="/img/gallery/3.jpg">
+                    </figure>
+                </li>
+            </ul>
+        </div>
     </div>
-    <div class="row">
-        <form method="post" action="#" class="contact-form">
-            <div class="row">
-                <div class="col span-1-of-3">
-                    <label for="name">Nom</label>
-                </div>
-                <div class="col span-2-of-3">
-                    <input type="text" name="name" id="name" placeholder="Votre Nom" required>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col span-1-of-3">
-                    <label for="email">Email</label>
-                </div>
-                <div class="col span-2-of-3">
-                    <input type="email" name="email" id="email" placeholder="Votre email" required>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col span-1-of-3">
-                    <label for="find-us">Filiere</label>
-                </div>
-                <div class="col span-2-of-3">
-                    <select name="find-us" id="find-us">
-                        <option value="friends" selected>TRI</option>
-                        <option value="search">TDI</option>
-                        <option value="ad">TMSIR</option>
-                        <option value="other">THB</option>
-                    </select>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col span-1-of-3">
-                    <label>Objet</label>
-                </div>
-                <div class="col span-2-of-3">
-                    <textarea id="message" name="message" placeholder="Votre message"></textarea>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col span-1-of-3">
-                    <label>&nbsp;</label>
-                </div>
-                <div class="col span-2-of-3">
-                    <input id="envoyer" type="button" value="Envoyer!">
-                </div>
-            </div>
-        </form>
-    </div>
-</section>
 
-<%- include components/footer %>
+    <!-- ##### Testimonials Area End ##### -->
+    <div class="testimonials-area section-padding-100" style="  background-color:rgb(178, 178, 180)">
+            <div class="container">
+                <h2 style="color:black" class="h2-polish">CONTACT FORM</h2>
+                <form>      
+                    <input name="name" type="text" class="feedback-input" placeholder="Name" />   
+                    <input name="email" type="text" class="feedback-input" placeholder="Email" />
+                    <textarea name="text" class="feedback-input" placeholder="Comment"></textarea>
+                    <input type="submit" value="SUBMIT"/>
+                </form>
+            </div>
+        </div>
+   
+    <%- include components/footer %>
+
+    <!-- ##### All Javascript Script ##### -->
+    <!-- jQuery-2.2.4 js -->
+    <script src="/js/jquery/jquery-2.2.4.min.js"></script>
+    <!-- Popper js -->
+    <script src="/js/bootstrap/popper.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="/js/bootstrap/bootstrap.min.js"></script>
+    <!-- All Plugins js -->
+    <script src="/js/plugins/plugins.js"></script>
+    <!-- Active js -->
+    <script src="/js/active.js"></script>
+</body>
+
+</html>

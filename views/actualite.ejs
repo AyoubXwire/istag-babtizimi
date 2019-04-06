@@ -1,0 +1,40 @@
+    <%- include components/header %>
+    <%- include components/navbar %>
+
+    <div style="margin-top:100px" class="container">
+        <div class="single-blog-post mb-50 wow fadeInUp" data-wow-delay="300ms">
+            <!-- Post Thumb -->
+            <div class="blog-post-thumb mb-50">
+                <img src="/img/blog-img/1.jpg" alt="">
+            </div>
+            <!-- Post Title -->
+            <a href="#" class="post-title"><%= post.title %></a>
+            <!-- Post Meta -->
+            <div class="post-meta">
+                <p>Par <a href="#"><%= post.username %></a> | <a href="#"><%= post.created_at %></a></p>
+            </div>
+            <!-- Post Excerpt -->
+            <p><%= post.content %></p>
+            <!-- Read More btn -->
+            <a href="#" class="btn academy-btn btn-sm mt-15">Télécharger les Fichiers</a>
+        </div>
+    </div>
+
+    <%- include components/footer %>
+
+    <!-- jQuery-2.2.4 js -->
+    <script src="/js/jquery/jquery-2.2.4.min.js"></script>
+    <!-- Popper js -->
+    <script src="/js/bootstrap/popper.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="/js/bootstrap/bootstrap.min.js"></script>
+    <!-- All Plugins js -->
+    <script src="/js/plugins/plugins.js"></script>
+    <!-- Active js -->
+    <script src="/js/active.js"></script>
+    <!-- Google Maps -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwuyLRa1uKNtbgx6xAJVmWy-zADgegA2s"></script>
+    <script src="/js/google-map/map-active.js"></script>
+</body>
+
+</html>

@@ -1,14 +1,14 @@
-const passport = require('passport')
+const passport      = require('passport')
 const localStrategy = require('passport-local').Strategy
-const bcrypt = require('bcrypt')
+const bcrypt        = require('bcrypt')
 
-const connection = require('../config/connection')
+const pool = require('./pool')
 
 module.exports = passport.use(
     new localStrategy({usernameField: 'username'}, (username, password, done) => {
         const command = 'SELECT * FROM users WHERE username = ?'
         const params = [username]
-        connection.query(command, params, (error, rows) => {
+        pool.query(command, params, (error, rows) => {
             if(error) throw error
             if(rows.length === 0) {
                 return done(null, false, { message: 'username unregistered' })
@@ -33,7 +33,7 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((id, done) => {
     const command = 'SELECT * FROM users WHERE id = ?'
     const params = [id]
-    connection.query(command, params, (error, rows) => {
+    pool.query(command, params, (error, rows) => {
         if(error) throw error
         done(null, rows[0])
     })

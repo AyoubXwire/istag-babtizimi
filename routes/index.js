@@ -1,16 +1,67 @@
-const express = require('express')
-const router = express.Router()
-const bcrypt = require('bcrypt')
+const express  = require('express')
+const router   = express.Router()
+const bcrypt   = require('bcrypt')
 const passport = require('passport')
 
-const connection = require('../config/connection')
+const auth = require('../middleware/auth')
+const pool = require('../config/pool')
 
 router.get('/', (req, res) => {
-    const command = 'SELECT title, content FROM posts ORDER BY id DESC'
-    connection.query(command, (error, rows, fields) => {
-        if(error) throw error
+    const command = 'SELECT id, title, created_at, content FROM posts ORDER BY id DESC LIMIT 5'
+    pool.query(command, (error, rows, fields) => {
+        if(error) {
+            console.log(error)
+            return
+        }
         res.render('index', { user: req.user, posts: rows })
     })
+})
+
+router.get('/actualites', (req, res) => {
+    let command
+    let params = []
+
+    if(req.query.search) {
+        command = `SELECT p.id, title, content, created_at, username FROM posts p JOIN users u ON p.user_id = u.id WHERE title LIKE ? ORDER BY p.id DESC`
+        params = [`%${req.query.search}%`]
+    } else {
+        command = 'SELECT p.id, title, content, created_at, username FROM posts p JOIN users u ON p.user_id = u.id ORDER BY p.id DESC'
+    }
+    pool.query(command, params, (error, rows, fields) => {
+        if(error) {
+            console.log(error)
+            return
+        }
+        res.render('actualites', { user: req.user, posts: rows })
+    })
+})
+
+router.get('/actualite/:id', (req, res) => {
+    const command = 'SELECT p.id, title, content, created_at, username FROM posts p JOIN users u ON p.user_id = u.id WHERE p.id = ?'
+    const params = [req.params.id]
+    pool.query(command, params, (error, rows, fields) => {
+        if(error) {
+            console.log(error)
+            return
+        }
+        res.render('actualite', { user: req.user, post: rows[0] })
+    })
+})
+
+router.get('/info-filieres', (req, res) => {
+    res.render('info-filieres', { user: req.user })
+})
+
+router.get('/info-inscription', (req, res) => {
+    res.render('info-inscription', { user: req.user })
+})
+
+router.get('/about-us', (req, res) => {
+    res.render('about-us', { user: req.user })
+})
+
+router.get('/contact-us', (req, res) => {
+    res.render('contact-us', { user: req.user })
 })
 
 router.get('/register', (req, res) => {
@@ -28,10 +79,10 @@ router.post('/register', (req, res) => {
         .then(hash => {
             const command = 'INSERT INTO users (username, password) VALUES (?, ?)'
             const params = [req.body.username, hash]
-            connection.query(command, params, (error, rows, fields) => {
+            pool.query(command, params, (error, rows, fields) => {
                 if(error) throw error
                 passport.authenticate('local')(req, res, () => {
-                    res.redirect('/feed')
+                    res.redirect('/')
                 })
             })
         })
@@ -45,7 +96,7 @@ router.post('/login', passport.authenticate('local', {
     failureRedirect: '/login'
 }))
 
-router.get('/logout', (req, res) => {
+router.get('/logout', auth, (req, res) => {
     req.logOut()
     res.redirect('/login')
 })
