@@ -17,7 +17,10 @@ router.get('/', (req, res) => {
 
         connection.query(command, (error, rows, fields) => {
             if(error) throw error
-            
+
+            rows.forEach(row => {
+                row.created_at = prettyDateTime(row.created_at)
+            })
             res.render('index', { user: req.user, posts: rows })
             connection.release()
         })
@@ -46,6 +49,9 @@ router.get('/actualites', (req, res) => {
         connection.query(command, params, (error, rows, fields) => {
             if(error) throw err
 
+            rows.forEach(row => {
+                row.created_at = prettyDateTime(row.created_at)
+            })
             res.render('actualites', { user: req.user, posts: rows })
             connection.release()
         })
@@ -64,6 +70,7 @@ router.get('/actualite/:id', (req, res) => {
         connection.query(command, params, (error, rows, fields) => {
             if(error) throw err
 
+            rows[0].created_at = prettyDateTime(rows[0].created_at)
             res.render('actualite', { user: req.user, post: rows[0] })
             connection.release()
         })
@@ -134,5 +141,16 @@ router.get('/logout', auth, (req, res) => {
     req.logOut()
     res.redirect('/login')
 })
+
+// Functions ******************************
+const prettyDateTime = (dt) => {
+    const day = dt.getDate() < 10 ? `0${dt.getDate()}` : `${dt.getDate()}`
+    const month = dt.getMonth() + 1 < 10 ? `0${dt.getDate()}` : `${dt.getDate()}`
+    const year = dt.getFullYear()
+    const hours = dt.getHours() < 10 ? `0${dt.getHours()}` : `${dt.getHours()}`
+    const minutes = dt.getMinutes() < 10 ? `0${dt.getMinutes()}` : `${dt.getMinutes()}`
+
+    return `${day}-${month}-${year} ${hours}:${minutes}`
+}
 
 module.exports = router
