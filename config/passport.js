@@ -6,22 +6,29 @@ const pool = require('./pool')
 
 module.exports = passport.use(
     new localStrategy({usernameField: 'username'}, (username, password, done) => {
-        const command = 'SELECT * FROM users WHERE username = ?'
+        const command = `SELECT * FROM users WHERE username = ?`
         const params = [username]
-        pool.query(command, params, (error, rows) => {
-            if(error) throw error
-            if(rows.length === 0) {
-                return done(null, false, { message: 'username unregistered' })
-            }
-            bcrypt.compare(password, rows[0].password)
-            .then(isMatch => {
-                if(isMatch) {
-                    return done(null, rows[0])
-                } else {
-                    return done(null, false, { message: 'password incorrect' })
+
+        pool.getConnection((error, connection) => {
+            if(error) throw err
+
+            connection.query(command, params, (error, rows, fields) => {
+                if(error) throw err
+    
+                if(rows.length === 0) {
+                    return done(null, false, { message: 'username unregistered' })
                 }
+                bcrypt.compare(password, rows[0].password)
+                .then(isMatch => {
+                    if(isMatch) {
+                        return done(null, rows[0])
+                    } else {
+                        return done(null, false, { message: 'password incorrect' })
+                    }
+                })
+                .catch(err => console.log(err))
+                connection.release()
             })
-            .catch(err => console.log(err))
         })
     })
 )
@@ -31,10 +38,17 @@ passport.serializeUser((user, done) => {
 })
     
 passport.deserializeUser((id, done) => {
-    const command = 'SELECT * FROM users WHERE id = ?'
+    const command = `SELECT * FROM users WHERE id = ?`
     const params = [id]
-    pool.query(command, params, (error, rows) => {
+    
+    pool.getConnection((error, connection) => {
         if(error) throw error
-        done(null, rows[0])
+
+        connection.query(command, params, (error, rows, fields) => {
+            if(error) throw error
+            
+            done(null, rows[0])
+            connection.release()
+        })
     })
 })

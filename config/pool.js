@@ -4,6 +4,7 @@ let pool;
 
 if(process.env === 'production') {
     pool = mysql.createPool({
+        connectionLimit : 100,
         host     : 'sql7.freesqldatabase.com',
         user     : 'sql7286630',
         password : 'fjbuICKb4e',
@@ -11,6 +12,7 @@ if(process.env === 'production') {
     })
 } else {
     pool = mysql.createPool({
+        connectionLimit : 100,
         host     : 'localhost',
         user     : 'root',
         password : 'xwire',

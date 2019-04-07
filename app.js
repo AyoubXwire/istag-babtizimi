@@ -30,3 +30,19 @@ app.use('/', require('./routes/index'))
 
 // Listener
 app.listen(process.env.PORT || 3000, () => console.log('server running..'))
+
+/*
+const command = ``
+const params = []
+
+pool.getConnection((error, connection) => {
+    if(error) throw err
+
+    connection.query(command, params, (error, rows, fields) => {
+        if(error) throw err
+
+        // code here
+        connection.release()
+    })
+})
+*/

@@ -7,13 +7,20 @@ const auth = require('../middleware/auth')
 const pool = require('../config/pool')
 
 router.get('/', (req, res) => {
-    const command = 'SELECT id, title, created_at, content FROM posts ORDER BY id DESC LIMIT 5'
-    pool.query(command, (error, rows, fields) => {
-        if(error) {
-            console.log(error)
-            return
-        }
-        res.render('index', { user: req.user, posts: rows })
+    const command = `SELECT id, title, created_at, content
+    FROM posts
+    ORDER BY id DESC
+    LIMIT 5`
+    
+    pool.getConnection((error, connection) => {
+        if(error) throw error
+
+        connection.query(command, (error, rows, fields) => {
+            if(error) throw error
+            
+            res.render('index', { user: req.user, posts: rows })
+            connection.release()
+        })
     })
 })
 
@@ -22,29 +29,44 @@ router.get('/actualites', (req, res) => {
     let params = []
 
     if(req.query.search) {
-        command = `SELECT p.id, title, content, created_at, username FROM posts p JOIN users u ON p.user_id = u.id WHERE title LIKE ? ORDER BY p.id DESC`
+        command = `SELECT p.id, title, content, created_at, username
+        FROM posts p JOIN users u ON p.user_id = u.id
+        WHERE title LIKE ?
+        ORDER BY p.id DESC`
         params = [`%${req.query.search}%`]
     } else {
-        command = 'SELECT p.id, title, content, created_at, username FROM posts p JOIN users u ON p.user_id = u.id ORDER BY p.id DESC'
+        command = `SELECT p.id, title, content, created_at, username
+        FROM posts p JOIN users u ON p.user_id = u.id
+        ORDER BY p.id DESC`
     }
-    pool.query(command, params, (error, rows, fields) => {
-        if(error) {
-            console.log(error)
-            return
-        }
-        res.render('actualites', { user: req.user, posts: rows })
+
+    pool.getConnection((error, connection) => {
+        if(error) throw err
+
+        connection.query(command, params, (error, rows, fields) => {
+            if(error) throw err
+
+            res.render('actualites', { user: req.user, posts: rows })
+            connection.release()
+        })
     })
 })
 
 router.get('/actualite/:id', (req, res) => {
-    const command = 'SELECT p.id, title, content, created_at, username FROM posts p JOIN users u ON p.user_id = u.id WHERE p.id = ?'
+    const command = `SELECT p.id, title, content, created_at, username
+    FROM posts p JOIN users u ON p.user_id = u.id
+    WHERE p.id = ?`
     const params = [req.params.id]
-    pool.query(command, params, (error, rows, fields) => {
-        if(error) {
-            console.log(error)
-            return
-        }
-        res.render('actualite', { user: req.user, post: rows[0] })
+
+    pool.getConnection((error, connection) => {
+        if(error) throw err
+
+        connection.query(command, params, (error, rows, fields) => {
+            if(error) throw err
+
+            res.render('actualite', { user: req.user, post: rows[0] })
+            connection.release()
+        })
     })
 })
 
@@ -64,6 +86,11 @@ router.get('/contact-us', (req, res) => {
     res.render('contact-us', { user: req.user })
 })
 
+router.post('/email', (req, res) => {
+    // nodemailer here
+})
+
+// Users routes *****************************************
 router.get('/register', (req, res) => {
     res.render('register')
 })
@@ -77,12 +104,19 @@ router.post('/register', (req, res) => {
     .then(salt => {
         bcrypt.hash(req.body.password, salt)
         .then(hash => {
-            const command = 'INSERT INTO users (username, password) VALUES (?, ?)'
+            const command = `INSERT INTO users (username, password) VALUES (?, ?)`
             const params = [req.body.username, hash]
-            pool.query(command, params, (error, rows, fields) => {
-                if(error) throw error
-                passport.authenticate('local')(req, res, () => {
-                    res.redirect('/')
+
+            pool.getConnection((error, connection) => {
+                if(error) throw err
+        
+                connection.query(command, params, (error, rows, fields) => {
+                    if(error) throw err
+        
+                    passport.authenticate('local')(req, res, () => {
+                        res.redirect('/')
+                    })
+                    connection.release()
                 })
             })
         })
