@@ -21,14 +21,10 @@
                             <div class="col-12">
                                 <div class="single-blog-post mb-50 wow fadeInUp" data-wow-delay="300ms">
 
-                                    <div class="blog-post-thumb mb-50">
-                                        <img src="img/blog-img/1.jpg" alt="">
-                                    </div>
-
                                     <a href="/actualite/<%= post.id %>" class="post-title"><%= post.title %></a>
 
                                     <div class="post-meta">
-                                        <p>Par <a href="#"><%= post.username %></a> | <a href="#"><%= post.created_at %></a></p>
+                                        <p>Par <a><%= post.username %></a> | <a><%= post.created_at %></a></p>
                                     </div>
 
                                     <p><%= post.content %></p>

@@ -48,8 +48,9 @@ router.get('/actualites', (req, res) => {
 
         connection.query(command, params, (error, rows, fields) => {
             if(error) throw err
-
+            
             rows.forEach(row => {
+                row.content = previewString(row.content)
                 row.created_at = prettyDateTime(row.created_at)
             })
             res.render('actualites', { user: req.user, posts: rows })
@@ -151,6 +152,16 @@ const prettyDateTime = (dt) => {
     const minutes = dt.getMinutes() < 10 ? `0${dt.getMinutes()}` : `${dt.getMinutes()}`
 
     return `${day}-${month}-${year} ${hours}:${minutes}`
+}
+
+const previewString = (str) => {
+    const previewLength = 50
+
+    if(str.length > previewLength){
+        return `${str.substring(0, previewLength)}...`
+    } else {
+        return str.substring(0, previewLength)
+    }
 }
 
 module.exports = router
