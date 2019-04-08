@@ -7,22 +7,24 @@ const auth = require('../middleware/auth')
 const pool = require('../config/pool')
 
 router.get('/', (req, res) => {
-    const command = `SELECT id, title, created_at, content
-    FROM posts
-    ORDER BY id DESC
-    LIMIT 5`
+    let command = `SELECT id, title, created_at, content
+    FROM posts ORDER BY id DESC LIMIT 5;
+    SELECT id, code, nom, description FROM secteurs;`
     
     pool.getConnection((error, connection) => {
         if(error) throw error
 
         connection.query(command, (error, rows, fields) => {
-            if(error) throw error
+            if(error) throw console.error();
+            let posts = rows[0]
+            let secteurs = rows[1]
 
-            rows.forEach(row => {
-                row.created_at = prettyDateTime(row.created_at)
+            posts.forEach(post => {
+                post.created_at = prettyDateTime(post.created_at)
             })
+
+            res.render('index', { posts, secteurs })
             connection.release()
-            res.render('index', { posts: rows })
         })
     })
 })
@@ -48,13 +50,14 @@ router.get('/actualites', (req, res) => {
 
         connection.query(command, params, (error, rows, fields) => {
             if(error) throw error
-            
-            rows.forEach(row => {
-                row.content = previewString(row.content)
-                row.created_at = prettyDateTime(row.created_at)
+            let posts = rows
+
+            posts.forEach(post => {
+                post.content = previewString(post.content)
+                post.created_at = prettyDateTime(post.created_at)
             })
+            res.render('actualites', { posts })
             connection.release()
-            res.render('actualites', { posts: rows })
         })
     })
 })
@@ -73,8 +76,8 @@ router.post('/actualites/new', (req, res) => {
         connection.query(command, params, (error, rows, fields) => {
             if(error) throw error
 
-            connection.release()
             res.redirect('/actualites')
+            connection.release()
         })
     })
 })
@@ -90,16 +93,56 @@ router.get('/actualite/:id', (req, res) => {
 
         connection.query(command, params, (error, rows, fields) => {
             if(error) throw err
+            let post = rows[0]
 
-            rows[0].created_at = prettyDateTime(rows[0].created_at)
-            res.render('actualite', { post: rows[0] })
+            post.created_at = prettyDateTime(post.created_at)
+            res.render('actualite', { post })
             connection.release()
         })
     })
 })
 
 router.get('/filieres', (req, res) => {
-    res.render('filieres')
+    let command
+    let params = []
+    
+    if(req.query.secteur) {
+        command = `SELECT id, code, nom FROM filieres WHERE id_secteur = ?`
+        params = [req.query.secteur]
+    } else {
+        command = `SELECT id, code, nom FROM filieres`
+    }
+
+    pool.getConnection((error, connection) => {
+        if(error) throw error
+
+        connection.query(command, params, (error, rows, fields) => {
+            if(error) throw error
+            let filieres = rows
+
+            res.render('filieres', { filieres })
+            connection.release()
+        })
+    })
+})
+
+router.get('/filiere/:id', (req, res) => {
+    let command = `SELECT code, nom, description FROM filieres WHERE id = ?;
+    SELECT nom FROM modules WHERE id_filiere = ?;`
+    let params = [req.params.id, req.params.id]
+
+    pool.getConnection((error, connection) => {
+        if(error) throw error
+
+        connection.query(command, params, (error, rows, fields) => {
+            if(error) throw error
+            let filiere = rows[0][0]
+            let modules = rows[1]
+            console.log(rows)
+            res.render('filiere', { filiere, modules })
+            connection.release()
+        })
+    })
 })
 
 router.get('/inscription', (req, res) => {

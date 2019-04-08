@@ -38,14 +38,15 @@ app.use('/', require('./routes/index'))
 app.listen(process.env.PORT || 3000, () => console.log('server running..'))
 
 /*
-const command = ``
-const params = []
+let command = ``
+let params = []
 
 pool.getConnection((error, connection) => {
     if(error) throw error
 
     connection.query(command, params, (error, rows, fields) => {
         if(error) throw error
+        let data = rows
 
         // code here
         connection.release()

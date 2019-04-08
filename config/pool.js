@@ -8,7 +8,8 @@ if(process.env === 'production') {
         host     : 'sql7.freesqldatabase.com',
         user     : 'sql7286630',
         password : 'fjbuICKb4e',
-        database : 'sql7286630'
+        database : 'sql7286630',
+        multipleStatements: true
     })
 } else {
     pool = mysql.createPool({
@@ -16,7 +17,8 @@ if(process.env === 'production') {
         host     : 'localhost',
         user     : 'root',
         password : 'xwire',
-        database : 'babtizimi'
+        database : 'babtizimi',
+        multipleStatements: true
     })
 }
 

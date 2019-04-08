@@ -1,15 +1,12 @@
     <%- include components/header %>
     <%- include components/navbar %>
-
-    <!-- ##### Breadcumb Area Start ##### -->
+    
     <div class="breadcumb-area bg-img" style="background-image: url(img/bg-img/breadcumb.jpg);">
         <div class="bradcumbContent">
             <h2>Notre Filiéres</h2>
         </div>
     </div>
-    <!-- ##### Breadcumb Area End ##### -->
 
-    <!-- ##### Top Popular Courses Area Start ##### -->
     <div class="top-popular-courses-area mt-50 section-padding-100-70">
         <div class="container">
             <div class="row">
@@ -22,164 +19,19 @@
             </div>
             <div class="row">
 
-                <div class="col-12 col-lg-6">
-                    <div class="single-top-popular-course d-flex align-items-center flex-wrap mb-30 wow fadeInUp" data-wow-delay="400ms">
-                        <div class="popular-course-content">
-                            <h5>TDI</h5>
-                            <p>Techniques de développement informatiques (TS)</p>
-                            <a href="filiere.html" class="btn academy-btn btn-sm">Voir cette Filiére</a>
+                <% filieres.forEach(filiere => { %>
+                    <div class="col-12 col-lg-6">
+                        <div class="single-top-popular-course d-flex align-items-center flex-wrap mb-30 wow fadeInUp" data-wow-delay="400ms">
+                            <div class="popular-course-content">
+                                <h5><%= filiere.code %></h5>
+                                <p><%= filiere.nom %></p>
+                                <a href="/filiere/<%= filiere.id %>" class="btn academy-btn btn-sm">Voir cette Filiére</a>
+                            </div>
+                            <div class="popular-course-thumb bg-img" style="background-image: url(img/bg-img/filiere.jpg);"></div>
                         </div>
-                        <div class="popular-course-thumb bg-img" style="background-image: url(img/bg-img/filiere.jpg);"></div>
                     </div>
-                </div>
-
-                <div class="col-12 col-lg-6">
-                    <div class="single-top-popular-course d-flex align-items-center flex-wrap mb-30 wow fadeInUp" data-wow-delay="400ms">
-                        <div class="popular-course-content">
-                            <h5>TRI</h5>
-                            <p>Techniques des réseaux informatiques (TS)</p>
-                            <a href="filiere.html" class="btn academy-btn btn-sm">Voir cette Filiére</a>
-                        </div>
-                        <div class="popular-course-thumb bg-img" style="background-image: url(img/bg-img/filiere.jpg);"></div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-lg-6">
-                    <div class="single-top-popular-course d-flex align-items-center flex-wrap mb-30 wow fadeInUp" data-wow-delay="400ms">
-                        <div class="popular-course-content">
-                            <h5>TMSIR</h5>
-                            <p>Technicien en Maintenance et Systèmes Informatiques et Réseaux (T)</p>
-                            <a href="filiere.html" class="btn academy-btn btn-sm">Voir cette Filiére</a>
-                        </div>
-                        <div class="popular-course-thumb bg-img" style="background-image: url(img/bg-img/filiere.jpg);"></div>
-                    </div>
-                </div>
+                <% }) %>
                 
-                <div class="col-12 col-lg-6">
-                    <div class="single-top-popular-course d-flex align-items-center flex-wrap mb-30 wow fadeInUp" data-wow-delay="400ms">
-                        <div class="popular-course-content">
-                            <h5>TSGE</h5>
-                            <p>Technicien Spécialisé en Gestion des Entreprises (TS)</p>
-                            <a href="filiere.html" class="btn academy-btn btn-sm">Voir cette Filiére</a>
-                        </div>
-                        <div class="popular-course-thumb bg-img" style="background-image: url(img/bg-img/filiere.jpg);"></div>
-                    </div>
-                </div>
-                
-                <div class="col-12 col-lg-6">
-                    <div class="single-top-popular-course d-flex align-items-center flex-wrap mb-30 wow fadeInUp" data-wow-delay="400ms">
-                        <div class="popular-course-content">
-                            <h5>TCE</h5>
-                            <p>Technicien Comptable d’Entreprises (T)</p>
-                            <a href="filiere.html" class="btn academy-btn btn-sm">Voir cette Filiére</a>
-                        </div>
-                        <div class="popular-course-thumb bg-img" style="background-image: url(img/bg-img/filiere.jpg);"></div>
-                    </div>
-                </div>
-                
-                <div class="col-12 col-lg-6">
-                    <div class="single-top-popular-course d-flex align-items-center flex-wrap mb-30 wow fadeInUp" data-wow-delay="400ms">
-                        <div class="popular-course-content">
-                            <h5>TSB</h5>
-                            <p>Technicien en Secrétariat Bureautique (T)</p>
-                            <a href="filiere.html" class="btn academy-btn btn-sm">Voir cette Filiére</a>
-                        </div>
-                        <div class="popular-course-thumb bg-img" style="background-image: url(img/bg-img/filiere.jpg);"></div>
-                    </div>
-                </div>
-                
-                <div class="col-12 col-lg-6">
-                    <div class="single-top-popular-course d-flex align-items-center flex-wrap mb-30 wow fadeInUp" data-wow-delay="400ms">
-                        <div class="popular-course-content">
-                            <h5>THP</h5>
-                            <p>Techniques Habillement Production (T)</p>
-                            <a href="filiere.html" class="btn academy-btn btn-sm">Voir cette Filiére</a>
-                        </div>
-                        <div class="popular-course-thumb bg-img" style="background-image: url(img/bg-img/filiere.jpg);"></div>
-                    </div>
-                </div>
-                
-                <div class="col-12 col-lg-6">
-                    <div class="single-top-popular-course d-flex align-items-center flex-wrap mb-30 wow fadeInUp" data-wow-delay="400ms">
-                        <div class="popular-course-content">
-                            <h5>THI</h5>
-                            <p>Technique Habillement Industrialisation (T)</p>
-                            <a href="filiere.html" class="btn academy-btn btn-sm">Voir cette Filiére</a>
-                        </div>
-                        <div class="popular-course-thumb bg-img" style="background-image: url(img/bg-img/filiere.jpg);"></div>
-                    </div>
-                </div>
-                
-                <div class="col-12 col-lg-6">
-                    <div class="single-top-popular-course d-flex align-items-center flex-wrap mb-30 wow fadeInUp" data-wow-delay="400ms">
-                        <div class="popular-course-content">
-                            <h5>TMI</h5>
-                            <p>Technique Modélisme Industriel (T)</p>
-                            <a href="filiere.html" class="btn academy-btn btn-sm">Voir cette Filiére</a>
-                        </div>
-                        <div class="popular-course-thumb bg-img" style="background-image: url(img/bg-img/filiere.jpg);"></div>
-                    </div>
-                </div>
-                
-                <div class="col-12 col-lg-6">
-                    <div class="single-top-popular-course d-flex align-items-center flex-wrap mb-30 wow fadeInUp" data-wow-delay="400ms">
-                        <div class="popular-course-content">
-                            <h5>TMMC</h5>
-                            <p>Techniques Maintenance de Machines à Coudre (T)</p>
-                            <a href="filiere.html" class="btn academy-btn btn-sm">Voir cette Filiére</a>
-                        </div>
-                        <div class="popular-course-thumb bg-img" style="background-image: url(img/bg-img/filiere.jpg);"></div>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-    </div>
-    <!-- ##### Top Popular Courses Area End ##### -->
-
- 
-    <!-- ##### Top Popular Courses Details Area End ##### -->
-
-    <!-- ##### Course Area Start ##### -->
-    <div class="academy-courses-area section-padding-100-0">
-        <div class="container">
-            <div class="row">
-                <!-- Single Course Area -->
-                <div class="col-12 col-lg-4">
-                    <div class="single-course-area d-flex align-items-center mb-100">
-                        <div class="course-icon">
-                            <i class="icon-id-card"></i>
-                        </div>
-                        <div class="course-content">
-                            <h4>NTIC</h4>
-                            <p>Secteur informatique.</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Single Course Area -->
-                <div class="col-12 col-lg-4">
-                    <div class="single-course-area d-flex align-items-center mb-100">
-                        <div class="course-icon">
-                            <i class="icon-worldwide"></i>
-                        </div>
-                        <div class="course-content">
-                            <h4>gestion</h4>
-                            <p>Secteur de marketing.</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Single Course Area -->
-                <div class="col-12 col-lg-4">
-                    <div class="single-course-area d-flex align-items-center mb-100">
-                        <div class="course-icon">
-                            <i class="icon-map"></i>
-                        </div>
-                        <div class="course-content">
-                            <h4>secratary</h4>
-                            <p>je sais pas.</p>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

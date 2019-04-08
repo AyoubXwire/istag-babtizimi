@@ -78,45 +78,21 @@
     <div class="academy-courses-area section-padding-100-0">
         <div class="container">
             <div class="row">
-                <!-- Single Course Area -->
 
-                <div class="col-12 col-sm-6 col-lg-4">
-                    <div class="single-course-area d-flex align-items-top mb-100 wow fadeInUp" data-wow-delay="700ms">
-                        <div class="course-icon">
-                            <i class="icon-laptop"></i>
-                        </div>
-                        <div class="course-content">
-                            <h4>Technologies de l'information</h4>
-                            <p>Le Maroc est conscient du fait que l’usage des technologies de l’information est un facteur essentiel pour l’émergence de la société du savoir et peut activement contribuer au développement humain, à l’amélioration de la cohésion sociale et à la croissance de l’économie nationale.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6 col-lg-4">
-                    <div class="single-course-area d-flex align-items-top mb-100 wow fadeInUp" data-wow-delay="300ms">
-                        <div class="course-icon">
-                            <i class="icon-id-card"></i>
-                        </div>
-                        <div class="course-content">
-                            <h4>Administration Gestion et Commerce</h4>
-                            <p>Les nouvelles tendances de l’économie mondiale montrent que les métiers du Tertiaire prennent une place de plus en plus importante dans le système de production en général en vue d’une plus grande productivité.</p>
+                <% secteurs.forEach(secteur => { %>
+                    <div class="col-12 col-sm-6 col-lg-4">
+                        <div class="single-course-area d-flex align-items-top mb-100 wow fadeInUp" data-wow-delay="700ms">
+                            <div class="course-icon">
+                                <i class="icon-worldwide"></i>
+                            </div>
+                            <div class="course-content">
+                                <a href="/filieres?secteur=<%= secteur.id %>"><h4><%= secteur.nom %></h4></a>
+                                <p><%= secteur.description %></p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                
-                <!-- Single Course Area -->
-
-                <div class="col-12 col-sm-6 col-lg-4">
-                    <div class="single-course-area d-flex align-items-top mb-100 wow fadeInUp" data-wow-delay="400ms">
-                        <div class="course-icon">
-                            <i class="icon-worldwide"></i>
-                        </div>
-                        <div class="course-content">
-                            <h4>Textile et Habillement</h4>
-                            <p>L’industrie du Textile et de l’Habillement occupe une place stratégique dans l’industrie nationale de transformation aussi bien sur le plan des emplois et des exportations que sur le plan de l’équilibre socio-économique du pays.</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Single Course Area -->
+                <% }) %>
+               
             </div>
         </div>
     </div>
