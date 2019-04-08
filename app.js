@@ -25,6 +25,12 @@ require('./config/passport')
 app.use(passport.initialize())
 app.use(passport.session())
 
+// Global variables
+app.use((req, res, next) => {
+    res.locals.user = req.user || null
+    next()
+})
+
 // Load routes
 app.use('/', require('./routes/index'))
 
@@ -36,10 +42,10 @@ const command = ``
 const params = []
 
 pool.getConnection((error, connection) => {
-    if(error) throw err
+    if(error) throw error
 
     connection.query(command, params, (error, rows, fields) => {
-        if(error) throw err
+        if(error) throw error
 
         // code here
         connection.release()
