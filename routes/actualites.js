@@ -11,14 +11,15 @@ router.get('/', (req, res) => {
     let params = []
 
     if(req.query.search) {
-        command = `SELECT p.id, title, content, p.created_at, username
+        command = `SELECT p.id, title, content, p.created_at, p.user_id, username
         FROM posts p JOIN users u ON p.user_id = u.id
-        WHERE title LIKE ?
+        WHERE pending = false AND title LIKE ?
         ORDER BY p.id DESC`
         params = [`%${req.query.search}%`]
     } else {
-        command = `SELECT p.id, title, content, p.created_at, username
+        command = `SELECT p.id, title, content, p.created_at, p.user_id, username
         FROM posts p JOIN users u ON p.user_id = u.id
+        WHERE pending = false
         ORDER BY p.id DESC`
     }
 
@@ -33,6 +34,7 @@ router.get('/', (req, res) => {
                 post.content = previewString(post.content)
                 post.created_at = prettyDateTime(post.created_at)
             })
+            
             res.render('actualites', { posts })
             connection.release()
         })
@@ -44,8 +46,14 @@ router.get('/new', isAuth, (req, res) => {
 })
 
 router.post('/new', isAuth, (req, res) => {
-    const command = `INSERT INTO posts (title, content, user_id) VALUES (?, ?, ?)`
-    const params = [req.body.title, req.body.content, req.user.id]
+    let command = `INSERT INTO posts (title, content, pending, user_id) VALUES (?, ?, ?, ?)`
+    let params = []
+
+    if(req.user.power > 1) {
+        params = [req.body.title, req.body.content, false, req.user.id]
+    } else {
+        params = [req.body.title, req.body.content, true, req.user.id]
+    }
 
     pool.getConnection((error, connection) => {
         if(error) throw error

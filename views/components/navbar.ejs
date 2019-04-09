@@ -17,7 +17,8 @@
                     </div>
                     <div class="login-content">
                         <% if(locals.user) { %>
-                            <a href="/users/logout"><%= user.username %></a>
+                            <a href="/administration" style="margin-right: 30px;"><%= user.username %></a>
+                            <a href="/users/logout">Deconnexion</a>
                         <% } else { %>
                             <a href="/users/login">Register / Login</a>
                         <% } %>

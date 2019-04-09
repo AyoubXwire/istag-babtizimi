@@ -7,7 +7,8 @@ const { isAdmin } = require('../helpers/power')
 router.get('/', isAdmin, (req, res) => {
     let command = `SELECT COUNT(id) AS numPosts FROM posts;
     SELECT COUNT(id) AS numUsers FROM users WHERE power = ?;
-    SELECT COUNT(id) AS numAdmins FROM users WHERE power > ?;`
+    SELECT COUNT(id) AS numAdmins FROM users WHERE power > ?;
+    SELECT COUNT(id) AS numPendingPosts FROM posts WHERE pending = true;`
     let params = [1, 1]
 
     pool.getConnection((error, connection) => {
@@ -18,8 +19,9 @@ router.get('/', isAdmin, (req, res) => {
             let numPosts = rows[0][0].numPosts
             let numUsers = rows[1][0].numUsers
             let numAdmins = rows[2][0].numAdmins
+            let numPendingPosts = rows[3][0].numPendingPosts
 
-            res.render('administration', { numPosts, numUsers, numAdmins })
+            res.render('administration', { numPosts, numUsers, numAdmins, numPendingPosts })
             connection.release()
         })
     })

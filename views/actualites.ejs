@@ -32,16 +32,18 @@
                             <div class="col-12">
                                 <div class="single-blog-post mb-50 wow fadeInUp" data-wow-delay="300ms">
 
-                                    <a href="/actualite/<%= post.id %>" class="post-title"><%= post.title %></a>
+                                    <a href="/actualites/<%= post.id %>" class="post-title"><%= post.title %></a>
 
                                     <div class="post-meta">
                                         <p>Par <a><%= post.username %></a> | <a><%= post.created_at %></a></p>
                                     </div>
 
                                     <p><%= post.content %></p>
-
-                                    <a href="#" class="btn academy-btn btn-sm mt-15">Modifier</a>
-                                    <a href="/actualites/delete/<%= post.id %>" class="btn academy-btn btn-sm float-right mt-15" id="supp">Supprimer</a>
+                                    
+                                    <% if(locals.user && user.id === post.user_id) { %>
+                                        <a href="#" class="btn academy-btn btn-sm mt-15">Modifier</a>
+                                        <a href="/actualites/delete/<%= post.id %>" class="btn academy-btn btn-sm float-right mt-15" id="supp">Supprimer</a>
+                                    <% } %>
                                 </div>
                             </div>
                         <% }) %>
@@ -53,7 +55,7 @@
                 <div style="margin-top:150px" class="col-12 col-md-4">
                     <div class="academy-blog-sidebar">
                         <form>      
-                            <a style="margin-bottom:40px" type="button" class="submit-a" href="/actualite/new">Nouvelle publication</a>
+                            <a style="margin-bottom:40px" type="button" class="submit-a" href="/actualites/new">Nouvelle publication</a>
                         </div>
                     </div>
                 </div>

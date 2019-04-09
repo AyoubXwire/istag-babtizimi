@@ -2,7 +2,7 @@ const pool = require('../config/pool')
 
 module.exports = {
     isAdmin: (req, res, next) => {
-        if(req.user.power > 1) {
+        if(req.user && req.user.power > 1) {
             return next()
         }
         res.redirect('/')
@@ -18,8 +18,8 @@ module.exports = {
                 if(error) throw error
                 let postOwner = rows[0].user_id
                 connection.release()
-                
-                if(req.user.id === postOwner) {
+
+                if(req.user && req.user.id === postOwner) {
                     return next()
                 }
                 res.redirect('/')
