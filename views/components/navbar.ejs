@@ -17,9 +17,9 @@
                     </div>
                     <div class="login-content">
                         <% if(locals.user) { %>
-                            <a href="/logout"><%= user.username %></a>
+                            <a href="/users/logout"><%= user.username %></a>
                         <% } else { %>
-                            <a href="/register">Register / Login</a>
+                            <a href="/users/login">Register / Login</a>
                         <% } %>
                     </div>
                 </div>

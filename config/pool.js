@@ -1,6 +1,6 @@
 const mysql = require('mysql')
 
-let pool;
+let pool
 
 if(process.env === 'production') {
     pool = mysql.createPool({

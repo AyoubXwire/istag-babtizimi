@@ -1,7 +1,7 @@
 const session    = require('express-session')
 const mysqlStore = require('express-mysql-session')(session)
 
-let sessionStore;
+let sessionStore
 
 if(process.env === 'production') {
     sessionStore = new mysqlStore({

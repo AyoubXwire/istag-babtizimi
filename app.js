@@ -33,6 +33,10 @@ app.use((req, res, next) => {
 
 // Load routes
 app.use('/', require('./routes/index'))
+app.use('/users', require('./routes/users'))
+app.use('/actualites', require('./routes/actualites'))
+app.use('/filieres', require('./routes/filieres'))
+app.use('/administration', require('./routes/administration'))
 
 // Listener
 app.listen(process.env.PORT || 3000, () => console.log('server running..'))
@@ -44,7 +48,7 @@ let params = []
 pool.getConnection((error, connection) => {
     if(error) throw error
 
-    connection.query(command, params, (error, rows, fields) => {
+    connection.query(command, params, (error, rows) => {
         if(error) throw error
         let data = rows
 

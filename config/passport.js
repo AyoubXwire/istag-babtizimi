@@ -12,7 +12,7 @@ module.exports = passport.use(
         pool.getConnection((error, connection) => {
             if(error) throw err
 
-            connection.query(command, params, (error, rows, fields) => {
+            connection.query(command, params, (error, rows) => {
                 if(error) throw err
     
                 if(rows.length === 0) {
@@ -44,7 +44,7 @@ passport.deserializeUser((id, done) => {
     pool.getConnection((error, connection) => {
         if(error) throw error
 
-        connection.query(command, params, (error, rows, fields) => {
+        connection.query(command, params, (error, rows) => {
             if(error) throw error
             
             done(null, rows[0])
