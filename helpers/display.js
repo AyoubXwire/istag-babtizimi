@@ -1,7 +1,7 @@
 module.exports = {
     prettyDateTime: (dt) => {
         const day = dt.getDate() < 10 ? `0${dt.getDate()}` : `${dt.getDate()}`
-        const month = dt.getMonth() + 1 < 10 ? `0${dt.getDate()}` : `${dt.getDate()}`
+        const month = dt.getMonth() + 1 < 10 ? `0${dt.getMonth() + 1}` : `${dt.getMonth() + 1}`
         const year = dt.getFullYear()
         const hours = dt.getHours() < 10 ? `0${dt.getHours()}` : `${dt.getHours()}`
         const minutes = dt.getMinutes() < 10 ? `0${dt.getMinutes()}` : `${dt.getMinutes()}`
