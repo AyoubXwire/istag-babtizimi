@@ -288,9 +288,13 @@ a {
 
 
 
+#supp{
+  color: #fff;
+}
 
-
-
+#supp:hover{
+  background-color: red;
+}
 
 
 
@@ -335,6 +339,7 @@ textarea {
   background:rgb(109, 156, 201);
   border-radius:5px;
   border:0;
+  border:2px solid rgb(235, 223, 223);
   cursor:pointer;
   color:white;
   font-size:24px;
@@ -346,7 +351,24 @@ textarea {
 }
 [type="submit"]:hover { background:#2C73D2; }
 /* ----------------------------------------------- */
-
+.submit-a {
+  font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+  width: 100%;
+  text-align: center;
+  background:rgb(109, 156, 201);
+  border-radius:5px;
+  border:0;
+  border:2px solid rgb(235, 223, 223);
+  cursor:pointer;
+  color:white;
+  font-size:24px;
+  padding-top:10px;
+  padding-bottom:10px;
+  transition: all 0.3s;
+  margin-top:-4px;
+  font-weight:700;
+}
+.submit-a:hover { background:#2C73D2; }
 
 input[type=text],
 input[type=email],
@@ -355,7 +377,7 @@ textarea {
   width: 100%;
   padding: 7px;
   border-radius: 3px;
-  border: 1px solid #ccc;
+  border:2px solid rgb(235, 223, 223);
 }
 
 textarea {

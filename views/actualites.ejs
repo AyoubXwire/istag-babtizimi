@@ -17,6 +17,17 @@
                     <div class="academy-blog-posts">
                         <div class="row">
 
+                        <div class="col-12">
+                            <div style="height:10%" class="-blog-post mb-50 wow fadeInUp" data-wow-delay="300ms">
+                                <div class="blog-post-search-widget mb-30">
+                                    <form action="/actualites" method="get">
+                                        <input type="search" name="search" id="Search" placeholder="Chercher">
+                                        <button type="button" onClick="javascript:this.form.submit();"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        
                         <% posts.forEach(post => { %>
                             <div class="col-12">
                                 <div class="single-blog-post mb-50 wow fadeInUp" data-wow-delay="300ms">
@@ -28,6 +39,9 @@
                                     </div>
 
                                     <p><%= post.content %></p>
+
+                                    <a href="#" class="btn academy-btn btn-sm mt-15">Modifier</a>
+                                    <a href="/actualite/delete/<%= post.id %>" class="btn academy-btn btn-sm float-right mt-15" id="supp">Supprimer</a>
                                 </div>
                             </div>
                         <% }) %>
@@ -36,18 +50,10 @@
                     </div>
                 </div>
 
-                <div class="col-12 col-md-4">
+                <div style="margin-top:150px" class="col-12 col-md-4">
                     <div class="academy-blog-sidebar">
-                        <!-- Blog Post Widget -->
-                        <div class="blog-post-search-widget mb-30">
-                            <form action="/actualites" method="get">
-                                <input type="search" name="search" id="Search" placeholder="Chercher">
-                                <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-                            </form>
-                        </div>
-
-                        <div class="mb-30">
-                            <a href="/actualites/new">Publier</a>
+                        <form>      
+                            <a style="margin-bottom:40px" type="button" class="submit-a" href="/actualite/new">Nouvelle publication</a>
                         </div>
                     </div>
                 </div>

@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
         if(error) throw error
 
         connection.query(command, (error, rows, fields) => {
-            if(error) throw console.error();
+            if(error) throw error
             let posts = rows[0]
             let secteurs = rows[1]
 
@@ -62,11 +62,11 @@ router.get('/actualites', (req, res) => {
     })
 })
 
-router.get('/actualites/new', (req, res) => {
+router.get('/actualite/new', auth, (req, res) => {
     res.render('editor')
 })
 
-router.post('/actualites/new', (req, res) => {
+router.post('/actualite/new', auth, (req, res) => {
     const command = `INSERT INTO posts (title, content, user_id) VALUES (?, ?, ?)`
     const params = [req.body.title, req.body.content, req.user.id]
 
@@ -97,6 +97,22 @@ router.get('/actualite/:id', (req, res) => {
 
             post.created_at = prettyDateTime(post.created_at)
             res.render('actualite', { post })
+            connection.release()
+        })
+    })
+})
+
+router.get('/actualite/delete/:id', (req, res) => {
+    const command = `DELETE FROM posts WHERE id = ?`
+    const params = [req.params.id]
+
+    pool.getConnection((error, connection) => {
+        if(error) throw err
+
+        connection.query(command, params, (error, rows, fields) => {
+            if(error) throw err
+            
+            res.redirect('/actualites')
             connection.release()
         })
     })
@@ -138,8 +154,29 @@ router.get('/filiere/:id', (req, res) => {
             if(error) throw error
             let filiere = rows[0][0]
             let modules = rows[1]
-            console.log(rows)
+            
             res.render('filiere', { filiere, modules })
+            connection.release()
+        })
+    })
+})
+
+router.get('/administration', (req, res) => {
+    let command = `SELECT COUNT(id) AS numPosts FROM posts;
+    SELECT COUNT(id) AS numUsers FROM users WHERE power = ?;
+    SELECT COUNT(id) AS numAdmins FROM users WHERE power > ?;`
+    let params = [1, 1]
+
+    pool.getConnection((error, connection) => {
+        if(error) throw error
+
+        connection.query(command, params, (error, rows, fields) => {
+            if(error) throw error
+            let numPosts = rows[0][0].numPosts
+            let numUsers = rows[1][0].numUsers
+            let numAdmins = rows[2][0].numAdmins
+
+            res.render('administration', { numPosts, numUsers, numAdmins })
             connection.release()
         })
     })
@@ -191,9 +228,9 @@ router.post('/register', (req, res) => {
                 })
             })
         })
-        .catch(err => console.log(err))
+        .catch(err => { throw err })
     })
-    .catch(err => console.log(err))
+    .catch(err => { throw err })
 })
 
 router.post('/login', passport.authenticate('local', {

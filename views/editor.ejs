@@ -1,11 +1,18 @@
 <%- include components/header %>
 <%- include components/navbar %>
 
-<form action="/actualites/new" method="post">
-    <input type="text" name="title" placeholder="titre">
-    <textarea name="content" cols="30" rows="10" placeholder="contenu"></textarea>
-    <button type="submit">Publier</button>
-</form>
+<div class="testimonials-area section-padding-100" style=" background-color:#fff">
+<div class="container">
+<h2 style="color:#000" class="h2-polish">Publication</h2>
+    <form action="/actualites/new" method="post">
+        <input style="color:black" name="title" type="text" class="feedback-input" placeholder="Titre" />
+        <textarea style="color:black" name="content" class="feedback-input" placeholder="contenu"></textarea>
+        <input style="margin-bottom:20px" class="form-control-file" type="file" name="image">  
+        
+        <input type="submit" value="Publier"/>
+    </form>
+</div>
+</div>
 
 <%- include components/footer %>
 

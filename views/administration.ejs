@@ -1,0 +1,88 @@
+<%- include components/header %>
+<%- include components/navbar %>
+
+<div class="breadcumb-area bg-img" style="background-image: url(img/bg-img/breadcumb.jpg);">
+    <div class="bradcumbContent">
+        <h2>ADMIN PANNEL</h2>
+    </div>
+</div>
+
+<section class="elements-area mt-50 section-padding-100-0">
+    <div class="container">
+        <div class="row">
+
+        <div class="col-12">
+        <div class="academy-cool-facts-area mb-50">
+            <div class="row">
+
+                <!-- Single Cool Fact-->
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="single-cool-fact text-center">
+                        <i class="icon-agenda-1"></i>
+                        <h3><span class="counter">130</span></h3>
+                        <p>Stagiéres Enregisitré</p>
+                    </div>
+                </div>
+
+                <!-- Single Cool Fact-->
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="single-cool-fact text-center">
+                        <i class="icon-assistance"></i>
+                        <h3><span class="counter"><%= numAdmins %></span></h3>
+                        <p>Administrateurs</p>
+                    </div>
+                </div>
+
+                <!-- Single Cool Fact-->
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="single-cool-fact text-center">
+                        <i class="icon-id-card"></i>
+                        <h3><span class="counter"><%= numUsers %></span></h3>
+                        <p>Utilisateurs</p>
+                    </div>
+                </div>
+
+                <!-- Single Cool Fact-->
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="single-cool-fact text-center">
+                        <i class="icon-message"></i>
+                        <h3><span class="counter"><%= numPosts %></span></h3>
+                        <p>Publications</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+            <!-- ========== Buttons ========== -->
+            <div class="col-12">
+                <div class="elements-title mb-50">
+                <h2 style="color:black" class="h2-polish">Outils</h2>
+                </div>
+                <!-- Selene Button -->
+                <div class="academy-buttons-area mb-100">
+                    <a href="pending.html" class="btn academy-btn m-2">Pending</a>
+                    <a href="Stagiers.html" class="btn academy-btn m-2">Stagiéres</a>
+                    
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<%- include components/footer %>
+
+<!-- jQuery-2.2.4 js -->
+<script src="/js/jquery/jquery-2.2.4.min.js"></script>
+<!-- Popper js -->
+<script src="/js/bootstrap/popper.min.js"></script>
+<!-- Bootstrap js -->
+<script src="/js/bootstrap/bootstrap.min.js"></script>
+<!-- All Plugins js -->
+<script src="/js/plugins/plugins.js"></script>
+<!-- Active js -->
+<script src="/js/active.js"></script>
+</body>
+
+</html>
