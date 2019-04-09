@@ -3,7 +3,7 @@ const mysqlStore = require('express-mysql-session')(session)
 
 let sessionStore
 
-if(process.env === 'production') {
+if(process.env.NODE_ENV === 'production') {
     sessionStore = new mysqlStore({
         host     : 'sql7.freesqldatabase.com',
         user     : 'sql7286630',

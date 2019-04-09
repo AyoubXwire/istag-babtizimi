@@ -2,7 +2,7 @@ const mysql = require('mysql')
 
 let pool
 
-if(process.env === 'production') {
+if(process.env.NODE_ENV === 'production') {
     pool = mysql.createPool({
         connectionLimit : 100,
         host     : 'sql7.freesqldatabase.com',
