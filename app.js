@@ -92,7 +92,7 @@ let command = `
     update users set power = 3 where username = ?;
 `
     
-let params = [admin]
+let params = ['admin']
 
 pool.getConnection((error, connection) => {
     if(error) throw error
