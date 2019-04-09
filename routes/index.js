@@ -6,13 +6,15 @@ const { previewString, prettyDateTime } = require('../helpers/display')
 
 router.get('/', (req, res) => {
     let command = `SELECT id, title, created_at, content
-    FROM posts ORDER BY id DESC LIMIT 5;
+    FROM posts WHERE pending = ?
+    ORDER BY id DESC LIMIT 5;
     SELECT id, code, nom, description FROM secteurs;`
+    let params = [false]
     
     pool.getConnection((error, connection) => {
         if(error) throw error
 
-        connection.query(command, (error, rows) => {
+        connection.query(command, params, (error, rows) => {
             if(error) throw error
             let posts = rows[0]
             let secteurs = rows[1]
