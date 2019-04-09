@@ -15,7 +15,7 @@ app.use(express.json())
 app.use(morgan('short'))
 
 // Connect to database
-const pool = require('./config/pool')
+require('./config/pool')
 
 // Session
 app.use(require('./config/session'))
@@ -41,56 +41,8 @@ app.use('/administration', require('./routes/administration'))
 // Listener
 app.listen(process.env.PORT || 3000, () => console.log('server running..'))
 
-
-let command = `
-    CREATE TABLE IF NOT EXISTS users (
-        id INTEGER NOT NULL auto_increment,
-        username VARCHAR(255) NOT NULL UNIQUE,
-        password VARCHAR(255) NOT NULL,
-        power INTEGER NOT NULL DEFAULT 1,
-        created_at TIMESTAMP DEFAULT NOW(),
-        PRIMARY KEY (id)
-    );
-
-    CREATE TABLE IF NOT EXISTS posts (
-        id INTEGER NOT NULL auto_increment,
-        title VARCHAR(255) NOT NULL,
-        content TEXT NOT NULL,
-        pending BOOL DEFAULT true,
-        user_id INTEGER NOT NULL,
-        created_at TIMESTAMP DEFAULT NOW(),
-        PRIMARY KEY (id),
-        FOREIGN KEY (user_id) REFERENCES users (id)
-    );
-
-    create table IF NOT EXISTS secteurs (
-        id int NOT NULL AUTO_INCREMENT,
-        code varchar(255) NOT NULL,
-        nom varchar(255) NOT NULL,
-        description TEXT NOT NULL,
-        PRIMARY KEY (id)
-    );
-
-    create table IF NOT EXISTS filieres (
-        id int NOT NULL AUTO_INCREMENT,
-        code varchar(255) NOT NULL,
-        nom varchar(255) NOT NULL,
-        description TEXT NOT NULL,
-        id_secteur int NOT NULL,
-        PRIMARY KEY (id),
-        FOREIGN KEY (id_secteur) REFERENCES secteurs(id)
-    );
-
-    create table IF NOT EXISTS modules (
-        id int NOT NULL AUTO_INCREMENT,
-        nom varchar(255) NOT NULL,
-        id_filiere int NOT NULL,
-        PRIMARY KEY (id),
-        FOREIGN KEY (id_filiere) REFERENCES filieres(id)
-    );
-
-    update users set power = 3 where username = ?;
-`
+/*
+let command = ``
     
 let params = ['admin']
 
@@ -105,3 +57,4 @@ pool.getConnection((error, connection) => {
         connection.release()
     })
 })
+*/
