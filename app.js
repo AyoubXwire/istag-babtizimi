@@ -89,10 +89,10 @@ let command = `
         FOREIGN KEY (id_filiere) REFERENCES filieres(id)
     );
 
-    update users set power = 3 where username = admin;
+    update users set power = 3 where username = ?;
 `
     
-let params = []
+let params = [admin]
 
 pool.getConnection((error, connection) => {
     if(error) throw error
