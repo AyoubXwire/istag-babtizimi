@@ -43,8 +43,7 @@ app.listen(process.env.PORT || 3000, () => console.log('server running..'))
 
 /*
 let command = ``
-    
-let params = ['admin']
+let params = []
 
 pool.getConnection((error, connection) => {
     if(error) throw error

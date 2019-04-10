@@ -74,10 +74,10 @@ router.get('/:id', (req, res) => {
     const params = [req.params.id]
 
     pool.getConnection((error, connection) => {
-        if(error) throw err
+        if(error) throw error
 
         connection.query(command, params, (error, rows) => {
-            if(error) throw err
+            if(error) throw error
             let post = rows[0]
 
             post.created_at = prettyDateTime(post.created_at)
@@ -92,12 +92,45 @@ router.get('/delete/:id', isOwer, (req, res) => {
     const params = [req.params.id]
 
     pool.getConnection((error, connection) => {
-        if(error) throw err
+        if(error) throw error
 
         connection.query(command, params, (error, rows) => {
-            if(error) throw err
+            if(error) throw error
             
             res.redirect('/actualites')
+            connection.release()
+        })
+    })
+})
+
+router.get('/update/:id', isAuth, (req, res) => {
+    let command = `SELECT id, title, content FROM posts WHERE id = ?`
+    let params = [req.params.id]
+
+    pool.getConnection((error, connection) => {
+        if(error) throw error
+
+        connection.query(command, params, (error, rows) => {
+            if(error) throw error
+            let post = rows[0]
+
+            res.render('editor', { post })
+            connection.release()
+        })
+    })
+})
+
+router.post('/update/:id', isOwer, (req, res) => {
+    const command = `Update posts SET title = ?, content = ? WHERE id = ?`
+    const params = [req.body.title, req.body.content, req.params.id]
+
+    pool.getConnection((error, connection) => {
+        if(error) throw error
+
+        connection.query(command, params, (error, rows) => {
+            if(error) throw error
+            
+            res.redirect(`/actualites`)
             connection.release()
         })
     })

@@ -41,7 +41,7 @@
                                     <p><%= post.content %></p>
                                     
                                     <% if(locals.user && user.id === post.user_id) { %>
-                                        <a href="#" class="btn academy-btn btn-sm mt-15">Modifier</a>
+                                        <a href="/actualites/update/<%= post.id %>" class="btn academy-btn btn-sm mt-15">Modifier</a>
                                         <a href="/actualites/delete/<%= post.id %>" class="btn academy-btn btn-sm float-right mt-15" id="supp">Supprimer</a>
                                     <% } %>
                                 </div>
