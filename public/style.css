@@ -328,7 +328,7 @@ form { max-width:420px; margin:50px auto; }
 .feedback-input:focus { border:2px solid #2C73D2; }
 
 textarea {
-  height: 200px;
+  height: 150px;
   line-height: 150%;
   resize:vertical;
 }
@@ -378,6 +378,10 @@ textarea {
   padding: 7px;
   border-radius: 3px;
   border:2px solid rgb(235, 223, 223);
+}
+
+textarea {
+  height: 100px;
 }
 
 input[type=checkbox] {

@@ -2,6 +2,7 @@ const express  = require('express')
 const router   = express.Router()
 
 const pool = require('../config/pool')
+const { previewString, prettyDateTime } = require('../helpers/display')
 const { isAdmin } = require('../helpers/power')
 
 router.get('/', isAdmin, (req, res) => {
@@ -25,6 +26,88 @@ router.get('/', isAdmin, (req, res) => {
             connection.release()
         })
     })
+})
+
+router.get('/pending', isAdmin, (req, res) => {
+    let command = `SELECT p.id, title, content, p.created_at, p.user_id, username
+    FROM posts p JOIN users u ON p.user_id = u.id
+    WHERE pending = true
+    ORDER BY p.id DESC`
+
+    pool.getConnection((error, connection) => {
+        if(error) throw error
+
+        connection.query(command, (error, rows) => {
+            if(error) throw error
+            let posts = rows
+
+            posts.forEach(post => {
+                post.content = previewString(post.content)
+                post.created_at = prettyDateTime(post.created_at)
+            })
+
+            res.render('pendings', { posts })
+            connection.release()
+        })
+    })
+})
+
+router.get('/pending/:id', isAdmin, (req, res) => {
+    let command = `SELECT p.id, title, content, p.created_at, p.user_id, username
+    FROM posts p JOIN users u ON p.user_id = u.id
+    WHERE p.id = ?`
+    let params = [req.params.id]
+
+    pool.getConnection((error, connection) => {
+        if(error) throw error
+
+        connection.query(command, params, (error, rows) => {
+            if(error) throw error
+            let post = rows[0]
+
+            post.content = previewString(post.content)
+            post.created_at = prettyDateTime(post.created_at)
+
+            res.render('pending', { post })
+            connection.release()
+        })
+    })
+})
+
+router.get('/pending/accepter/:id', isAdmin, (req, res) => {
+    let command = `UPDATE posts SET pending = false WHERE id = ?`
+    let params = [req.params.id]
+
+    pool.getConnection((error, connection) => {
+        if(error) throw error
+
+        connection.query(command, params, (error, rows) => {
+            if(error) throw error
+
+            res.redirect('/administration/pending')
+            connection.release()
+        })
+    })
+})
+
+router.get('/pending/refuser/:id', isAdmin, (req, res) => {
+    let command = `DELETE FROM posts WHERE id = ?`
+    let params = [req.params.id]
+
+    pool.getConnection((error, connection) => {
+        if(error) throw error
+
+        connection.query(command, params, (error, rows) => {
+            if(error) throw error
+
+            res.redirect('/administration/pending')
+            connection.release()
+        })
+    })
+})
+
+router.get('/utilisateurs', isAdmin, (req, res) => {
+    res.render('utilisateurs')
 })
 
 module.exports = router

@@ -1,0 +1,76 @@
+<%- include components/header %>
+
+<style>
+.media{box-shadow:0px 0px 4px -2px #000; margin: 20px 0; padding:15px; background-color:white;}
+.media-body{padding:10px;}
+.media-body a{text-decoration:none;}
+.media .label{padding:5px 10px;}
+.dp{border:10px solid #eee; transition: all 0.2s ease-in-out;}
+.dp:hover{ border:2px solid #eee; transform:rotate(360deg); -ms-transform:rotate(360deg); -webkit-transform:rotate(360deg); -webkit-font-smoothing:antialiased;}
+</style>
+
+<%- include components/navbar %>
+
+<div style="margin-top:100px" class="container">
+    <div class="col-12">
+        <div style="height:10%" class="-blog-post mb-50 wow fadeInUp" data-wow-delay="300ms">
+            <div class="blog-post-search-widget mb-30">
+                <form  action="#" method="post">
+                    <input type="search" name="search" id="Search" placeholder="Chercher">
+                    <button type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="single-blog-post mb-50 wow fadeInUp" data-wow-delay="300ms">
+        <div class="container"><h2>TOUS LES PUBLICATIONS</h2></div>
+            <div class="row">
+                <% posts.forEach(post => { %>
+                    <div class="col-md-12">
+                        <div class="media">
+                            <a class="pull-left" href="#">
+                                <img class="media-object dp img-circle" src="/img/gallery/writing.png" style="width: 100px;height:100px;">
+                            </a>
+                            <div class="media-body">
+                                <small class="float-right">Par <%= post.username %></small>
+                                <a href="/administration/pending/<%= post.id %>"><h4 class="media-heading"><%= post.title %></h4></a>
+                                <h5><%= post.created_at %></h5>
+                                <p><%= post.content %></p>
+                                <hr style="margin:8px auto">
+                                <br>
+                                <a class="accepter-refuser btn btn-sm academy-btn" href="/administration/pending/accepter/<%= post.id %>"><span class="label label-warning">Accepter</span></a>
+                                <a class="accepter-refuser btn btn-sm academy-btn" href="/administration/pending/refuser/<%= post.id %>"><span class="label label-success">Refuser</span></a>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+
+<%- include components/footer %>
+
+    <!-- jQuery-2.2.4 js -->
+    <script src="/js/jquery/jquery-2.2.4.min.js"></script>
+    <!-- Popper js -->
+    <script src="/js/bootstrap/popper.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="/js/bootstrap/bootstrap.min.js"></script>
+    <!-- All Plugins js -->
+    <script src="/js/plugins/plugins.js"></script>
+    <!-- Active js -->
+    <script src="/js/active.js"></script>
+    <!-- Google Maps -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwuyLRa1uKNtbgx6xAJVmWy-zADgegA2s"></script>
+    <script src="/js/google-map/map-active.js"></script>
+
+    <script>
+        $(".user-menu").click(function() {
+            $(this).toggleClass("show");
+        });
+    </script>
+    
+</body>
+
+</html>
