@@ -12,85 +12,42 @@
 <%- include components/navbar %>
 
 <div style="margin-top:100px" class="container">
-            <div class="col-12">
-                    <div style="height:10%" class="-blog-post mb-50 wow fadeInUp" data-wow-delay="300ms">
-                        <div class="blog-post-search-widget mb-30">
-                            <form  action="#" method="post">
-                                <input type="search" name="search" id="Search" placeholder="Chercher">
-                                <button type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
-                            </form>
-                            
-                        </div>
-
-                        <label style="margin-right:20px" class="radio-inline"><input type="radio" name="filter">Filtre par Nom</label>
-                        <label style="margin-right:20px" class="radio-inline"><input type="radio" name="filter">Filter par filiére</label>
-                        <label style="margin-right:20px" class="radio-inline"><input type="radio" name="filter">Filter par date</label>
-                    </div>
-                </div>
-        <div class="single-blog-post mb-50 wow fadeInUp" data-wow-delay="300ms">
-            
-  
-                        <div class="container"><h2>TOUS LES STAGIERES</h2></div>
-                        
-
-				<div class="row">
-
-						<div class="col-md-12">
-							<div class="media">
-								<a class="pull-left" href="#">
-									<img class="media-object dp img-circle" src="/img/gallery/user.png" style="width: 100px;height:100px;">
-								</a>
-								<div class="media-body">
-									<h4 class="media-heading">Hamid smasa <small> Meknes</small></h4>
-									<h5>email.ddd@.com</h5>
-									<hr style="margin:8px auto">
-<br>
-									
-                                    <a href="#"><span class="label label-warning">Supprimez</span></a>
-                                    <a href="#"><span class="label label-success">Attribuer</span></a>
-								</div>
-							</div>
-
-                        </div>
-                        
-                        <div class="col-md-12">
-                                <div class="media">
-                                    <a class="pull-left" href="#">
-                                        <img class="media-object dp img-circle" src="/img/gallery/user.png" style="width: 100px;height:100px;">
-                                    </a>
-                                    <div class="media-body">
-                                        <h4 class="media-heading">Hamid smasa <small> Meknes</small></h4>
-                                        <h5>email.ddd@.com</h5>
-                                        <hr style="margin:8px auto">
-    <br>
-                                        
-                                        <a href="#"><span class="label label-warning">Supprimez</span></a>
-                                        <a href="#"><span class="label label-success">Attribuer</span></a>
-                                    </div>
-                                </div>
-    
-                            </div>
-
-                            <div class="col-md-12">
-                                    <div class="media">
-                                        <a class="pull-left" href="#">
-                                            <img class="media-object dp img-circle" src="/img/gallery/user.png" style="width: 100px;height:100px;">
-                                        </a>
-                                        <div class="media-body">
-                                            <h4 class="media-heading">Hamid smasa <small> Meknes</small></h4>
-                                            <h5>email.ddd@.com</h5>
-                                            <hr style="margin:8px auto">
-        <br>
-                                            
-                                            <a href="#"><span class="label label-warning">Supprimez</span></a>
-                                            <a href="#"><span class="label label-success">Attribuer</span></a>
-                                        </div>
-                                    </div>
-        
-                                </div>
-					</div>
+    <div class="col-12">
+        <div style="height:10%" class="-blog-post mb-50 wow fadeInUp" data-wow-delay="300ms">
+            <div class="blog-post-search-widget mb-30">
+                <form  action="#" method="post">
+                    <input type="search" name="search" id="Search" placeholder="Chercher">
+                    <button type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </form>
+            </div>
         </div>
     </div>
+
+    <div class="single-blog-post mb-50 wow fadeInUp" data-wow-delay="300ms">
+        <div class="container"><h2>TOUS LES STAGIERES</h2></div>
+            <div class="row">
+                <% users.forEach(user => { %>
+                    <div class="col-md-12">
+                        <div class="media">
+                            <a class="pull-left" href="#">
+                                <img class="media-object dp img-circle" src="/img/gallery/user.png" style="width: 100px;height:100px;">
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading"><%= user.username %></h4>
+                                <h5>user@gmail.com</h5>
+                                <hr style="margin:8px auto">
+                                <br>
+                                <a href="#"><span class="label label-warning">Supprimez</span></a>
+                                <a href="#"><span class="label label-success">Attribuer</span></a>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+
+</div>
 
 <%- include components/footer %>
 

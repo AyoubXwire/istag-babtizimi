@@ -29,7 +29,7 @@ router.get('/', isAdmin, (req, res) => {
 })
 
 router.get('/pending', isAdmin, (req, res) => {
-    let command = `SELECT p.id, title, content, p.created_at, p.user_id, username
+    let command = `SELECT p.id, title, content, p.created_at, username
     FROM posts p JOIN users u ON p.user_id = u.id
     WHERE pending = true
     ORDER BY p.id DESC`
@@ -45,7 +45,7 @@ router.get('/pending', isAdmin, (req, res) => {
                 post.content = previewString(post.content)
                 post.created_at = prettyDateTime(post.created_at)
             })
-
+            console.log(posts)
             res.render('pendings', { posts })
             connection.release()
         })
@@ -65,7 +65,6 @@ router.get('/pending/:id', isAdmin, (req, res) => {
             if(error) throw error
             let post = rows[0]
 
-            post.content = previewString(post.content)
             post.created_at = prettyDateTime(post.created_at)
 
             res.render('pending', { post })
@@ -107,7 +106,35 @@ router.get('/pending/refuser/:id', isAdmin, (req, res) => {
 })
 
 router.get('/utilisateurs', isAdmin, (req, res) => {
-    res.render('utilisateurs')
+    let command = `SELECT id, username from users`
+
+    pool.getConnection((error, connection) => {
+        if(error) throw error
+
+        connection.query(command, (error, rows) => {
+            if(error) throw error
+            let users = rows
+
+            res.render('utilisateurs', { users })
+            connection.release()
+        })
+    })
+})
+
+router.get('/infos', isAdmin, (req, res) => {
+    let command = `SELECT id, apropos, num_filieres, num_formateurs, num_stagiaires FROM infos;`
+
+    pool.getConnection((error, connection) => {
+        if(error) throw error
+
+        connection.query(command, (error, rows) => {
+            if(error) throw error
+            let infos = rows[0]
+
+            res.render('infos', { infos })
+            connection.release()
+        })
+    })
 })
 
 module.exports = router

@@ -1,22 +1,29 @@
-    <%- include components/header %>
-    <%- include components/navbar %>
+<%- include components/header %>
+<%- include components/navbar %>
 
     <div style="margin-top:100px" class="container">
-        <div class="single-blog-post mb-50 wow fadeInUp" data-wow-delay="300ms">
-            <!-- Post Thumb -->
-            <div class="blog-post-thumb mb-50">
-                <img src="/img/blog-img/1.jpg" alt="">
+        <div class="single-blog-post mb-50 wow fadeInUp col-md-12" data-wow-delay="300ms">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="media">
+                        <div class="media-body">
+                            <a><h1 class="media-heading d-inline"><%= post.title %></h1></a>
+                            <br>
+                            <a>Par <%= post.username %> | <%= post.created_at %></a>
+                            <hr>
+                            <p><%= post.content %></p>
+                            <hr style="margin:8px auto">
+                            <a target="blank" href="/img/bg-img/bg-1.jpg"><img src="/img/bg-img/bg-1.jpg"></a>
+                            <a target="blank" href="/img/bg-img/bg-2.jpg"><img src="/img/bg-img/bg-2.jpg"></a>
+                            <hr style="margin:8px auto">
+                            <% if(locals.user && user.id === post.user_id) { %>
+                                <a href="/actualites/update/<%= post.id %>" class="btn academy-btn btn-sm mt-15">Modifier</a>
+                                <a href="/actualites/delete/<%= post.id %>" class="btn academy-btn btn-sm float-right mt-15" id="supp">Supprimer</a>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!-- Post Title -->
-            <a href="#" class="post-title"><%= post.title %></a>
-            <!-- Post Meta -->
-            <div class="post-meta">
-                <p>Par <a><%= post.username %></a> | <a><%= post.created_at %></a></p>
-            </div>
-            <!-- Post Excerpt -->
-            <p><%= post.content %></p>
-            <!-- Read More btn -->
-            <a href="#" class="btn academy-btn btn-sm mt-15">Télécharger les Fichiers</a>
         </div>
     </div>
 

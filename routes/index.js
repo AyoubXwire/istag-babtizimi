@@ -8,7 +8,8 @@ router.get('/', (req, res) => {
     let command = `SELECT id, title, created_at, content
     FROM posts WHERE pending = ?
     ORDER BY id DESC LIMIT 5;
-    SELECT id, code, nom, description FROM secteurs;`
+    SELECT id, code, nom, description FROM secteurs;
+    SELECT id, apropos, num_filieres, num_formateurs, num_stagiaires FROM infos;`
     let params = [false]
     
     pool.getConnection((error, connection) => {
@@ -18,13 +19,14 @@ router.get('/', (req, res) => {
             if(error) throw error
             let posts = rows[0]
             let secteurs = rows[1]
+            let infos = rows[2][0]
 
             posts.forEach(post => {
                 post.title = previewString(post.title)
                 post.created_at = prettyDateTime(post.created_at)
             })
 
-            res.render('index', { posts, secteurs })
+            res.render('index', { posts, secteurs, infos })
             connection.release()
         })
     })

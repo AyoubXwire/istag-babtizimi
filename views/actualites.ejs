@@ -1,5 +1,5 @@
-    <%- include components/header %>
-    <%- include components/navbar %>
+<%- include components/header %>
+<%- include components/navbar %>
 
     <!-- ##### Breadcumb Area Start ##### -->
     <div class="breadcumb-area bg-img" style="background-image: url(img/bg-img/breadcumb.jpg);">
@@ -17,36 +17,39 @@
                     <div class="academy-blog-posts">
                         <div class="row">
 
-                        <div class="col-12">
-                            <div style="height:10%" class="-blog-post mb-50 wow fadeInUp" data-wow-delay="300ms">
-                                <div class="blog-post-search-widget mb-30">
-                                    <form action="/actualites" method="get">
-                                        <input type="search" name="search" id="Search" placeholder="Chercher">
-                                        <button type="button" onClick="javascript:this.form.submit();"><i class="fa fa-search" aria-hidden="true"></i></button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <% posts.forEach(post => { %>
+                            <!--search bar-->
                             <div class="col-12">
-                                <div class="single-blog-post mb-50 wow fadeInUp" data-wow-delay="300ms">
-
-                                    <a href="/actualites/<%= post.id %>" class="post-title"><%= post.title %></a>
-
-                                    <div class="post-meta">
-                                        <p>Par <a><%= post.username %></a> | <a><%= post.created_at %></a></p>
+                                <div style="height:10%" class="-blog-post mb-50 wow fadeInUp" data-wow-delay="300ms">
+                                    <div class="blog-post-search-widget mb-30">
+                                        <form action="/actualites" method="get">
+                                            <input type="search" name="search" id="Search" placeholder="Chercher">
+                                            <button type="button" onClick="javascript:this.form.submit();"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                        </form>
                                     </div>
-
-                                    <p><%= post.content %></p>
-                                    
-                                    <% if(locals.user && user.id === post.user_id) { %>
-                                        <a href="/actualites/update/<%= post.id %>" class="btn academy-btn btn-sm mt-15">Modifier</a>
-                                        <a href="/actualites/delete/<%= post.id %>" class="btn academy-btn btn-sm float-right mt-15" id="supp">Supprimer</a>
-                                    <% } %>
                                 </div>
                             </div>
-                        <% }) %>
+
+                            <% posts.forEach(post => { %>
+                                <div class="single-blog-post mb-50 wow fadeInUp col-md-12" data-wow-delay="300ms">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="media">
+                                                <div class="media-body">
+                                                    <a href="/actualites/<%= post.id %>"><h3 class="media-heading d-inline"><%= post.title %></h3></a>
+                                                    <br>
+                                                    <small>Par <%= post.username %> | <%= post.created_at %></small>
+                                                    <hr>
+                                                    <p><%= post.content %></p>
+                                                    <% if(locals.user && user.id === post.user_id) { %>
+                                                        <a href="/actualites/update/<%= post.id %>" class="btn academy-btn btn-sm mt-15">Modifier</a>
+                                                        <a href="/actualites/delete/<%= post.id %>" class="btn academy-btn btn-sm float-right mt-15" id="supp">Supprimer</a>
+                                                    <% } %>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% })%>
                             
                         </div>
                     </div>
@@ -54,27 +57,28 @@
 
                 <div style="margin-top:150px" class="col-12 col-md-4">
                     <div class="academy-blog-sidebar">
-                        <form>      
-                            <a style="margin-bottom:40px" type="button" class="submit-a" href="/actualites/new">Nouvelle publication</a>
-                        </div>
+                        <form>
+                            <a style="margin-bottom:40px" type="button" class="submit-a" href="/actualites/new">Publier</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-   
+
+    </div>
+
     <%- include components/footer %>
-    
+
     <!-- jQuery-2.2.4 js -->
-    <script src="/js/jquery/jquery-2.2.4.min.js"></script>
+    <script src="./js/jquery/jquery-2.2.4.min.js"></script>
     <!-- Popper js -->
-    <script src="/js/bootstrap/popper.min.js"></script>
+    <script src="./js/bootstrap/popper.min.js"></script>
     <!-- Bootstrap js -->
-    <script src="/js/bootstrap/bootstrap.min.js"></script>
+    <script src="./js/bootstrap/bootstrap.min.js"></script>
     <!-- All Plugins js -->
-    <script src="/js/plugins/plugins.js"></script>
+    <script src="./js/plugins/plugins.js"></script>
     <!-- Active js -->
-    <script src="/js/active.js"></script>
+    <script src="./js/active.js"></script>
 </body>
 
 </html>

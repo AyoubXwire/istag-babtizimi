@@ -68,7 +68,7 @@ router.post('/new', isAuth, (req, res) => {
 })
 
 router.get('/:id', (req, res) => {
-    const command = `SELECT p.id, title, content, p.created_at, username
+    const command = `SELECT p.id, title, content, p.created_at, username, u.id AS user_id
     FROM posts p JOIN users u ON p.user_id = u.id
     WHERE p.id = ?`
     const params = [req.params.id]
@@ -81,6 +81,7 @@ router.get('/:id', (req, res) => {
             let post = rows[0]
 
             post.created_at = prettyDateTime(post.created_at)
+            
             res.render('actualite', { post })
             connection.release()
         })
