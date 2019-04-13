@@ -6,18 +6,23 @@
 
     <% if(locals.post) { %>
         <h2 style="color:#000" class="h2-polish">Modifier publication</h2>
-        <form action="/actualites/update/<%= post.id %>" method="post">
+        <form action="/actualites/update/<%= post.id %>" method="post" encType="multipart/form-data">
             <input style="color:black" name="title" type="text" class="feedback-input" value="<%= post.title %>" placeholder="Titre" />
             <textarea style="color:black" name="content" class="feedback-input" placeholder="contenu"><%= post.content %></textarea>
-            <input style="margin-bottom:20px" class="form-control-file" type="file" name="image">  
+            <hr style="margin:8px auto">
+            <% files.forEach(file => { %>
+                <a target="blank" href="/uploads/<%= file.name %>"><img src="/uploads/<%= file.name %>" alt="Ficher"></a>
+            <% }) %>
+            <hr style="margin:8px auto">
+            <input style="margin-bottom:20px" class="form-control-file" type="file" name="document" multiple>  
             <input type="submit" value="Publier"/>
         </form>
     <% } else { %>
         <h2 style="color:#000" class="h2-polish">Nouvelle publication</h2>
-        <form action="/actualites/new" method="post">
+        <form action="/actualites/new" method="post" encType="multipart/form-data">
             <input style="color:black" name="title" type="text" class="feedback-input" placeholder="Titre" />
             <textarea style="color:black" name="content" class="feedback-input" placeholder="contenu"></textarea>
-            <input style="margin-bottom:20px" class="form-control-file" type="file" name="image">  
+            <input style="margin-bottom:20px" class="form-control-file" type="file" name="document" multiple>  
             <input type="submit" value="Publier"/>
         </form>
     <% } %>

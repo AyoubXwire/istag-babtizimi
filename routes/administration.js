@@ -45,7 +45,7 @@ router.get('/pending', isAdmin, (req, res) => {
                 post.content = previewString(post.content)
                 post.created_at = prettyDateTime(post.created_at)
             })
-            console.log(posts)
+            
             res.render('pendings', { posts })
             connection.release()
         })
@@ -54,20 +54,21 @@ router.get('/pending', isAdmin, (req, res) => {
 
 router.get('/pending/:id', isAdmin, (req, res) => {
     let command = `SELECT p.id, title, content, p.created_at, p.user_id, username
-    FROM posts p JOIN users u ON p.user_id = u.id
-    WHERE p.id = ?`
-    let params = [req.params.id]
+    FROM posts p JOIN users u ON p.user_id = u.id WHERE p.id = ?;
+    SELECT id, name FROM files WHERE post_id = ?;`
+    let params = [req.params.id, req.params.id]
 
     pool.getConnection((error, connection) => {
         if(error) throw error
 
         connection.query(command, params, (error, rows) => {
             if(error) throw error
-            let post = rows[0]
+            let post = rows[0][0]
+            let files = rows[1]
 
             post.created_at = prettyDateTime(post.created_at)
 
-            res.render('pending', { post })
+            res.render('pending', { post, files })
             connection.release()
         })
     })
@@ -106,7 +107,7 @@ router.get('/pending/refuser/:id', isAdmin, (req, res) => {
 })
 
 router.get('/utilisateurs', isAdmin, (req, res) => {
-    let command = `SELECT id, username from users`
+    let command = `SELECT id, username, power from users`
 
     pool.getConnection((error, connection) => {
         if(error) throw error

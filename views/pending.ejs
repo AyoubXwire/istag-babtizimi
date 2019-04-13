@@ -13,8 +13,9 @@
                             <hr>
                             <p><%= post.content %></p>
                             <hr style="margin:8px auto">
-                            <a target="blank" href="/img/bg-img/bg-1.jpg"><img src="/img/bg-img/bg-1.jpg"></a>
-                            <a target="blank" href="/img/bg-img/bg-2.jpg"><img src="/img/bg-img/bg-2.jpg"></a>
+                            <% files.forEach(file => { %>
+                                <a target="blank" href="/uploads/<%= file.name %>"><img src="/uploads/<%= file.name %>" alt="Ficher"></a>
+                            <% }) %>
                             <hr style="margin:8px auto">
                             <a class="accepter-refuser btn btn-sm academy-btn" href="/administration/pending/accepter/<%= post.id %>"><span class="label label-warning">Accepter</span></a>
                             <a class="accepter-refuser btn btn-sm academy-btn float-right" href="/administration/pending/refuser/<%= post.id %>"><span class="label label-success">Refuser</span></a>

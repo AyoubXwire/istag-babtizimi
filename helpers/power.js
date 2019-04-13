@@ -16,7 +16,10 @@ module.exports = {
 
             connection.query(command, params, (error, rows) => {
                 if(error) throw error
-                let postOwner = rows[0].user_id
+                
+                let postOwner
+                if(req.user)
+                postOwner = rows[0].user_id
                 connection.release()
 
                 if(req.user && req.user.id === postOwner) {

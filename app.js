@@ -1,6 +1,7 @@
 const path     = require('path')
 const express  = require('express')
 const passport = require('passport')
+const fileUpload = require('express-fileupload')
 const morgan   = require('morgan')
 
 const app = express()
@@ -13,6 +14,7 @@ app.set('views', path.join(__dirname, 'views'))
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
 app.use(morgan('short'))
+app.use(fileUpload())
 
 // Connect to database
 require('./config/pool')

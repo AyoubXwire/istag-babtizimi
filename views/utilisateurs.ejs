@@ -1,14 +1,4 @@
 <%- include components/header %>
-
-<style>
-.media{box-shadow:0px 0px 4px -2px #000; margin: 20px 0; padding:15px; background-color:white;}
-.media-body{padding:10px;}
-.media-body a{text-decoration:none;}
-.media .label{padding:5px 10px;}
-.dp{border:10px solid #eee; transition: all 0.2s ease-in-out;}
-.dp:hover{ border:2px solid #eee; transform:rotate(360deg); -ms-transform:rotate(360deg); -webkit-transform:rotate(360deg); -webkit-font-smoothing:antialiased;}
-</style>
-
 <%- include components/navbar %>
 
 <div style="margin-top:100px" class="container">
@@ -22,31 +12,28 @@
             </div>
         </div>
     </div>
-
-    <div class="single-blog-post mb-50 wow fadeInUp" data-wow-delay="300ms">
-        <div class="container"><h2>TOUS LES STAGIERES</h2></div>
+    <% users.forEach(user => { %>
+        <div class="single-blog-post mb-50 wow fadeInUp col-md-12" data-wow-delay="300ms">
             <div class="row">
-                <% users.forEach(user => { %>
-                    <div class="col-md-12">
-                        <div class="media">
-                            <a class="pull-left" href="#">
-                                <img class="media-object dp img-circle" src="/img/gallery/user.png" style="width: 100px;height:100px;">
-                            </a>
-                            <div class="media-body">
-                                <h4 class="media-heading"><%= user.username %></h4>
-                                <h5>user@gmail.com</h5>
-                                <hr style="margin:8px auto">
-                                <br>
-                                <a href="#"><span class="label label-warning">Supprimez</span></a>
-                                <a href="#"><span class="label label-success">Attribuer</span></a>
-                            </div>
+                <div class="col-md-12">
+                    <div class="media">
+                        <div class="media-body">
+                            <h1><%= user.username %></h1>
+                            <h6>user@gmail.com</h6>
+                            <hr style="margin:8px auto">
+                            <br>
+                            <% if(user.power === 1) { %>
+                                <a href="#"><span class="label mr-50">Definir comme admin</span></a>
+                            <% } else { %>
+                                <a href="#"><span class="label mr-50">Definir comme utilisateur</span></a>
+                            <% } %>
+                            <a href="#"><span class="label">Supprimez</span></a>
                         </div>
                     </div>
-                <% }) %>
+                </div>
             </div>
         </div>
-    </div>
-
+    <% }) %>
 </div>
 
 <%- include components/footer %>

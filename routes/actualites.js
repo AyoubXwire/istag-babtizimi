@@ -46,7 +46,7 @@ router.get('/new', isAuth, (req, res) => {
 })
 
 router.post('/new', isAuth, (req, res) => {
-    let command = `INSERT INTO posts (title, content, pending, user_id) VALUES (?, ?, ?, ?)`
+    let command = `INSERT INTO posts (title, content, pending, user_id) VALUES (?, ?, ?, ?);`
     let params = []
 
     if(req.user.power > 1) {
@@ -61,6 +61,37 @@ router.post('/new', isAuth, (req, res) => {
         connection.query(command, params, (error, rows) => {
             if(error) throw error
 
+            if(req.files) {
+                console.log(req.files)
+                if(Array.isArray(req.files.document)) {
+                    const files = req.files.document
+                    files.forEach(file => {
+                        let command = `INSERT INTO files (post_id, name) VALUES (?, ?);`
+                        let params = [rows.insertId, file.name]
+        
+                        file.mv('public/uploads/' + file.name, error => {
+                            if(error) throw error
+                    
+                            connection.query(command, params, (error, rows) => {
+                                if(error) throw error
+                            })
+                        })
+                    })
+                } else {
+                    const file = req.files.document
+                    let command = `INSERT INTO files (post_id, name) VALUES (?, ?);`
+                    let params = [rows.insertId, file.name]
+    
+                    file.mv('public/uploads/' + file.name, error => {
+                        if(error) throw error
+                
+                        connection.query(command, params, (error, rows) => {
+                            if(error) throw error
+                        })
+                    })
+                }
+            }
+
             res.redirect('/actualites')
             connection.release()
         })
@@ -69,28 +100,31 @@ router.post('/new', isAuth, (req, res) => {
 
 router.get('/:id', (req, res) => {
     const command = `SELECT p.id, title, content, p.created_at, username, u.id AS user_id
-    FROM posts p JOIN users u ON p.user_id = u.id
-    WHERE p.id = ?`
-    const params = [req.params.id]
+    FROM posts p JOIN users u ON p.user_id = u.id WHERE p.id = ?;
+    SELECT id, name FROM files WHERE post_id = ?`
+    const params = [req.params.id, req.params.id]
 
     pool.getConnection((error, connection) => {
         if(error) throw error
 
         connection.query(command, params, (error, rows) => {
             if(error) throw error
-            let post = rows[0]
+            
+            let post = rows[0][0]
+            let files = rows[1]
 
             post.created_at = prettyDateTime(post.created_at)
             
-            res.render('actualite', { post })
+            res.render('actualite', { post, files })
             connection.release()
         })
     })
 })
 
 router.get('/delete/:id', isOwer, (req, res) => {
-    const command = `DELETE FROM posts WHERE id = ?`
-    const params = [req.params.id]
+    const command = `DELETE FROM files WHERE post_id = ?;
+    DELETE FROM posts WHERE id = ?;`
+    const params = [req.params.id, req.params.id]
 
     pool.getConnection((error, connection) => {
         if(error) throw error
@@ -105,24 +139,26 @@ router.get('/delete/:id', isOwer, (req, res) => {
 })
 
 router.get('/update/:id', isAuth, (req, res) => {
-    let command = `SELECT id, title, content FROM posts WHERE id = ?`
-    let params = [req.params.id]
+    let command = `SELECT id, title, content FROM posts WHERE id = ?;
+    SELECT id, name FROM files WHERE post_id = ?`
+    let params = [req.params.id, req.params.id]
 
     pool.getConnection((error, connection) => {
         if(error) throw error
 
         connection.query(command, params, (error, rows) => {
             if(error) throw error
-            let post = rows[0]
+            let post = rows[0][0]
+            let files = rows[1]
 
-            res.render('editor', { post })
+            res.render('editor', { post, files })
             connection.release()
         })
     })
 })
 
 router.post('/update/:id', isOwer, (req, res) => {
-    const command = `Update posts SET title = ?, content = ? WHERE id = ?`
+    const command = `Update posts SET title = ?, content = ? WHERE id = ?;`
     const params = [req.body.title, req.body.content, req.params.id]
 
     pool.getConnection((error, connection) => {
@@ -130,8 +166,39 @@ router.post('/update/:id', isOwer, (req, res) => {
 
         connection.query(command, params, (error, rows) => {
             if(error) throw error
-            
-            res.redirect(`/actualites`)
+
+            if(req.files) {
+                console.log(req.files)
+                if(Array.isArray(req.files.document)) {
+                    const files = req.files.document
+                    files.forEach(file => {
+                        let command = `INSERT INTO files (post_id, name) VALUES (?, ?);`
+                        let params = [req.params.id, file.name]
+        
+                        file.mv('public/uploads/' + file.name, error => {
+                            if(error) throw error
+                    
+                            connection.query(command, params, (error, rows) => {
+                                if(error) throw error
+                            })
+                        })
+                    })
+                } else {
+                    const file = req.files.document
+                    let command = `INSERT INTO files (post_id, name) VALUES (?, ?);`
+                    let params = [req.params.id, file.name]
+    
+                    file.mv('public/uploads/' + file.name, error => {
+                        if(error) throw error
+                
+                        connection.query(command, params, (error, rows) => {
+                            if(error) throw error
+                        })
+                    })
+                }
+            }
+
+            res.redirect('/actualites')
             connection.release()
         })
     })
