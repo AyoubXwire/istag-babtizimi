@@ -36,6 +36,10 @@ router.get('/inscription', (req, res) => {
     res.render('inscription')
 })
 
+router.get('/reglement', (req, res) => {
+    res.render('reglement')
+})
+
 router.get('/apropos', (req, res) => {
     res.render('apropos')
 })

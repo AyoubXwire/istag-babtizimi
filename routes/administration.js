@@ -137,5 +137,5 @@ router.get('/infos', isAdmin, (req, res) => {
         })
     })
 })
- 
+
 module.exports = router

@@ -1,8 +1,9 @@
-const path     = require('path')
-const express  = require('express')
-const passport = require('passport')
+const path       = require('path')
+const express    = require('express')
+const passport   = require('passport')
+const flash      = require('connect-flash')
 const fileUpload = require('express-fileupload')
-const morgan   = require('morgan')
+const morgan     = require('morgan')
 
 const app = express()
 
@@ -13,8 +14,9 @@ app.set('views', path.join(__dirname, 'views'))
 app.set('views', path.join(__dirname, 'views'))
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
-app.use(morgan('short'))
+app.use(flash())
 app.use(fileUpload())
+app.use(morgan('short'))
 
 // Connect to database
 require('./config/pool')
@@ -30,6 +32,8 @@ app.use(passport.session())
 // Global variables
 app.use((req, res, next) => {
     res.locals.user = req.user || null
+    res.locals.success = req.flash('success')
+    res.locals.error = req.flash('error')
     next()
 })
 

@@ -17,9 +17,15 @@ module.exports = {
             connection.query(command, params, (error, rows) => {
                 if(error) throw error
                 
+                if(!rows[0]) {
+                    req.flash('error', 'Publication introuvable')
+                    return res.redirect('/actualites')
+                }
                 let postOwner
-                if(req.user)
-                postOwner = rows[0].user_id
+                if(req.user) {
+                    postOwner = rows[0].user_id
+                }
+
                 connection.release()
 
                 if(req.user && req.user.id === postOwner) {

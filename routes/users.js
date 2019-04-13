@@ -25,7 +25,7 @@ router.post('/register', isntAuth, (req, res) => {
             pool.getConnection((error, connection) => {
                 if(error) throw err
         
-                connection.query(command, params, (error, rows, fields) => {
+                connection.query(command, params, (error, rows) => {
                     if(error) throw err
         
                     passport.authenticate('local')(req, res, () => {
@@ -42,7 +42,9 @@ router.post('/register', isntAuth, (req, res) => {
 
 router.post('/login', isntAuth, passport.authenticate('local', {
     successRedirect: '/',
-    failureRedirect: '/users/login'
+    failureRedirect: '/users/login',
+    successFlash: true,
+    failureFlash: true
 }))
 
 router.get('/logout', isAuth, (req, res) => {
