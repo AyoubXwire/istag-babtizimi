@@ -1,0 +1,13 @@
+<% if(success != '') { %>
+    <div style="position: fixed; bottom: 5%; left: 25%; width: 50%; font-weight: bold;" class="alert alert-success alert-dismissible border-dark fade show shadow-lg">
+        <%= success %>
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+<% } %>
+
+<% if(error != '') { %>
+    <div style="position: fixed; bottom: 5%; left: 25%; width: 50%; font-weight: bold;" class="alert alert-danger alert-dismissible border-dark fade show shadow-lg">
+        <%= error %>
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+<% } %>

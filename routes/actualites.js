@@ -92,6 +92,7 @@ router.post('/new', isAuth, (req, res) => {
                 }
             }
 
+            req.flash('success', 'Suggestion publiée, un administrateur doit la confirmer')
             res.redirect('/actualites')
             connection.release()
         })
@@ -112,7 +113,10 @@ router.get('/:id', (req, res) => {
             
             let post = rows[0][0]
             let files = rows[1]
-
+            if (!post) {
+                req.flash('error', 'Publication introuvable')
+                return res.redirect('/actualites')
+            }
             post.created_at = prettyDateTime(post.created_at)
             
             res.render('actualite', { post, files })
@@ -121,7 +125,7 @@ router.get('/:id', (req, res) => {
     })
 })
 
-router.get('/delete/:id', isOwer, (req, res) => {
+router.get('/delete/:id', isAuth, isOwer, (req, res) => {
     const command = `DELETE FROM files WHERE post_id = ?;
     DELETE FROM posts WHERE id = ?;`
     const params = [req.params.id, req.params.id]
@@ -132,13 +136,14 @@ router.get('/delete/:id', isOwer, (req, res) => {
         connection.query(command, params, (error, rows) => {
             if(error) throw error
             
+            req.flash('success', 'Publication supprimée')
             res.redirect('/actualites')
             connection.release()
         })
     })
 })
 
-router.get('/update/:id', isAuth, (req, res) => {
+router.get('/update/:id', isAuth, isOwer, (req, res) => {
     let command = `SELECT id, title, content FROM posts WHERE id = ?;
     SELECT id, name FROM files WHERE post_id = ?`
     let params = [req.params.id, req.params.id]
@@ -157,7 +162,7 @@ router.get('/update/:id', isAuth, (req, res) => {
     })
 })
 
-router.post('/update/:id', isOwer, (req, res) => {
+router.post('/update/:id', isAuth, isOwer, (req, res) => {
     const command = `Update posts SET title = ?, content = ? WHERE id = ?;`
     const params = [req.body.title, req.body.content, req.params.id]
 
@@ -198,6 +203,7 @@ router.post('/update/:id', isOwer, (req, res) => {
                 }
             }
 
+            req.flash('success', 'Publication modifiée')
             res.redirect('/actualites')
             connection.release()
         })

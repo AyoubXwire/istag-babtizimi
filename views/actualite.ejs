@@ -17,7 +17,7 @@
                                 <a target="blank" href="/uploads/<%= file.name %>"><img src="/uploads/<%= file.name %>" alt="Ficher"></a>
                             <% }) %>
                             <hr style="margin:8px auto">
-                            <% if(locals.user && user.id === post.user_id) { %>
+                            <% if(locals.user && (user.id === post.user_id) || locals.user && user.power > 1) { %>
                                 <a href="/actualites/update/<%= post.id %>" class="btn academy-btn btn-sm mt-15">Modifier</a>
                                 <a href="/actualites/delete/<%= post.id %>" class="btn academy-btn btn-sm float-right mt-15" id="supp">Supprimer</a>
                             <% } %>
