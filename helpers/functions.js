@@ -16,5 +16,14 @@ module.exports = {
         } else {
             return str.substring(0, previewLength)
         }
+    },
+    escapeHtml : (html) => {
+        return html
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;")
+        .replace(/\n/g, "<br>")
     }
 }
