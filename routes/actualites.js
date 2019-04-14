@@ -1,8 +1,8 @@
 const express  = require('express')
 const router   = express.Router()
 
-const { previewString, prettyDateTime } = require('../helpers/display')
-const { isAuth, isOwner, isAdmin, isOwnerOrAdmin, isntPending } = require('../helpers/auth')
+const { previewString, prettyDateTime, escapeHtml } = require('../helpers/functions')
+const { isAuth, isOwnerOrAdmin, isntPending } = require('../helpers/middleware')
 
 router.get('/', (req, res) => {
     let command
@@ -44,15 +44,11 @@ router.get('/new', isAuth, (req, res) => {
 })
 
 router.post('/new', isAuth, (req, res) => {
-    let command = `INSERT INTO posts (title, content, pending, user_id) VALUES (?, ?, ?, ?);`
-    let params = []
-
-    if(req.user.power > 1) {
-        params = [req.body.title, req.body.content, false, req.user.id]
-    } else {
-        params = [req.body.title, req.body.content, true, req.user.id]
-    }
-
+    let command = `INSERT INTO posts (title, content, user_id, pending) VALUES (?, ?, ?, ?);`
+    let params = [req.body.title, req.body.content, req.user.id]
+    
+    params.push(req.user.power === 1)
+    
     pool.getConnection((error, connection) => {
         if(error) throw error
 
@@ -60,10 +56,12 @@ router.post('/new', isAuth, (req, res) => {
             if(error) throw error
 
             if(req.files) {
-                console.log(req.files)
                 if(Array.isArray(req.files.document)) {
                     const files = req.files.document
                     files.forEach(file => {
+                        const prefix = Math.floor(Math.random() * 1000000) + '-'
+                        file.name = prefix + file.name
+
                         let command = `INSERT INTO files (post_id, name) VALUES (?, ?);`
                         let params = [rows.insertId, file.name]
         
@@ -77,6 +75,9 @@ router.post('/new', isAuth, (req, res) => {
                     })
                 } else {
                     const file = req.files.document
+                    const prefix = Math.floor(Math.random() * 1000000) + '-'
+                    file.name = prefix + file.name
+
                     let command = `INSERT INTO files (post_id, name) VALUES (?, ?);`
                     let params = [rows.insertId, file.name]
     
@@ -90,7 +91,12 @@ router.post('/new', isAuth, (req, res) => {
                 }
             }
 
-            req.flash('success', 'Suggestion publiée, un administrateur doit la confirmer')
+            if(req.user.power > 1) {
+                req.flash('success', 'Publication envoyée')
+            } else {
+                req.flash('success', 'Suggestion publiée, un administrateur doit la confirmer')
+            }
+
             res.redirect('/actualites')
             connection.release()
         })
@@ -116,6 +122,7 @@ router.get('/:id', isntPending, (req, res) => {
                 return res.redirect('/actualites')
             }
             post.created_at = prettyDateTime(post.created_at)
+            post.content = escapeHtml(post.content)
             
             res.render('actualite', { post, files })
             connection.release()
@@ -157,6 +164,9 @@ router.post('/update/:id', isAuth, isOwnerOrAdmin, (req, res) => {
                 if(Array.isArray(req.files.document)) {
                     const files = req.files.document
                     files.forEach(file => {
+                        const prefix = Math.floor(Math.random() * 1000000) + '-'
+                        file.name = prefix + file.name
+
                         let command = `INSERT INTO files (post_id, name) VALUES (?, ?);`
                         let params = [req.params.id, file.name]
         
@@ -170,6 +180,9 @@ router.post('/update/:id', isAuth, isOwnerOrAdmin, (req, res) => {
                     })
                 } else {
                     const file = req.files.document
+                    const prefix = Math.floor(Math.random() * 1000000) + '-'
+                    file.name = prefix + file.name
+
                     let command = `INSERT INTO files (post_id, name) VALUES (?, ?);`
                     let params = [req.params.id, file.name]
     
@@ -202,6 +215,23 @@ router.get('/delete/:id', isAuth, isOwnerOrAdmin, (req, res) => {
             if(error) throw error
             
             req.flash('success', 'Publication supprimée')
+            res.redirect('/actualites')
+            connection.release()
+        })
+    })
+})
+
+router.get('/delete-file/:id', isAuth, isOwnerOrAdmin, (req, res) => {
+    const command = `DELETE FROM files WHERE id = ?;`
+    const params = [req.params.id]
+
+    pool.getConnection((error, connection) => {
+        if(error) throw error
+
+        connection.query(command, params, (error, rows) => {
+            if(error) throw error
+            
+            req.flash('success', 'fichier supprimé')
             res.redirect('/actualites')
             connection.release()
         })

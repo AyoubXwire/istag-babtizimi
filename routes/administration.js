@@ -1,8 +1,8 @@
 const express  = require('express')
 const router   = express.Router()
 
-const { previewString, prettyDateTime } = require('../helpers/display')
-const { isAuth, isAdmin } = require('../helpers/auth')
+const { previewString, prettyDateTime } = require('../helpers/functions')
+const { isAuth, isAdmin } = require('../helpers/middleware')
 
 router.get('/', isAuth, isAdmin, (req, res) => {
     let command = `SELECT COUNT(id) AS numPosts FROM posts;

@@ -11,12 +11,18 @@
                             <br>
                             <a>Par <%= post.username %> | <%= post.created_at %></a>
                             <hr>
-                            <p><%= post.content %></p>
-                            <hr style="margin:8px auto">
-                            <% files.forEach(file => { %>
-                                <a target="blank" href="/uploads/<%= file.name %>"><img src="/uploads/<%= file.name %>" alt="Ficher"></a>
-                            <% }) %>
-                            <hr style="margin:8px auto">
+                            <p><%- post.content %></p>
+                            <% if(files.length > 0) { %>
+                                <hr style="margin:8px auto">
+                                <% files.forEach(file => { %>
+                                    <% if(file.name.includes('pdf')) { %>
+                                        <a target="blank" href="/uploads/<%= file.name %>"><img src="/extensions/pdf.png" alt="Ficher"></a>
+                                    <% } else { %>
+                                        <a target="blank" href="/uploads/<%= file.name %>"><img src="/uploads/<%= file.name %>" alt="Ficher"></a>
+                                    <% } %>
+                                <% }) %>
+                                <hr style="margin:8px auto">
+                            <% } %>
                             <% if(locals.user && (user.id === post.user_id) || locals.user && user.power > 1) { %>
                                 <a href="/actualites/update/<%= post.id %>" class="btn academy-btn btn-sm mt-15">Modifier</a>
                                 <a href="/actualites/delete/<%= post.id %>" class="btn academy-btn btn-sm float-right mt-15" id="supp">Supprimer</a>

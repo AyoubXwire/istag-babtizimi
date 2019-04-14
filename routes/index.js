@@ -1,7 +1,7 @@
 const express  = require('express')
 const router   = express.Router()
 
-const { previewString, prettyDateTime } = require('../helpers/display')
+const { previewString, prettyDateTime } = require('../helpers/functions')
 
 router.get('/', (req, res) => {
     let command = `SELECT id, title, created_at, content
