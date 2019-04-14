@@ -3,7 +3,6 @@ const router   = express.Router()
 const bcrypt   = require('bcrypt')
 const passport = require('passport')
 
-const pool = require('../config/pool')
 const { isAuth, isntAuth } = require('../helpers/auth')
 
 router.get('/register', isntAuth, (req, res) => {

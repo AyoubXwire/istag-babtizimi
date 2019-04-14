@@ -1,17 +1,10 @@
 const express  = require('express')
 const router   = express.Router()
 
-const pool = require('../config/pool')
 const { previewString, prettyDateTime } = require('../helpers/display')
-const { isAuth } = require('../helpers/auth')
-const { isAdmin } = require('../helpers/power')
+const { isAuth, isAdmin } = require('../helpers/auth')
 
-router.get('/', isAuth, (req, res) => {
-    if(!isAdmin(req.user)) {
-        req.flash('error', `autorisations insuffisantes`)
-        return res.redirect('/actualites')
-    }
-
+router.get('/', isAuth, isAdmin, (req, res) => {
     let command = `SELECT COUNT(id) AS numPosts FROM posts;
     SELECT COUNT(id) AS numUsers FROM users WHERE power = ?;
     SELECT COUNT(id) AS numAdmins FROM users WHERE power > ?;
@@ -34,12 +27,7 @@ router.get('/', isAuth, (req, res) => {
     })
 })
 
-router.get('/pending', isAuth, (req, res) => {
-    if(!isAdmin(req.user)) {
-        req.flash('error', `autorisations insuffisantes`)
-        return res.redirect('/actualites')
-    }
-
+router.get('/pending', isAuth, isAdmin, (req, res) => {
     let command = `SELECT p.id, title, content, p.created_at, username
     FROM posts p JOIN users u ON p.user_id = u.id
     WHERE pending = true
@@ -63,12 +51,7 @@ router.get('/pending', isAuth, (req, res) => {
     })
 })
 
-router.get('/pending/:id', isAuth, (req, res) => {
-    if(!isAdmin(req.user)) {
-        req.flash('error', `autorisations insuffisantes`)
-        return res.redirect('/actualites')
-    }
-
+router.get('/pending/:id', isAuth, isAdmin, (req, res) => {
     let command = `SELECT p.id, title, content, p.created_at, p.user_id, username
     FROM posts p JOIN users u ON p.user_id = u.id WHERE p.id = ?;
     SELECT id, name FROM files WHERE post_id = ?;`
@@ -90,12 +73,7 @@ router.get('/pending/:id', isAuth, (req, res) => {
     })
 })
 
-router.get('/pending/accepter/:id', isAuth, (req, res) => {
-    if(!isAdmin(req.user)) {
-        req.flash('error', `autorisations insuffisantes`)
-        return res.redirect('/actualites')
-    }
-
+router.get('/pending/accepter/:id', isAuth, isAdmin, (req, res) => {
     let command = `UPDATE posts SET pending = false WHERE id = ?`
     let params = [req.params.id]
 
@@ -111,12 +89,7 @@ router.get('/pending/accepter/:id', isAuth, (req, res) => {
     })
 })
 
-router.get('/pending/refuser/:id', isAuth, (req, res) => {
-    if(!isAdmin(req.user)) {
-        req.flash('error', `autorisations insuffisantes`)
-        return res.redirect('/actualites')
-    }
-
+router.get('/pending/refuser/:id', isAuth, isAdmin, (req, res) => {
     let command = `DELETE FROM posts WHERE id = ?`
     let params = [req.params.id]
 
@@ -132,12 +105,7 @@ router.get('/pending/refuser/:id', isAuth, (req, res) => {
     })
 })
 
-router.get('/utilisateurs', isAuth, (req, res) => {
-    if(!isAdmin(req.user)) {
-        req.flash('error', `autorisations insuffisantes`)
-        return res.redirect('/actualites')
-    }
-
+router.get('/utilisateurs', isAuth, isAdmin, (req, res) => {
     let command = `SELECT id, username, power from users`
 
     pool.getConnection((error, connection) => {
@@ -153,12 +121,7 @@ router.get('/utilisateurs', isAuth, (req, res) => {
     })
 })
 
-router.get('/infos', isAuth, (req, res) => {
-    if(!isAdmin(req.user)) {
-        req.flash('error', `autorisations insuffisantes`)
-        return res.redirect('/actualites')
-    }
-    
+router.get('/infos', isAuth, isAdmin, (req, res) => {
     let command = `SELECT id, apropos, num_filieres, num_formateurs, num_stagiaires FROM infos;`
 
     pool.getConnection((error, connection) => {

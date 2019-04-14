@@ -1,8 +1,6 @@
 const express  = require('express')
 const router   = express.Router()
 
-const pool = require('../config/pool')
-
 router.get('/', (req, res) => {
     let command
     let params = []

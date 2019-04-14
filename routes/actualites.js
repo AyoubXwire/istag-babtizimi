@@ -2,8 +2,7 @@ const express  = require('express')
 const router   = express.Router()
 
 const { previewString, prettyDateTime } = require('../helpers/display')
-const { isAuth } = require('../helpers/auth')
-const { isOwner, isAdmin } = require('../helpers/power')
+const { isAuth, isOwner, isAdmin, isOwnerOrAdmin, isntPending } = require('../helpers/auth')
 
 router.get('/', (req, res) => {
     let command
@@ -98,15 +97,15 @@ router.post('/new', isAuth, (req, res) => {
     })
 })
 
-router.get('/:id', (req, res) => {
+router.get('/:id', isntPending, (req, res) => {
     const command = `SELECT p.id, title, content, p.created_at, username, u.id AS user_id
     FROM posts p JOIN users u ON p.user_id = u.id WHERE p.id = ?;
     SELECT id, name FROM files WHERE post_id = ?`
     const params = [req.params.id, req.params.id]
-
+    
     pool.getConnection((error, connection) => {
         if(error) throw error
-
+        
         connection.query(command, params, (error, rows) => {
             if(error) throw error
             
@@ -124,35 +123,7 @@ router.get('/:id', (req, res) => {
     })
 })
 
-router.get('/delete/:id', isAuth, (req, res) => {
-    if(!isOwner(req.user, req.params.id) && !isAdmin(req.user)) {
-        req.flash('error', `Publication introuvable ou autorisations insuffisantes`)
-        return res.redirect('/actualites')
-    }
-
-    const command = `DELETE FROM files WHERE post_id = ?;
-    DELETE FROM posts WHERE id = ?;`
-    const params = [req.params.id, req.params.id]
-
-    pool.getConnection((error, connection) => {
-        if(error) throw error
-
-        connection.query(command, params, (error, rows) => {
-            if(error) throw error
-            
-            req.flash('success', 'Publication supprimée')
-            res.redirect('/actualites')
-            connection.release()
-        })
-    })
-})
-
-router.get('/update/:id', isAuth, (req, res) => {
-    if(!isOwner(req.user, req.params.id) && !isAdmin(req.user)) {
-        req.flash('error', `Publication introuvable ou autorisations insuffisantes`)
-        return res.redirect('/actualites')
-    }
-
+router.get('/update/:id', isAuth, isOwnerOrAdmin, (req, res) => {
     let command = `SELECT id, title, content FROM posts WHERE id = ?;
     SELECT id, name FROM files WHERE post_id = ?`
     let params = [req.params.id, req.params.id]
@@ -171,12 +142,7 @@ router.get('/update/:id', isAuth, (req, res) => {
     })
 })
 
-router.post('/update/:id', isAuth, (req, res) => {
-    if(!isOwner(req.user, req.params.id) && !isAdmin(req.user)) {
-        req.flash('error', `Publication introuvable ou autorisations insuffisantes`)
-        return res.redirect('/actualites')
-    }
-
+router.post('/update/:id', isAuth, isOwnerOrAdmin, (req, res) => {
     const command = `Update posts SET title = ?, content = ? WHERE id = ?;`
     const params = [req.body.title, req.body.content, req.params.id]
 
@@ -218,6 +184,24 @@ router.post('/update/:id', isAuth, (req, res) => {
             }
 
             req.flash('success', 'Publication modifiée')
+            res.redirect('/actualites')
+            connection.release()
+        })
+    })
+})
+
+router.get('/delete/:id', isAuth, isOwnerOrAdmin, (req, res) => {
+    const command = `DELETE FROM files WHERE post_id = ?;
+    DELETE FROM posts WHERE id = ?;`
+    const params = [req.params.id, req.params.id]
+
+    pool.getConnection((error, connection) => {
+        if(error) throw error
+
+        connection.query(command, params, (error, rows) => {
+            if(error) throw error
+            
+            req.flash('success', 'Publication supprimée')
             res.redirect('/actualites')
             connection.release()
         })

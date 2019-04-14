@@ -1,7 +1,6 @@
 const express  = require('express')
 const router   = express.Router()
 
-const pool = require('../config/pool')
 const { previewString, prettyDateTime } = require('../helpers/display')
 
 router.get('/', (req, res) => {
