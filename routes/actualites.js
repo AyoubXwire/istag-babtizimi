@@ -1,10 +1,9 @@
 const express  = require('express')
 const router   = express.Router()
 
-const pool = require('../config/pool')
 const { previewString, prettyDateTime } = require('../helpers/display')
 const { isAuth } = require('../helpers/auth')
-const { isOwer } = require('../helpers/power')
+const { isOwner, isAdmin } = require('../helpers/power')
 
 router.get('/', (req, res) => {
     let command
@@ -125,7 +124,12 @@ router.get('/:id', (req, res) => {
     })
 })
 
-router.get('/delete/:id', isAuth, isOwer, (req, res) => {
+router.get('/delete/:id', isAuth, (req, res) => {
+    if(!isOwner(req.user, req.params.id) && !isAdmin(req.user)) {
+        req.flash('error', `Publication introuvable ou autorisations insuffisantes`)
+        return res.redirect('/actualites')
+    }
+
     const command = `DELETE FROM files WHERE post_id = ?;
     DELETE FROM posts WHERE id = ?;`
     const params = [req.params.id, req.params.id]
@@ -143,7 +147,12 @@ router.get('/delete/:id', isAuth, isOwer, (req, res) => {
     })
 })
 
-router.get('/update/:id', isAuth, isOwer, (req, res) => {
+router.get('/update/:id', isAuth, (req, res) => {
+    if(!isOwner(req.user, req.params.id) && !isAdmin(req.user)) {
+        req.flash('error', `Publication introuvable ou autorisations insuffisantes`)
+        return res.redirect('/actualites')
+    }
+
     let command = `SELECT id, title, content FROM posts WHERE id = ?;
     SELECT id, name FROM files WHERE post_id = ?`
     let params = [req.params.id, req.params.id]
@@ -162,7 +171,12 @@ router.get('/update/:id', isAuth, isOwer, (req, res) => {
     })
 })
 
-router.post('/update/:id', isAuth, isOwer, (req, res) => {
+router.post('/update/:id', isAuth, (req, res) => {
+    if(!isOwner(req.user, req.params.id) && !isAdmin(req.user)) {
+        req.flash('error', `Publication introuvable ou autorisations insuffisantes`)
+        return res.redirect('/actualites')
+    }
+
     const command = `Update posts SET title = ?, content = ? WHERE id = ?;`
     const params = [req.body.title, req.body.content, req.params.id]
 

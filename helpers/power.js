@@ -1,15 +1,10 @@
-const pool = require('../config/pool')
-
 module.exports = {
-    isAdmin: (req, res, next) => {
-        if(req.user && req.user.power > 1) {
-            return next()
-        }
-        res.redirect('/')
+    isAdmin: (user) => {
+        return (user && user.power > 1)
     },
-    isOwer: (req, res, next) => {
+    isOwner: (user, postId) => {
         let command = `SELECT user_id FROM posts WHERE id = ?`
-        let params = [req.params.id]
+        let params = [postId]
         
         pool.getConnection((error, connection) => {
             if(error) throw error
@@ -17,21 +12,16 @@ module.exports = {
             connection.query(command, params, (error, rows) => {
                 if(error) throw error
                 
-                if(!rows[0]) {
-                    req.flash('error', 'Publication introuvable')
-                    return res.redirect('/actualites')
-                }
-                let postOwner
-                if(req.user) {
-                    postOwner = rows[0].user_id
-                }
-
                 connection.release()
-
-                if(req.user && req.user.id === postOwner) {
-                    return next()
+                const post = rows[0]
+                
+                // Check existence
+                if(post === undefined && !user) {
+                    return false
                 }
-                res.redirect('/')
+
+                // Check ownership
+                return (user.id === post.user_id)
             })
         })
     }

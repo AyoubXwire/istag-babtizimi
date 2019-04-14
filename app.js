@@ -19,7 +19,7 @@ app.use(fileUpload())
 app.use(morgan('short'))
 
 // Connect to database
-require('./config/pool')
+global.pool = require('./config/pool')
 
 // Session
 app.use(require('./config/session'))
@@ -46,20 +46,3 @@ app.use('/administration', require('./routes/administration'))
 
 // Listener
 app.listen(process.env.PORT || 3000, () => console.log('server running..'))
-
-/*
-let command = ``
-let params = []
-
-pool.getConnection((error, connection) => {
-    if(error) throw error
-
-    connection.query(command, params, (error, rows) => {
-        if(error) throw error
-        let data = rows
-
-        // code here
-        connection.release()
-    })
-})
-*/
