@@ -2,8 +2,6 @@ const passport      = require('passport')
 const localStrategy = require('passport-local').Strategy
 const bcrypt        = require('bcrypt')
 
-const pool = require('./pool')
-
 module.exports = passport.use(
     new localStrategy({usernameField: 'username'}, (username, password, done) => {
         const command = `SELECT * FROM users WHERE username = ?`

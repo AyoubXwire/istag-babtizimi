@@ -5,10 +5,10 @@ let sessionStore
 
 if(process.env.NODE_ENV === 'production') {
     sessionStore = new mysqlStore({
-        host     : 'sql7.freesqldatabase.com',
-        user     : 'sql7286630',
-        password : 'fjbuICKb4e',
-        database : 'sql7286630'
+        host     : 'remotemysql.com',
+        user     : 'm9jdJTXR5Q',
+        password : 'r6TxyCm5Hl',
+        database : 'm9jdJTXR5Q'
     })
 } else {
     sessionStore = new mysqlStore({

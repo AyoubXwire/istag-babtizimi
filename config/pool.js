@@ -5,10 +5,10 @@ let pool
 if(process.env.NODE_ENV === 'production') {
     pool = mysql.createPool({
         connectionLimit : 100,
-        host     : 'sql7.freesqldatabase.com',
-        user     : 'sql7286630',
-        password : 'fjbuICKb4e',
-        database : 'sql7286630',
+        host     : 'remotemysql.com',
+        user     : 'm9jdJTXR5Q',
+        password : 'r6TxyCm5Hl',
+        database : 'm9jdJTXR5Q',
         multipleStatements: true
     })
 } else {
