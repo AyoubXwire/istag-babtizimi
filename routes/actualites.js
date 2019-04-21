@@ -1,5 +1,6 @@
 const express  = require('express')
 const router   = express.Router()
+const fs = require('fs')
 
 const { previewString, prettyDateTime, escapeHtml } = require('../helpers/functions')
 const { isAuth, isOwnerOrAdmin, isntPending } = require('../helpers/middleware')
@@ -160,7 +161,6 @@ router.post('/update/:id', isAuth, isOwnerOrAdmin, (req, res) => {
             if(error) throw error
 
             if(req.files) {
-                console.log(req.files)
                 if(Array.isArray(req.files.document)) {
                     const files = req.files.document
                     files.forEach(file => {
@@ -222,18 +222,30 @@ router.get('/delete/:id', isAuth, isOwnerOrAdmin, (req, res) => {
 })
 
 router.get('/delete-file/:id', isAuth, isOwnerOrAdmin, (req, res) => {
-    const command = `DELETE FROM files WHERE id = ?;`
+    const command = `SELECT name FROM files WHERE id = ?;`
     const params = [req.params.id]
 
     pool.getConnection((error, connection) => {
         if(error) throw error
 
         connection.query(command, params, (error, rows) => {
-            if(error) throw error
-            
-            req.flash('success', 'fichier supprimé')
-            res.redirect('/actualites')
-            connection.release()
+            let fileName = rows[0].name
+
+            fs.unlink('public/uploads/' + fileName, (error) => {
+                if(error) throw error
+
+                const command = `DELETE FROM files WHERE id = ?;`
+                const params = [req.params.id]
+                
+                connection.query(command, params, (error, rows) => {
+                    if(error) throw error
+        
+                    req.flash('success', 'fichier supprimé')
+                    res.redirect('/actualites')
+                    connection.release()
+        
+                })
+            })
         })
     })
 })
