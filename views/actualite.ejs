@@ -16,9 +16,9 @@
                                 <hr style="margin:8px auto">
                                 <% files.forEach(file => { %>
                                     <% if(file.name.includes('pdf')) { %>
-                                        <a target="blank" href="/public/uploads/<%= file.name %>"><img src="/extensions/pdf.png" alt="Ficher"></a>
+                                        <a target="blank" href="/uploads/<%= file.name %>"><img src="/extensions/pdf.png" alt="Ficher"></a>
                                     <% } else { %>
-                                        <a target="blank" href="/public/uploads/<%= file.name %>"><img src="/public/uploads/<%= file.name %>" alt="Ficher"></a>
+                                        <a target="blank" href="/uploads/<%= file.name %>"><img src="/uploads/<%= file.name %>" alt="Ficher"></a>
                                     <% } %>
                                 <% }) %>
                                 <hr style="margin:8px auto">
