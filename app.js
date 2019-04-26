@@ -44,5 +44,9 @@ app.use('/actualites', require('./routes/actualites'))
 app.use('/filieres', require('./routes/filieres'))
 app.use('/admin', require('./routes/admin'))
 
+app.get('*', (req, res) => {
+    res.status(404).render('404')
+})
+
 // Listener
 app.listen(process.env.PORT || 3000, () => console.log('server running..'))

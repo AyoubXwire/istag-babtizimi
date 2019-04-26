@@ -19,13 +19,13 @@
                 <div class="col-md-12">
                     <div class="media">
                         <div class="media-body">
-                            <a href="/administration/pending/<%= post.id %>"><h3 class="media-heading d-inline"><%= post.title %></h3></a>
+                            <a href="/admin/pending/<%= post.id %>"><h3 class="media-heading d-inline"><%= post.title %></h3></a>
                             <br>
                             <small>Par <%= post.username %> | <%= post.created_at %></small>
                             <hr>
                             <p><%= post.content %></p>
-                            <a class="accepter-refuser btn btn-sm academy-btn" href="/administration/pending/accepter/<%= post.id %>"><span class="label label-warning">Accepter</span></a>
-                            <a class="accepter-refuser btn btn-sm academy-btn" href="/administration/pending/refuser/<%= post.id %>"><span class="label label-success">Refuser</span></a>
+                            <a class="accepter-refuser btn btn-sm academy-btn" href="/admin/pending/accepter/<%= post.id %>"><span class="label label-warning">Accepter</span></a>
+                            <a class="accepter-refuser btn btn-sm academy-btn" href="/admin/pending/refuser/<%= post.id %>"><span class="label label-success">Refuser</span></a>
                             <a class="accepter-refuser btn btn-sm academy-btn float-right" href="/actualites/update/<%= post.id %>"><span class="label label-warning">Modifier</span></a>
                         </div>
                     </div>
