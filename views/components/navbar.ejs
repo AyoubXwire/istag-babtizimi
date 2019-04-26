@@ -2,86 +2,140 @@
 
 <body>
 
-<!-- ##### Preloader ##### -->
-<div id="preloader">
-<i class="circle-preloader"></i>
-</div>
+    <!-- ##### Preloader ##### -->
+    <div id="preloader">
+        <i class="circle-preloader"></i>
+    </div>
 
-<!-- ##### Header Area Start ##### -->
-<header class="header-area">
+    <!-- ##### Header Area Start ##### -->
+    <header class="header-area">
 
-<!-- Top Header Area -->
-<div class="top-header">
-    <div class="container h-100">
-        <div class="row h-100">
-            <div class="col-12 h-100">
-                <div class="header-content h-100 d-flex align-items-center justify-content-between">
-                    <div class="academy-logo">
-                        <a href="/"><img src="/img/core-img/logo.png" alt=""></a>
-                    </div>
-                    <div class="login-content">
-                        <% if(locals.user) { %>
-                            <a href="/administration" style="margin-right: 30px;"><%= user.username %></a>
-                            <a href="/users/logout">Deconnexion</a>
-                        <% } else { %>
-                            <a href="/users/login">Register / Login</a>
-                        <% } %>
+        <!-- Top Header Area -->
+        <div class="top-header">
+            <div class="container h-100">
+                <div class="row h-100">
+                    <div class="col-12 h-100">
+                        <div class="header-content h-100 d-flex align-items-center justify-content-between">
+                            <div class="academy-logo">
+                                <a href="/"><img src="/img/core-img/logo.png" alt=""></a>
+                            </div>
+                            <div class="login-content">
+                                <% if(locals.user) { %>
+                                <a href="/admin" style="margin-right: 30px;"><%= user.username %></a>
+                                <a href="/users/logout">Deconnexion</a>
+                                <% } else { %>
+                                <a href="/users/login">Register / Login</a>
+                                <% } %>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
-<!-- Navbar Area -->
-<div class="academy-main-menu">
-    <div class="classy-nav-container breakpoint-off">
-        <div class="container">
-            <!-- Menu -->
-            <nav class="classy-navbar justify-content-between" id="academyNav">
+        <!-- Navbar Area -->
+        <div class="academy-main-menu">
+            <div class="classy-nav-container breakpoint-off">
+                <div class="container">
+                    <!-- Menu -->
+                    <nav class="classy-navbar justify-content-between" id="academyNav">
 
-                <!-- Navbar Toggler -->
-                <div class="classy-navbar-toggler">
-                    <span class="navbarToggler"><span></span><span></span><span></span></span>
-                </div>
+                        <!-- Navbar Toggler -->
+                        <div class="classy-navbar-toggler">
+                            <span class="navbarToggler"><span></span><span></span><span></span></span>
+                        </div>
 
-                <!-- Menu -->
-                <div class="classy-menu">
+                        <!-- Menu -->
+                        <div class="classy-menu">
 
-                    <!-- close btn -->
-                    <div class="classycloseIcon">
-                        <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
-                    </div>
+                            <!-- close btn -->
+                            <div class="classycloseIcon">
+                                <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                            </div>
 
-                    <!-- Nav Start -->
-                    <div class="classynav">
-                        <ul>
-                            <li><a href="/">Acceuil</a></li>
-                            <li><a href="#">Formation</a>
-                                <ul class="dropdown">
-                                    <li><a href="/filieres">Filieres</a></li>
-                                    <li><a href="/inscription">Inscription</a></li>
-                                    <li><a href="/reglement">Reglement</a></li>
+                            <!-- Nav Start -->
+                            <div class="classynav">
+                                <ul>
+                                    <li><a href="/empty">ETABLISSEMENT</a>
+                                        <ul class="dropdown">
+                                            <li><a href="/apropos">Introduction</a></li>
+                                            <li><a href="/reglement">Réglement</a></li>
+                                            <li><a href="/empty">Chiffres Clé</a></li>
+                                            <li><a href="/empty">Organigramme</a></li>
+                                            <li><a href="/empty">Historique</a></li>
+                                            <li><a href="/empty">Site/Ofppt</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="/empty">INSCRIPTION</a>
+                                        <ul class="dropdown">
+                                            <li><a href="/inscription">Inscription</a></li>
+                                            <li><a href="/filieres">Cours de jour</a></li>
+                                            <li><a href="/empty">Cours de soir</a></li>
+                                            <li><a href="/empty">Formation Q/C</a></li>
+                                            <li><a href="/empty">Admits/Attentes</a></li>
+                                            <li><a href="/empty">EFP</a></li>
+                                            <li><a href="/contact">Porte Ouverte</a></li>
+                                            <li><a href="/empty">Inscription online</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="/empty">ESPACE ETUDIANT</a>
+                                        <ul class="dropdown">
+                                            <li><a href="/empty">Emplois</a></li>
+                                            <li><a href="/empty">Avis (stagiaires)</a></li>
+                                            <li><a href="/empty">Dates examens</a></li>
+                                            <li><a href="/empty">Dates vacances</a></li>
+                                            <li><a href="/empty">Recrutement</a></li>
+                                            <li><a href="/empty">Réalisations</a></li>
+                                            <li><a href="/empty">Stages</a></li>
+                                            <li><a href="/empty">Bources</a></li>
+                                            <li><a href="/empty">Résultats</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="/empty">ACTUALITES</a>
+                                        <ul class="dropdown">
+                                            <li><a href="/actualites">Actualites</a></li>
+                                            <div class="dropdown show">
+                                                <a class="btn btn-light dropdown-toggle" href="/empty" role="button"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    ACTIVITES
+                                                </a>
+
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                    <a class="dropdown-item" href="/empty">Pédagogique</a>
+                                                    <a class="dropdown-item" href="/empty">Culturelles</a>
+                                                    <a class="dropdown-item" href="/empty">Parascolaires</a>
+                                                    <a class="dropdown-item" href="/empty">Social</a>
+                                                </div>
+                                            </div>
+                                            <li><a href="/empty">Avis</a></li>
+                                            <li><a href="/empty">Concours</a></li>
+                                            <li><a href="/empty">Ofppt news</a></li>
+
+                                        </ul>
+                                    </li>
+                                    <li><a href="/empty">RESSOURCES</a>
+                                        <ul class="dropdown">
+                                            <li><a href="/empty">Publication</a></li>
+                                            <li><a href="/empty">PéDAGOGIQUES</a></li>
+                                            <li><a href="/empty">Bibliothèque</a></li>
+                                        </ul>
+                                    </li>
+
                                 </ul>
-                            </li>
-                            <li><a href="/actualites">Actualités</a></li>
-                            <li><a href="#">Cours/Exercices</a></li>
-                            <li><a href="/apropos">A propos</a></li>
-                            <li><a href="/contact">Contact</a></li>
-                        </ul>
-                    </div>
-                    <!-- Nav End -->
-                </div>
+                            </div>
+                            <!-- Nav End -->
+                        </div>
 
-                <!-- Calling Info -->
-                <div class="calling-info">
-                    <div class="call-center">
-                        <a href="tel:+21251474115"><i class="icon-telephone-2"></i> <span>+21251474115</span></a>
-                    </div>
+                        <!-- Calling Info -->
+                        <div class="calling-info">
+                            <div class="call-center">
+                                <a href="tel:+21251474115"><i class="icon-telephone-2"></i>
+                                    <span>+21251474115</span></a>
+                            </div>
+                        </div>
+                    </nav>
                 </div>
-            </nav>
+            </div>
         </div>
-    </div>
-</div>
-</header>
-<!-- ##### Header Area End ##### -->
+    </header>
+    <!-- ##### Header Area End ##### -->

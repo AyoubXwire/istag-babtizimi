@@ -1,5 +1,5 @@
-<%- include components/header %>
-<%- include components/navbar %>
+<%- include ../components/header %>
+<%- include ../components/navbar %>
 
 <div class="breadcumb-area bg-img" style="background-image: url(img/bg-img/breadcumb.jpg);">
     <div class="bradcumbContent">
@@ -61,9 +61,9 @@
                 </div>
                 <!-- Selene Button -->
                 <div class="academy-buttons-area mb-100">
-                    <a target="blank" href="/administration/pending" class="btn academy-btn m-2">Pending (<%= numPendingPosts %>)</a>
-                    <a target="blank" href="/administration/utilisateurs" class="btn academy-btn m-2">Utilisateurs</a>
-                    <a target="blank" href="/administration/infos" class="btn academy-btn m-2">Modifier les infos</a>
+                    <a target="blank" href="/admin/pending" class="btn academy-btn m-2">Pending (<%= numPendingPosts %>)</a>
+                    <a target="blank" href="/admin/utilisateurs" class="btn academy-btn m-2">Utilisateurs</a>
+                    <a target="blank" href="/admin/infos" class="btn academy-btn m-2">Modifier les infos</a>
                 </div>
             </div>
 
@@ -72,7 +72,7 @@
     </div>
 </section>
 
-<%- include components/footer %>
+<%- include ../components/footer %>
 
 <!-- jQuery-2.2.4 js -->
 <script src="/js/jquery/jquery-2.2.4.min.js"></script>

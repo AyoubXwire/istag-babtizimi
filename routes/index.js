@@ -51,4 +51,8 @@ router.post('/email', (req, res) => {
     // nodemailer here
 })
 
+router.get('/empty', (req, res) => {
+    res.render('empty')
+})
+
 module.exports = router

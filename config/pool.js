@@ -16,7 +16,7 @@ if(process.env.NODE_ENV === 'production') {
         connectionLimit : 100,
         host     : 'localhost',
         user     : 'root',
-        password : 'xwire',
+        password : '1234',
         database : 'babtizimi',
         multipleStatements: true
     })

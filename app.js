@@ -42,7 +42,7 @@ app.use('/', require('./routes/index'))
 app.use('/users', require('./routes/users'))
 app.use('/actualites', require('./routes/actualites'))
 app.use('/filieres', require('./routes/filieres'))
-app.use('/administration', require('./routes/administration'))
+app.use('/admin', require('./routes/admin'))
 
 // Listener
 app.listen(process.env.PORT || 3000, () => console.log('server running..'))

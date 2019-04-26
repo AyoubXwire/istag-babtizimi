@@ -14,7 +14,7 @@ if(process.env.NODE_ENV === 'production') {
     sessionStore = new mysqlStore({
         host     : 'localhost',
         user     : 'root',
-        password : 'xwire',
+        password : '1234',
         database : 'babtizimi'
     })
 }

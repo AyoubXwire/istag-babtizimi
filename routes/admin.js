@@ -21,7 +21,7 @@ router.get('/', isAuth, isAdmin, (req, res) => {
             let numAdmins = rows[2][0].numAdmins
             let numPendingPosts = rows[3][0].numPendingPosts
 
-            res.render('administration', { numPosts, numUsers, numAdmins, numPendingPosts })
+            res.render('admin/index', { numPosts, numUsers, numAdmins, numPendingPosts })
             connection.release()
         })
     })
@@ -45,7 +45,7 @@ router.get('/pending', isAuth, isAdmin, (req, res) => {
                 post.created_at = prettyDateTime(post.created_at)
             })
             
-            res.render('pendings', { posts })
+            res.render('admin/pendings', { posts })
             connection.release()
         })
     })
@@ -67,7 +67,7 @@ router.get('/pending/:id', isAuth, isAdmin, (req, res) => {
 
             post.created_at = prettyDateTime(post.created_at)
 
-            res.render('pending', { post, files })
+            res.render('admin/pending', { post, files })
             connection.release()
         })
     })
@@ -83,7 +83,7 @@ router.get('/pending/accepter/:id', isAuth, isAdmin, (req, res) => {
         connection.query(command, params, (error, rows) => {
             if(error) throw error
 
-            res.redirect('/administration/pending')
+            res.redirect('/admin/pending')
             connection.release()
         })
     })
@@ -99,7 +99,7 @@ router.get('/pending/refuser/:id', isAuth, isAdmin, (req, res) => {
         connection.query(command, params, (error, rows) => {
             if(error) throw error
 
-            res.redirect('/administration/pending')
+            res.redirect('/admin/pending')
             connection.release()
         })
     })
@@ -115,7 +115,7 @@ router.get('/utilisateurs', isAuth, isAdmin, (req, res) => {
             if(error) throw error
             let users = rows
 
-            res.render('utilisateurs', { users })
+            res.render('admin/utilisateurs', { users })
             connection.release()
         })
     })
@@ -131,7 +131,7 @@ router.get('/infos', isAuth, isAdmin, (req, res) => {
             if(error) throw error
             let infos = rows[0]
 
-            res.render('infos', { infos })
+            res.render('admin/infos', { infos })
             connection.release()
         })
     })

@@ -1,53 +1,54 @@
-    <%- include components/header %>
-    <%- include components/navbar %>
-    
-    <div class="breadcumb-area bg-img" style="background-image: url(img/bg-img/breadcumb.jpg);">
-        <div class="bradcumbContent">
-            <h2>Notre Filiéres</h2>
-        </div>
-    </div>
+<%- include components/header %>
+<%- include components/navbar %>
 
-    <div class="top-popular-courses-area mt-50 section-padding-100-70">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section-heading text-center mx-auto wow fadeInUp" data-wow-delay="300ms">
-                       
-                        <h3>Les meilleurs Formations Professionelle</h3>
+<div class="breadcumb-area bg-img" style="background-image: url(img/bg-img/breadcumb.jpg);">
+    <div class="bradcumbContent">
+        <h2>Notre Filiéres</h2>
+    </div>
+</div>
+
+<div class="top-popular-courses-area mt-50 section-padding-100-70">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-heading text-center mx-auto wow fadeInUp" data-wow-delay="300ms">
+
+                    <h3>Les meilleurs Formations Professionelle</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+            <% filieres.forEach(filiere => { %>
+            <div class="col-12 col-lg-6">
+                <div class="single-top-popular-course d-flex align-items-center flex-wrap mb-30 wow fadeInUp"
+                    data-wow-delay="400ms">
+                    <div class="popular-course-content">
+                        <a href="/filieres/<%= filiere.id %>"><h3><%= filiere.code %></h3></a>
+                        <p><%= filiere.nom %></p>
+                    </div>
+                    <div class="popular-course-thumb bg-img" style="background-image: url(img/bg-img/filiere.jpg);">
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <% }) %>
 
-                <% filieres.forEach(filiere => { %>
-                    <div class="col-12 col-lg-6">
-                        <div class="single-top-popular-course d-flex align-items-center flex-wrap mb-30 wow fadeInUp" data-wow-delay="400ms">
-                            <div class="popular-course-content">
-                                <h5><%= filiere.code %></h5>
-                                <p><%= filiere.nom %></p>
-                                <a href="/filieres/<%= filiere.id %>" class="btn academy-btn btn-sm">Voir cette Filiére</a>
-                            </div>
-                            <div class="popular-course-thumb bg-img" style="background-image: url(img/bg-img/filiere.jpg);"></div>
-                        </div>
-                    </div>
-                <% }) %>
-                
-            </div>
         </div>
     </div>
-    
-    <%- include components/footer %>
+</div>
 
-    <!-- jQuery-2.2.4 js -->
-    <script src="js/jquery/jquery-2.2.4.min.js"></script>
-    <!-- Popper js -->
-    <script src="js/bootstrap/popper.min.js"></script>
-    <!-- Bootstrap js -->
-    <script src="js/bootstrap/bootstrap.min.js"></script>
-    <!-- All Plugins js -->
-    <script src="js/plugins/plugins.js"></script>
-    <!-- Active js -->
-    <script src="js/active.js"></script>
+<%- include components/footer %>
+
+<!-- jQuery-2.2.4 js -->
+<script src="js/jquery/jquery-2.2.4.min.js"></script>
+<!-- Popper js -->
+<script src="js/bootstrap/popper.min.js"></script>
+<!-- Bootstrap js -->
+<script src="js/bootstrap/bootstrap.min.js"></script>
+<!-- All Plugins js -->
+<script src="js/plugins/plugins.js"></script>
+<!-- Active js -->
+<script src="js/active.js"></script>
 </body>
 
 </html>
