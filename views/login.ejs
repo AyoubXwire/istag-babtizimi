@@ -1,74 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <!-- Required meta tags-->
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>connexion</title>
 
-    <!-- Title Page-->
-    <title>CONNEXION</title>
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="/login-inscription/fonts/material-icon/css/material-design-iconic-font.min.css">
 
-    <!-- Icons font CSS-->
-    <link href="/resources/login&inscription/inscription/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
-    <link href="/resources/login&inscription/inscription/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
-    <!-- Font special for pages-->
-    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
-    <!-- Vendor CSS-->
-    <link href="/resources/login&inscription/inscription/vendor/select2/select2.min.css" rel="stylesheet" media="all">
-    <link href="/resources/login&inscription/inscription/vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
-
-    <!-- Main CSS-->
-    <link href="/resources/login&inscription/inscription/css/main.css" rel="stylesheet" media="all">
+    <!-- Main css -->
+    <link rel="stylesheet" href="/login-inscription/css/style.css">
 </head>
+<body style="background-image:linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(/img/gallery/1.jpg);">
 
-<body>
-    <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
-            <a href="/" style="text-decoration: none; position:relative;bottom: 20px;left: 10px" class="btn btn--radius-2 btn--blue">ACCEUIL</a>
-        <div class="wrapper wrapper--w680">
-            <div class="card card-4">
-                <div class="card-body">
-                    <form method="POST" action="/users/login">
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">NOM D'UTILISATEUR</label>
-                                    <input class="input--style-4" type="text" name="username">
-                                </div>
+    <div class="main" style="background-image:linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(/img/gallery/1.jpg);">
+        <a class="acceuil" href="/">ACCEUIL</a>
+        <!-- Sing in  Form -->
+        <section class="sign-in">
+            <div class="container">
+                <div class="signin-content">
+                    <div class="signin-image">
+                        <figure><img src="/login-inscription/images/signin-image.jpg" alt="sing up image"></figure>
+                        <a href="/users/register" class="signup-image-link">Créer un compte</a>
+                    </div>
+
+                    <div class="signin-form">
+                        <h2 class="form-title">CONNEXION</h2>
+                        <form method="POST" class="register-form" id="login-form">
+                            <div class="form-group">
+                                <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input type="text" name="username" id="your_name" placeholder="Nom utilisateur"/>
                             </div>
-                            
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">MOT DE PASSE</label>
-                                    <input class="input--style-4" type="password" name="password">
-                                </div>
+                            <div class="form-group">
+                                <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
+                                <input type="password" name="password" id="your_pass" placeholder="Mot de passe"/>
                             </div>
-                        </div>
-                        
-                        <div class="p-t-15">
-                            <button style="text-decoration:none" type="submit" class="btn btn--radius-2 btn--blue">CONNEXION</button>
-                            <a style="text-decoration:none ;margin-left: 2%;" href="/users/register" class="">Vous n'avez pas de compte?</a>
-                        </div>
-                    </form>
+                            <div class="form-group">
+                                <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
+                                <label for="remember-me" class="label-agree-term"><span><span></span></span>Enregistrer le mot de pass</label>
+                            </div>
+                            <div class="form-group form-button">
+                                <input type="submit" name="signin" id="signin" class="form-submit" value="CONNEXION"/>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
     </div>
-    
-    <%- include components/flash %>
 
-    <!-- Jquery JS-->
-    <script src="/resources/login&inscription/inscription/vendor/jquery/jquery.min.js"></script>
-    <!-- Vendor JS-->
-    <script src="/resources/login&inscription/inscription/vendor/select2/select2.min.js"></script>
-    <script src="/resources/login&inscription/inscription/vendor/datepicker/moment.min.js"></script>
-    <script src="/resources/login&inscription/inscription/vendor/datepicker/daterangepicker.js"></script>
-
-    <!-- Main JS-->
-    <script src="/resources/login&inscription/inscription/js/global.js"></script>
-
-</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
-
+    <!-- JS -->
+    <script src="/login-inscription/vendor/jquery/jquery.min.js"></script>
+    <script src="/login-inscription/js/main.js"></script>
+</body>
 </html>
-<!-- end document-->

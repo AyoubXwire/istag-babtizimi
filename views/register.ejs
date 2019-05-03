@@ -2,125 +2,64 @@
 <html lang="en">
 
 <head>
-    <!-- Required meta tags-->
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Colorlib Templates">
-    <meta name="author" content="Colorlib">
-    <meta name="keywords" content="Colorlib Templates">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>inscription</title>
 
-    <!-- Title Page-->
-    <title>INSCRIPTION</title>
-
-    <!-- Icons font CSS-->
-    <link href="/resources/login&inscription/inscription/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
-    <link href="/resources/login&inscription/inscription/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
-    <!-- Font special for pages-->
-    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
-    <!-- Vendor CSS-->
-    <link href="/resources/login&inscription/inscription/vendor/select2/select2.min.css" rel="stylesheet" media="all">
-    <link href="/resources/login&inscription/inscription/vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
-
-    <!-- Main CSS-->
-    <link href="/resources/login&inscription/inscription/css/main.css" rel="stylesheet" media="all">
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="/login-inscription/fonts/material-icon/css/material-design-iconic-font.min.css">
+    <!-- Main css -->
+    <link rel="stylesheet" href="/login-inscription/css/style.css">
 </head>
 
-<body>
-    <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
-            <a href="/" style="text-decoration: none; position:relative;bottom: 20px;left: 10px" class="btn btn--radius-2 btn--blue">ACCEUIL</a>
-        <div class="wrapper wrapper--w680">
-            <div class="card card-4">
-                <div class="card-body">
-                    <form method="POST" action="/users/register">
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">NOM D'UTILISATEUR</label>
-                                    <input class="input--style-4" type="text" name="username">
-                                </div>
+<body style="background-image:linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(/img/gallery/1.jpg);">
+    <div class="main"  style="background-image:linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(/img/gallery/1.jpg);">
+        <a class="acceuil" href="/">ACCEUIL</a>
+        <!-- Sign up form -->
+        <section class="signup">
+            <div class="container">
+                <div class="signup-content">
+                    <div class="signup-form">
+                        <% if(error != '') { %>
+                        <p style="color: red"><strong><%= error %></strong></p>
+                        <% } %>
+                        <h2 class="form-title">INSCRIPTION</h2>
+                        <form method="POST" class="register-form" id="register-form">
+                            <div class="form-group">
+                                <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input type="text" name="username" id="name" placeholder="Nom utilisateur" />
                             </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">TELEPHONE</label>
-                                    <input class="input--style-4" type="text" name="phone">
-                                </div>
+                            <div class="form-group">
+                                <label for="email"><i class="zmdi zmdi-email"></i></label>
+                                <input type="email" name="email" id="email" placeholder="Votre Email" />
                             </div>
-                        </div>
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">DATE DE NAISSANCE</label>
-                                    <div class="input-group-icon">
-                                        <input class="input--style-4 js-datepicker" type="text" name="birthday">
-                                        <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
-                                    </div>
-                                </div>
+                            <div class="form-group">
+                                <label for="pass"><i class="zmdi zmdi-lock"></i></label>
+                                <input type="password" name="password" id="pass" placeholder="Mot de passe" />
                             </div>
-                            
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">SEXE</label>
-                                    <div class="p-t-10">
-                                        <label class="radio-container m-r-45">HOMME
-                                            <input type="radio" checked="checked" name="gender">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                        <label class="radio-container">FEMME
-                                            <input type="radio" name="gender">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="row row-space">
-                            
-                            <div class="col-2">
-                            <div class="input-group">
-                                <label class="label">EMAIL</label>
-                                <input class="input--style-4" type="email" name="email">
-                            </div>
-                        </div>
-
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">MOT DE PASSE</label>
-                                    <input class="input--style-4" type="password" name="password">
-                                </div>
+                            <div class="form-group">
+                                <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
+                                <input type="password" name="password2" id="re_pass" placeholder="Répeter Votre Mot De Pass" />
                             </div>
 
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">CONFIRMER MOT DE PASSE</label>
-                                    <input class="input--style-4" type="password" name="password2">
-                                </div>
+                            <div class="form-group form-button">
+                                <input type="submit" name="signup" id="signup" class="form-submit" value="Enregistrer" />
                             </div>
-                        </div>
-                        
-                        <div class="p-t-15">
-                            <button class="btn btn--radius-2 btn--blue" type="submit">INSCRIPTION</button>
-                            <a style="text-decoration:none ;margin-left: 2%;" href="/users/login" class="">Vous avez deja un compte?</a>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
+                    <div class="signup-image">
+                        <figure><img src="/login-inscription/images/signin-image.jpg" alt="sing up image"></figure>
+                        <a href="/users/login" class="signup-image-link">J'ai deja un compte</a>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
     </div>
 
-    <%- include components/flash %>
-
-    <!-- Jquery JS-->
-    <script src="/resources/login&inscription/inscription/vendor/jquery/jquery.min.js"></script>
-    <!-- Vendor JS-->
-    <script src="/resources/login&inscription/inscription/vendor/select2/select2.min.js"></script>
-    <script src="/resources/login&inscription/inscription/vendor/datepicker/moment.min.js"></script>
-    <script src="/resources/login&inscription/inscription/vendor/datepicker/daterangepicker.js"></script>
-    <!-- Main JS-->
-    <script src="/resources/login&inscription/inscription/js/global.js"></script>
-
-</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+    <!-- JS -->
+    <script src="/login-inscription/vendor/jquery/jquery.min.js"></script>
+    <script src="/login-inscription/js/main.js"></script>
+</body>
 
 </html>
-<!-- end document-->
