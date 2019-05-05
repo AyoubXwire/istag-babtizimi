@@ -26,27 +26,23 @@ module.exports = {
             .replace(/'/g, "&#039;")
             .replace(/\n/g, "<br>")
     },
-    validateForm: ({ username, email, password, password2 }) => new Promise((resolve, reject) => {
+    validateForm: (username, email, password, password2) => {
         // Check required fields
         if (!username || !email || !password || !password2) {
-            reject('Remplissez tous les champs')
+            return 'Remplissez tous les champs'
         }
 
         // Check password strength
         if (/^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/.test(password) == false) {
-            reject('Mot de passe doit contenir au moins 8 caracteres (majiscule, miniscule, nombre et un symbole)')
+            return 'Mot de passe doit contenir au moins 8 caracteres (majiscule, miniscule, nombre et un symbole)'
         }
 
         // Check passwords match
         if (password !== password2) {
-            reject(`Le mot de passe n'est pas le meme`)
+            return `Les mots de passe ne sont pas les memes`
         }
 
         // If the form is valid
-        const validUser = new User({
-            username: username,
-            email: email
-        })
-        resolve(validUser)
-    })
+        return 'valid'
+    }
 }
