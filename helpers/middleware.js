@@ -3,12 +3,14 @@ module.exports = {
         if(req.isAuthenticated()) {
             return next()
         }
+        req.flash('error', 'Veuillez vous connecter pour publier')
         res.redirect('/users/login')
     },
     isntAuth: (req, res, next) => {
         if(!req.isAuthenticated()) {
             return next()
         }
+        req.flash('error', 'Veuillez vous deconnecter')
         res.redirect('/')
     },
     isAdmin: (req, res, next) => {

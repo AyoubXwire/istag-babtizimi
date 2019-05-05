@@ -106,7 +106,7 @@ router.get('/pending/refuser/:id', isAuth, isAdmin, (req, res) => {
 })
 
 router.get('/utilisateurs', isAuth, isAdmin, (req, res) => {
-    let command = `SELECT id, username, power from users`
+    let command = `SELECT id, username, email, power from users`
 
     pool.getConnection((error, connection) => {
         if(error) throw error

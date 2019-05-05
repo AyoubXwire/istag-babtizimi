@@ -26,6 +26,9 @@
                     </div>
 
                     <div class="signin-form">
+                        <% if(error != '') { %>
+                            <p style="color: red"><strong><%= error %></strong></p>
+                        <% } %>
                         <h2 class="form-title">CONNEXION</h2>
                         <form method="POST" class="register-form" id="login-form">
                             <div class="form-group">
