@@ -20,11 +20,7 @@
                             <div class="login-content">
                                 <% if(locals.user) { %>
                                 <a href="#" style="margin-right: 30px;"><%= user.username %></a>
-                                <a href="/users/logout">Deconnexion</a>
-                                <% } else { %>
-                                <a href="/users/login">CONNEXION</a>
                                 <% } %>
-                                <a href="/empty">Service de Messagerie</a>
                             </div>
                         </div>
                     </div>
@@ -64,7 +60,8 @@
                                             <li style="height: 40px;"><a href="/empty">Chiffres Clé</a></li>
                                             <li style="height: 40px;"><a href="/empty">Organigramme</a></li>
                                             <li style="height: 40px;"><a href="/empty">Historique</a></li>
-                                            <li style="height: 40px;"><a href="/contact">Site Ofppt</a>
+                                            <li style="height: 40px;"><a href="/empty">Site Ofppt</a>
+                                            <li style="height: 40px;"><a href="/contact">Contact</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -133,8 +130,12 @@
                         <!-- Calling Info -->
                         <div class="calling-info">
                             <div class="call-center">
-                                <a href="tel:+21251474115"><i class="icon-telephone-2"></i>
-                                    <span>+21251474115</span></a>
+                                <a class="mr-2" target="blank" href="https://www.istag-babtizimi.ma:444/"><img class="mr-2" src="https://img.icons8.com/color/48/000000/new-post.png">MESSAGERIE</a>
+                                <% if(locals.user) { %>
+                                    <a class="mr-2" target="blank" href="/users/logout"><img class="mr-2" src="https://img.icons8.com/color/48/000000/login-rounded-right.png">Logout</a>
+                                <% } else { %>
+                                    <a class="mr-2" target="blank" href="/users/login"><img class="mr-2" src="https://img.icons8.com/color/48/000000/login-rounded-right.png">LOGIN</a>
+                                <% } %>
                             </div>
                         </div>
                     </nav>
