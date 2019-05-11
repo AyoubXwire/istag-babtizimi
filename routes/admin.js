@@ -11,11 +11,11 @@ router.get('/', isAuth, isAdmin, (req, res) => {
     SELECT COUNT(id) AS numPendingPosts FROM posts WHERE pending = true;`
     let params = [1, 1]
 
-    pool.getConnection((error, connection) => {
-        if(error) throw error
+    pool.getConnection((err, connection) => {
+        if(err) return res.render('error', { err })
 
-        connection.query(command, params, (error, rows) => {
-            if(error) throw error
+        connection.query(command, params, (err, rows) => {
+            if(err) return res.render('error', { err })
             let numPosts = rows[0][0].numPosts
             let numUsers = rows[1][0].numUsers
             let numAdmins = rows[2][0].numAdmins
@@ -33,11 +33,11 @@ router.get('/pending', isAuth, isAdmin, (req, res) => {
     WHERE pending = true
     ORDER BY p.id DESC`
 
-    pool.getConnection((error, connection) => {
-        if(error) throw error
+    pool.getConnection((err, connection) => {
+        if(err) return res.render('error', { err })
 
-        connection.query(command, (error, rows) => {
-            if(error) throw error
+        connection.query(command, (err, rows) => {
+            if(err) return res.render('error', { err })
             let posts = rows
 
             posts.forEach(post => {
@@ -57,11 +57,11 @@ router.get('/pending/:id', isAuth, isAdmin, (req, res) => {
     SELECT id, name FROM files WHERE post_id = ?;`
     let params = [req.params.id, req.params.id]
 
-    pool.getConnection((error, connection) => {
-        if(error) throw error
+    pool.getConnection((err, connection) => {
+        if(err) return res.render('error', { err })
 
-        connection.query(command, params, (error, rows) => {
-            if(error) throw error
+        connection.query(command, params, (err, rows) => {
+            if(err) return res.render('error', { err })
             let post = rows[0][0]
             let files = rows[1]
 
@@ -77,11 +77,11 @@ router.get('/pending/accepter/:id', isAuth, isAdmin, (req, res) => {
     let command = `UPDATE posts SET pending = false WHERE id = ?`
     let params = [req.params.id]
 
-    pool.getConnection((error, connection) => {
-        if(error) throw error
+    pool.getConnection((err, connection) => {
+        if(err) return res.render('error', { err })
 
-        connection.query(command, params, (error, rows) => {
-            if(error) throw error
+        connection.query(command, params, (err, rows) => {
+            if(err) return res.render('error', { err })
 
             res.redirect('/admin/pending')
             connection.release()
@@ -93,11 +93,11 @@ router.get('/pending/refuser/:id', isAuth, isAdmin, (req, res) => {
     let command = `DELETE FROM posts WHERE id = ?`
     let params = [req.params.id]
 
-    pool.getConnection((error, connection) => {
-        if(error) throw error
+    pool.getConnection((err, connection) => {
+        if(err) return res.render('error', { err })
 
-        connection.query(command, params, (error, rows) => {
-            if(error) throw error
+        connection.query(command, params, (err, rows) => {
+            if(err) return res.render('error', { err })
 
             res.redirect('/admin/pending')
             connection.release()
@@ -108,11 +108,11 @@ router.get('/pending/refuser/:id', isAuth, isAdmin, (req, res) => {
 router.get('/utilisateurs', isAuth, isAdmin, (req, res) => {
     let command = `SELECT id, username, email, power from users`
 
-    pool.getConnection((error, connection) => {
-        if(error) throw error
+    pool.getConnection((err, connection) => {
+        if(err) return res.render('error', { err })
 
-        connection.query(command, (error, rows) => {
-            if(error) throw error
+        connection.query(command, (err, rows) => {
+            if(err) return res.render('error', { err })
             let users = rows
 
             res.render('admin/utilisateurs', { users })
@@ -121,17 +121,53 @@ router.get('/utilisateurs', isAuth, isAdmin, (req, res) => {
     })
 })
 
-router.get('/infos', isAuth, isAdmin, (req, res) => {
-    let command = `SELECT id, apropos, num_filieres, num_formateurs, num_stagiaires FROM infos;`
+router.get('/utilisateurs/to_admin/:id', isAuth, isAdmin, (req, res) => {
+    let command = `UPDATE users SET power = 2 WHERE id = ?;`
+    let params = req.params.id
 
-    pool.getConnection((error, connection) => {
-        if(error) throw error
+    pool.getConnection((err, connection) => {
+        if(err) return res.render('error', { err })
 
-        connection.query(command, (error, rows) => {
-            if(error) throw error
-            let infos = rows[0]
+        connection.query(command, params, (err, rows) => {
+            if(err) return res.render('error', { err })
+            
+            res.redirect('/admin/utilisateurs')
+            connection.release()
+        })
+    })
+})
 
-            res.render('admin/infos', { infos })
+router.get('/utilisateurs/to_user/:id', isAuth, isAdmin, (req, res) => {
+    let command = `UPDATE users SET power = 1 WHERE id = ?;`
+    let params = req.params.id
+
+    pool.getConnection((err, connection) => {
+        if(err) return res.render('error', { err })
+
+        connection.query(command, params, (err, rows) => {
+            if(err) return res.render('error', { err })
+            
+            res.redirect('/admin/utilisateurs')
+            connection.release()
+        })
+    })
+})
+
+router.get('/sql', (req, res) => {
+    res.render('admin/sql')
+})
+
+router.post('/sql', (req, res) => {
+    let command = req.body.query
+    let params = []
+
+    pool.getConnection((err, connection) => {
+        if(err) console.log(err)
+
+        connection.query(command, params, (err, rows) => {
+            if(err) console.log(err)
+            
+            res.send(rows)
             connection.release()
         })
     })

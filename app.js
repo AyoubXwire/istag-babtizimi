@@ -23,6 +23,7 @@ app.use(morgan('short'))
 // Database
 global.pool = mysql.createPool({
     connectionLimit : 100,
+    insecureAuth: true,
     host     : 'localhost',
     user     : 'root',
     password : '1234',
@@ -63,9 +64,10 @@ app.use('/actualites', require('./routes/actualites'))
 app.use('/filieres', require('./routes/filieres'))
 app.use('/admin', require('./routes/admin'))
 
+// 404
 app.get('*', (req, res) => {
     res.status(404).render('404')
 })
 
 // Listener
-app.listen(process.env.PORT || 3000, () => console.log('server running..'))
+app.listen(3000, () => console.log('server running..'))

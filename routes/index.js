@@ -3,29 +3,28 @@ const router   = express.Router()
 
 const { previewString, prettyDateTime } = require('../helpers/functions')
 
-router.get('/', (req, res) => {
+router.get('/', (req, res, next) => {
     let command = `SELECT id, title, created_at, content
     FROM posts WHERE pending = ?
     ORDER BY id DESC LIMIT 5;
-    SELECT id, code, nom, description FROM secteurs;
-    SELECT id, apropos, num_filieres, num_formateurs, num_stagiaires FROM infos;`
+    SELECT id, code, nom, description FROM secteurs;`
     let params = [false]
     
-    pool.getConnection((error, connection) => {
-        if(error) throw error
+    pool.getConnection((err, connection) => {
+        if(err) return res.render('error', { err })
 
-        connection.query(command, params, (error, rows) => {
-            if(error) throw error
+        connection.query(command, params, (err, rows) => {
+            if(err) return res.render('error', { err })
+
             let posts = rows[0]
             let secteurs = rows[1]
-            let infos = rows[2][0]
 
             posts.forEach(post => {
                 post.title = previewString(post.title)
                 post.created_at = prettyDateTime(post.created_at)
             })
 
-            res.render('index', { posts, secteurs, infos })
+            res.render('index', { posts, secteurs })
             connection.release()
         })
     })

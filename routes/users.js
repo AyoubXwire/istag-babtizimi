@@ -37,7 +37,7 @@ router.post('/register', isntAuth, (req, res) => {
             const params = [req.body.username, req.body.email, hash]
 
             pool.getConnection((err, connection) => {
-                if (err) throw err
+                if (err) return res.render('error', { err })
 
                 connection.query(command, params, (err, rows) => {
                     if (err) {
@@ -52,9 +52,9 @@ router.post('/register', isntAuth, (req, res) => {
                 })
             })
         })
-        .catch(err => { throw err })
+        .catch(err => res.render('error'))
     })
-    .catch(err => { throw err })
+    .catch(err => res.render('error'))
 })
 
 

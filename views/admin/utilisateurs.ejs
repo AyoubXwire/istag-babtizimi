@@ -23,11 +23,10 @@
                             <hr style="margin:8px auto">
                             <br>
                             <% if(user.power === 1) { %>
-                                <a href="#"><span class="label mr-50">Definir comme admin</span></a>
+                                <a href="/admin/utilisateurs/to_admin/<%= user.id %>"><span class="label mr-50">Definir comme admin</span></a>
                             <% } else { %>
-                                <a href="#"><span class="label mr-50">Definir comme utilisateur</span></a>
+                                <a href="/admin/utilisateurs/to_user/<%= user.id %>""><span class="label mr-50">Definir comme utilisateur</span></a>
                             <% } %>
-                            <a href="#"><span class="label">Supprimez</span></a>
                         </div>
                     </div>
                 </div>
@@ -49,7 +48,6 @@
     <!-- Active js -->
     <script src="/js/active.js"></script>
     <!-- Google Maps -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwuyLRa1uKNtbgx6xAJVmWy-zADgegA2s"></script>
     <script src="/js/google-map/map-active.js"></script>
 
     <script>

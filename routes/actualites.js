@@ -22,11 +22,11 @@ router.get('/', (req, res) => {
         ORDER BY p.id DESC`
     }
 
-    pool.getConnection((error, connection) => {
-        if(error) throw error
+    pool.getConnection((err, connection) => {
+        if(err) return res.render('error', { err })
 
-        connection.query(command, params, (error, rows) => {
-            if(error) throw error
+        connection.query(command, params, (err, rows) => {
+            if(err) return res.render('error', { err })
             let posts = rows
 
             posts.forEach(post => {
@@ -50,11 +50,11 @@ router.post('/new', isAuth, (req, res) => {
     
     params.push(req.user.power === 1)
     
-    pool.getConnection((error, connection) => {
-        if(error) throw error
+    pool.getConnection((err, connection) => {
+        if(err) return res.render('error', { err })
 
-        connection.query(command, params, (error, rows) => {
-            if(error) throw error
+        connection.query(command, params, (err, rows) => {
+            if(err) return res.render('error', { err })
 
             if(req.files) {
                 if(Array.isArray(req.files.document)) {
@@ -66,11 +66,11 @@ router.post('/new', isAuth, (req, res) => {
                         let command = `INSERT INTO files (post_id, name) VALUES (?, ?);`
                         let params = [rows.insertId, file.name]
         
-                        file.mv('public/uploads/' + file.name, error => {
-                            if(error) throw error
+                        file.mv('public/uploads/' + file.name, err => {
+                            if(err) return res.render('error', { err })
                     
-                            connection.query(command, params, (error, rows) => {
-                                if(error) throw error
+                            connection.query(command, params, (err, rows) => {
+                                if(err) return res.render('error', { err })
                             })
                         })
                     })
@@ -82,11 +82,11 @@ router.post('/new', isAuth, (req, res) => {
                     let command = `INSERT INTO files (post_id, name) VALUES (?, ?);`
                     let params = [rows.insertId, file.name]
     
-                    file.mv('public/uploads/' + file.name, error => {
-                        if(error) throw error
+                    file.mv('public/uploads/' + file.name, err => {
+                        if(err) return res.render('error', { err })
                 
-                        connection.query(command, params, (error, rows) => {
-                            if(error) throw error
+                        connection.query(command, params, (err, rows) => {
+                            if(err) return res.render('error', { err })
                         })
                     })
                 }
@@ -110,11 +110,11 @@ router.get('/:id', isntPending, (req, res) => {
     SELECT id, name FROM files WHERE post_id = ?`
     const params = [req.params.id, req.params.id]
     
-    pool.getConnection((error, connection) => {
-        if(error) throw error
+    pool.getConnection((err, connection) => {
+        if(err) return res.render('error', { err })
         
-        connection.query(command, params, (error, rows) => {
-            if(error) throw error
+        connection.query(command, params, (err, rows) => {
+            if(err) return res.render('error', { err })
             
             let post = rows[0][0]
             let files = rows[1]
@@ -136,11 +136,11 @@ router.get('/update/:id', isAuth, isOwnerOrAdmin, (req, res) => {
     SELECT id, name FROM files WHERE post_id = ?`
     let params = [req.params.id, req.params.id]
 
-    pool.getConnection((error, connection) => {
-        if(error) throw error
+    pool.getConnection((err, connection) => {
+        if(err) return res.render('error', { err })
 
-        connection.query(command, params, (error, rows) => {
-            if(error) throw error
+        connection.query(command, params, (err, rows) => {
+            if(err) return res.render('error', { err })
             let post = rows[0][0]
             let files = rows[1]
 
@@ -154,11 +154,11 @@ router.post('/update/:id', isAuth, isOwnerOrAdmin, (req, res) => {
     const command = `Update posts SET title = ?, content = ? WHERE id = ?;`
     const params = [req.body.title, req.body.content, req.params.id]
 
-    pool.getConnection((error, connection) => {
-        if(error) throw error
+    pool.getConnection((err, connection) => {
+        if(err) return res.render('error', { err })
 
-        connection.query(command, params, (error, rows) => {
-            if(error) throw error
+        connection.query(command, params, (err, rows) => {
+            if(err) return res.render('error', { err })
 
             if(req.files) {
                 if(Array.isArray(req.files.document)) {
@@ -170,11 +170,11 @@ router.post('/update/:id', isAuth, isOwnerOrAdmin, (req, res) => {
                         let command = `INSERT INTO files (post_id, name) VALUES (?, ?);`
                         let params = [req.params.id, file.name]
         
-                        file.mv('public/uploads/' + file.name, error => {
-                            if(error) throw error
+                        file.mv('public/uploads/' + file.name, err => {
+                            if(err) return res.render('error', { err })
                     
-                            connection.query(command, params, (error, rows) => {
-                                if(error) throw error
+                            connection.query(command, params, (err, rows) => {
+                                if(err) return res.render('error', { err })
                             })
                         })
                     })
@@ -186,11 +186,11 @@ router.post('/update/:id', isAuth, isOwnerOrAdmin, (req, res) => {
                     let command = `INSERT INTO files (post_id, name) VALUES (?, ?);`
                     let params = [req.params.id, file.name]
     
-                    file.mv('public/uploads/' + file.name, error => {
-                        if(error) throw error
+                    file.mv('public/uploads/' + file.name, err => {
+                        if(err) return res.render('error', { err })
                 
-                        connection.query(command, params, (error, rows) => {
-                            if(error) throw error
+                        connection.query(command, params, (err, rows) => {
+                            if(err) return res.render('error', { err })
                         })
                     })
                 }
@@ -208,11 +208,11 @@ router.get('/delete/:id', isAuth, isOwnerOrAdmin, (req, res) => {
     DELETE FROM posts WHERE id = ?;`
     const params = [req.params.id, req.params.id]
 
-    pool.getConnection((error, connection) => {
-        if(error) throw error
+    pool.getConnection((err, connection) => {
+        if(err) return res.render('error', { err })
 
-        connection.query(command, params, (error, rows) => {
-            if(error) throw error
+        connection.query(command, params, (err, rows) => {
+            if(err) return res.render('error', { err })
             
             req.flash('success', 'Publication supprimée')
             res.redirect('/actualites')
@@ -225,20 +225,20 @@ router.get('/delete-file/:id', isAuth, isOwnerOrAdmin, (req, res) => {
     const command = `SELECT name FROM files WHERE id = ?;`
     const params = [req.params.id]
 
-    pool.getConnection((error, connection) => {
-        if(error) throw error
+    pool.getConnection((err, connection) => {
+        if(err) return res.render('error', { err })
 
-        connection.query(command, params, (error, rows) => {
+        connection.query(command, params, (err, rows) => {
             let fileName = rows[0].name
 
-            fs.unlink('public/uploads/' + fileName, (error) => {
-                if(error) throw error
+            fs.unlink('public/uploads/' + fileName, (err) => {
+                if(err) return res.render('error', { err })
 
                 const command = `DELETE FROM files WHERE id = ?;`
                 const params = [req.params.id]
                 
-                connection.query(command, params, (error, rows) => {
-                    if(error) throw error
+                connection.query(command, params, (err, rows) => {
+                    if(err) return res.render('error', { err })
         
                     req.flash('success', 'fichier supprimé')
                     res.redirect('/actualites')

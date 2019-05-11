@@ -1,3 +1,7 @@
+-- CREATE DATABASE babtizimi;
+-- USE babtizimi;
+-- SET NAMES utf8;
+
 -- create tables
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER NOT NULL auto_increment,
@@ -29,6 +33,13 @@ CREATE TABLE IF NOT EXISTS files (
     FOREIGN KEY (post_id) REFERENCES posts (id)
 );
 
+CREATE TABLE IF NOT EXISTS sessions (
+	session_id varchar(128),
+    expires int(11) unsigned,
+    data text,
+    PRIMARY KEY (session_id)
+);
+
 create table IF NOT EXISTS secteurs (
     id int NOT NULL AUTO_INCREMENT,
     code varchar(255) NOT NULL,
@@ -55,20 +66,8 @@ create table IF NOT EXISTS modules (
     FOREIGN KEY (id_filiere) REFERENCES filieres(id)
 );
 
-create table IF NOT EXISTS infos (
-	id int NOT NULL AUTO_INCREMENT,
-    apropos text NOT NULL,
-    num_filieres INT NOT NULL,
-    num_formateurs INT NOT NULL,
-    num_stagiaires INT NOT NULL,
-    PRIMARY KEY (id)
-);
-
--- create admin
-INSERT INTO users(username, email, password, power) VALUES("admin", "admin@gmail.com", "$2b$10$kx.shx5l1CGwRYFQGAj0GO4Qk6GreWpRHjiYZC4Ew8ojU0qnLNoPW", 3);
-
--- insert in secteur
-INSERT INTO infos(apropos, num_filieres, num_formateurs, num_stagiaires) VALUES("In feugiat ligula quis turpis imperdiet, nec tempus nisi dapibus. Fusce a erat dictum, lacinia ipsum vel, sollicitudin ante. Duis lacus sapien, tincidunt in diam vitae, convallis posuere orci. Donec libero ante, convallis vitae dictum a, auctor vitae enim. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec elementum, magna nec feugiat mattis, est est iaculis magna, sed blandit ipsum augue ut massa. Vivamus euismod augue nec arcu volutpat mattis. Etiam ut sollicitudin mi. Mauris et eleifend ligula, in scelerisque est. Donec imperdiet, risus id tincidunt semper, justo lectus aliquet metus, accumsan egestas erat nisi quis est. Sed vel lacinia magna, non finibus tortor. Nullam dignissim aliquet mollis. Donec tincidunt venenatis ex, ut volutpat neque facilisis id. Ut sagittis elit id lacus faucibus, sit amet mattis orci mollis.", 28, 42, 1742);
+-- create webmaster (Webmaster@123)
+INSERT INTO users(username, email, password, power) VALUES("webmaster", "webmaster@gmail.com", "$2b$10$J4u0fWfKTycMbJ3y6tCV.uxb4yIAxPYtdh.ryXo079DuIHVCB52Me", 3);
 
 -- insert in secteur
 INSERT INTO secteurs(code, nom, description) VALUES("NTIC", "Technologies de l'information", "Le Maroc est conscient du fait que l’usage des technologies de l’information est un facteur essentiel pour l’émergence de la société du savoir et peut activement contribuer au développement humain, à l’amélioration de la cohésion sociale et à la croissance de l’économie nationale.");

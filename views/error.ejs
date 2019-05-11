@@ -6,7 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>404</title>
+	<title>erreur</title>
 
 	<!-- Google font -->
 	<link href="https:/fonts.googleapis.com/css?family=Montserrat:500" rel="stylesheet">
@@ -108,9 +108,10 @@ body {
 	<div id="notfound">
 		<div class="notfound">
 			<div class="notfound-404">
-				<h1>404</h1>
+				<h1>Erreur</h1>
 			</div>
-			<h2>Oops! Cette page est introuvable</h2>
+      <h2>Oops! Une erreur s'est produit</h2>
+      <p><%= err.message %></p>
 			<a href="/">ACCEUIL</a>
 		</div>
 	</div>

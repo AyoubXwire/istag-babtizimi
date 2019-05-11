@@ -12,11 +12,11 @@ router.get('/', (req, res) => {
         command = `SELECT id, code, nom FROM filieres`
     }
 
-    pool.getConnection((error, connection) => {
-        if(error) throw error
+    pool.getConnection((err, connection) => {
+        if(err) return res.render('error', { err })
 
-        connection.query(command, params, (error, rows) => {
-            if(error) throw error
+        connection.query(command, params, (err, rows) => {
+            if(err) return res.render('error', { err })
             let filieres = rows
 
             res.render('filieres', { filieres })
@@ -30,11 +30,12 @@ router.get('/:id', (req, res) => {
     SELECT nom FROM modules WHERE id_filiere = ?;`
     let params = [req.params.id, req.params.id]
 
-    pool.getConnection((error, connection) => {
-        if(error) throw error
+    pool.getConnection((err, connection) => {
+        if(err) return res.render('error', { err })
 
-        connection.query(command, params, (error, rows) => {
-            if(error) throw error
+        connection.query(command, params, (err, rows) => {
+            if(err) return res.render('error', { err })
+            
             let filiere = rows[0][0]
             let modules = rows[1]
             

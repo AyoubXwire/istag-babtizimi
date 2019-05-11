@@ -2,12 +2,10 @@
 
 <body>
 
-    <!-- ##### Preloader ##### -->
     <div id="preloader">
         <i class="circle-preloader"></i>
     </div>
 
-    <!-- ##### Header Area Start ##### -->
     <header class="header-area">
 
         <!-- Top Header Area -->
@@ -21,7 +19,7 @@
                             </div>
                             <div class="login-content">
                                 <% if(locals.user) { %>
-                                <a href="/admin" style="margin-right: 30px;"><%= user.username %></a>
+                                <a href="#" style="margin-right: 30px;"><%= user.username %></a>
                                 <a href="/users/logout">Deconnexion</a>
                                 <% } else { %>
                                 <a href="/users/login">CONNEXION</a>
@@ -33,7 +31,6 @@
                 </div>
             </div>
         </div>
-
 
         <!-- Navbar Area -->
         <div class="academy-main-menu">
@@ -60,75 +57,72 @@
                                 <ul>
                                     <li><a href="#">ETABLISSEMENT</a>
                                         <ul style="width:200%" class="dropdown">
-                                            <li style="height: 60px;"><a href="/apropos">Introduction</a>
+                                            <li style="height: 40px;"><a href="/apropos">Introduction</a>
                                             </li>
-                                            <li style="height: 60px;"><a href="/Reglement">Réglement Interne</a>
+                                            <li style="height: 40px;"><a href="/reglement">Réglement Interne</a>
                                             </li>
-                                            <li style="height: 60px;"><a href="/empty">Chiffres Clé</a></li>
-                                            <li style="height: 60px;"><a href="/empty">Organigramme</a></li>
-                                            <li style="height: 60px;"><a href="/empty">Patrimoine, Historique</a></li>
-                                            <li style="height: 60px;"><a href="/contact">Site/Ofppt</a>
+                                            <li style="height: 40px;"><a href="/empty">Chiffres Clé</a></li>
+                                            <li style="height: 40px;"><a href="/empty">Organigramme</a></li>
+                                            <li style="height: 40px;"><a href="/empty">Historique</a></li>
+                                            <li style="height: 40px;"><a href="/contact">Site Ofppt</a>
                                             </li>
                                         </ul>
                                     </li>
+
+
 
                                     <li><a href="#">INSCRIPTION</a>
                                         <ul style="width:200%" class="dropdown">
-                                            <li style="height: 60px;"><a href="/filieres">Cours de jour</a></li>
-                                            <li style="height: 60px;"><a href="/filieres">Cours de soir</a></li>
-                                            <li style="height: 60px;"><a href="/inscription">démarches d’inscription.</a></li>
-                                            <li style="height: 60px;"><a href="/empty">Formation qualifiante</a></li>
-                                            <li style="height: 60px;"><a href="/empty">Formation continue</a></li>
-                                            <li style="height: 60px;"><a href="/empty">Dates clés</a></li>
-                                            <li style="height: 60px;"><a href="/empty">listes(admis et d’attentes)</a></li>
-                                            <li style="height: 60px;"><a href="/empty">Liste des EFP de la région</a></li>
-                                            <li style="height: 60px;"><a href="/empty">Portes ouvertes</a></li>
-                                            <li style="height: 60px;"><a href="/empty">Inscription en ligne</a></li>
+                                            <!--ours de jour : listes de filières (description + modules + conditions d’accès)-->
+                                            <li style="height: 40px;"><a href="/filieres">Cours de jour</a></li>
+                                            <!--Cours de soir : listes de filières + condition d’accès-->
+                                            <li style="height: 40px;"><a href="/filieres">Cours de soir</a></li>
+                                            <li style="height: 40px;"><a href="/inscription">démarches d’inscription</a></li>
+                                            <li style="height: 40px;"><a href="/empty">Formation qualifiante</a></li>
+                                            <!--Formation continue : personne à contacter-->
+                                            <li style="height: 40px;"><a href="/empty">Formation continue</a></li>
+                                            <!--Dates clés (date de concours d’accès et date d’affichage des résultats)-->
+                                            <li style="height: 40px;"><a href="/empty">Dates clés</a></li>
+                                            <li style="height: 40px;"><a href="/empty">liste des admis</a></li>
+                                            <li style="height: 40px;"><a href="/empty">Liste des EFP de la région</a></li>
+                                            <li style="height: 40px;"><a href="/empty">Inscription en ligne</a></li>
                                         </ul>
                                     </li>
 
+
                                     <li><a href="#">ESPACE ETUDIANT</a>
                                         <ul style="width:200%" class="dropdown">
-                                            <li style="height: 60px;"><a href="/empty">Emplois du temps</a></li>
-                                            <li style="height: 60px;"><a href="/empty">Avis aux stagiaires</a></li>
-                                            <li style="height: 60px;"><a href="/empty">Calendrier des examens</a></li>
-                                            <li style="height: 60px;"><a href="/empty">Calendrier des vacances</a></li>
-                                            <li style="height: 60px;"><a href="/empty">Concours, offre d’emplois</a></li>
-                                            <li style="height: 60px;"><a href="/empty">Réalisation de nos stagiaires</a></li>
-                                            <li style="height: 60px;"><a href="/empty">Bource</a></li>
-                                            <li style="height: 60px;"><a href="/empty">Listes des résultats de fin
-                                                    d’années.</a></li>
-                                            <li><a href="#">Stages en milieu professionnelle:</a>
+                                            <li style="height: 40px;"><a href="/empty">Emplois du temps</a></li>
+                                            <!--Avis aux stagiaires (Rattrapages, Absence des formateurs, …)-->
+                                            <li style="height: 40px;"><a href="/empty">Avis aux stagiaires</a></li>
+                                            <!--Calendrier des examens (EFF, EFR, EFF)-->
+                                            <li style="height: 40px;"><a href="/empty">Calendrier des examens</a></li>
+                                            <li style="height: 40px;"><a href="/empty">Calendrier des vacances</a></li>
+                                            <li style="height: 40px;"><a href="/empty">Offre d’emplois</a></li>
+                                            <li style="height: 40px;"><a href="/empty">Réalisation de nos stagiaires</a></li>
+                                            <li style="height: 40px;"><a href="/empty">Bource</a></li>
+                                            <li style="height: 40px;"><a href="/empty">Résultats de fin
+                                                    d’année</a></li>
+                                            <li><a href="/empty">Stages en milieu professionnelle</a>
                                                 <ul style="width:100%" class="dropdown">
-                                                    <li style="height: 60px;"><a href="/empty">Planning</a></li>
-                                                    <li style="height: 60px;"><a href="/empty">Liste des entreprises</a></li>
-                                                    <li style="height: 60px;"><a href="/empty">Documents utiles</a></li>
+                                                    <li style="height: 40px;"><a href="/empty">Planning</a></li>
+                                                    <li style="height: 40px;"><a href="/empty">Liste des entreprises</a></li>
+                                                    <li style="height: 40px;"><a href="/empty">Documents utiles</a></li>
                                                 </ul>
                                             </li>
                                         </ul>
                                     </li>
 
-                                    <li><a href="/actualites">ACTUALITES</a>
-                                        <ul style="width:200%" class="dropdown">
-                                            <li style="height: 60px;"><a href="/actualites">Activités pedagogique</a></li>
-                                            <li style="height: 60px;"><a href="/empty">activités culturelles</a></li>
-                                            <li style="height: 60px;"><a href="/empty">activités parascolaires</a></li>
-                                            <li style="height: 60px;"><a href="/empty">activités sociales</a></li>
-                                            <li style="height: 60px;"><a href="/empty">Avis aux stagiaires</a></li>
-                                            <li style="height: 60px;"><a href="/empty">les actualités de l’OFPPT</a></li>
-                                            <li style="height: 100px;"><a href="/empty">Concours, offre d’emplois</a></li>
-                                        </ul>
-                                    </li>
                                     <li><a href="#">RESSOURCES</a>
                                         <ul style="width:200%" class="dropdown">
 
-                                            <li style="height: 60px;"><a href="/empty">Charte de publication</a></li>
-                                            <li style="height: 60px;"><a href="/empty">Contenu Pedagogique</a></li>
-                                            <li style="height: 100px;"><a href="/empty">Liste des ouvrages disponible dans la
-                                                    Bibliothèque</a></li>
+                                            <li style="height: 40px;"><a href="/empty">Charte de publication</a></li>
+                                            <li style="height: 40px;"><a href="/empty">Contenu Pedagogique</a></li>
+                                            <li style="height: 40px;"><a href="/empty">URD</a></li>
                                         </ul>
                                     </li>
 
+                                    <li><a href="/actualites">ACTUALITES</a></li>
                                     </li>
 
                                 </ul>
@@ -148,4 +142,3 @@
             </div>
         </div>
     </header>
-    <!-- ##### Header Area End ##### -->
