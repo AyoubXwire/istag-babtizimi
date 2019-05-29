@@ -43,7 +43,6 @@ User.findOrCreate({
         power: 2
     }
 })
-.then(() => console.log('webmaster created'))
 .catch(err => console.log(err))
 
 module.exports = User

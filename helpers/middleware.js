@@ -1,3 +1,5 @@
+const Post = require('../models/Post')
+
 module.exports = {
     isAuth: (req, res, next) => {
         if(req.isAuthenticated()) {
@@ -16,7 +18,7 @@ module.exports = {
     },
 
     isAdmin: (req, res, next) => {
-        if(req.user && req.user.power === 2) {
+        if(req.user && req.user.power === 1) {
             return next()
         }
         req.flash('error', `vous n'etes pas autorisé`)
@@ -24,7 +26,7 @@ module.exports = {
     },
 
     isMaster: (req, res, next) => {
-        if(req.user && req.user.power === 3) {
+        if(req.user && req.user.power === 2) {
             return next()
         }
         req.flash('error', `vous n'etes pas autorisé`)
@@ -32,7 +34,7 @@ module.exports = {
     },
 
     isMasterOrAdmin: (req, res, next) => {
-        if(req.user && req.user.power > 1) {
+        if(req.user && req.user.power > 0) {
             return next()
         }
         req.flash('error', `vous n'etes pas autorisé`)
@@ -40,95 +42,66 @@ module.exports = {
     },
 
     isOwner: (req, res, next) => {
-        let command = `SELECT user_id FROM posts WHERE id = ?`
-        let params = [req.params.id]
-        
-        pool.getConnection((error, connection) => {
-            if(error) throw error
-
-            connection.query(command, params, (error, rows) => {
-                if(error) throw error
-                
-                connection.release()
-                const post = rows[0]
-                
-                // Check existence
-                if(post === undefined && !req.user) {
-                    req.flash('error', `Publication introuvable ou autorisations insuffisantes`)
-                    return res.redirect('/actualites')
-                }
-
-                // Check ownership
-                if(req.user.id === post.user_id) {
-                    return next()
-                }
-
-                req.flash('error', `vous n'etes pas autorisé`)
+        Post.findByPk(req.params.id)
+        .then(post => {
+            // Check existence
+            if(!post && !req.user) {
+                req.flash('error', `Publication introuvable ou autorisations insuffisantes`)
                 return res.redirect('/actualites')
-            })
+            }
+
+            // Check ownership
+            if(req.user.username === post.username) {
+                return next()
+            }
+
+            req.flash('error', `vous n'etes pas autorisé`)
+            return res.redirect('/actualites')
         })
+        .catch(err => console.log(err))
     },
 
     isOwnerOrMasterOrAdmin : (req, res, next) => {
-        if(req.user && req.user.power > 1) {
+        if(req.user && req.user.power > 0) {
             return next()
         }
-        let command = `SELECT user_id FROM posts WHERE id = ?`
-        let params = [req.params.id]
-        
-        pool.getConnection((error, connection) => {
-            if(error) throw error
 
-            connection.query(command, params, (error, rows) => {
-                if(error) throw error
-                
-                connection.release()
-                const post = rows[0]
-                
-                // Check existence
-                if(post === undefined && !req.user) {
-                    req.flash('error', `Publication introuvable ou autorisations insuffisantes`)
-                    return res.redirect('/actualites')
-                }
-                
-                // Check ownership
-                if(req.user.id === post.user_id) {
-                    return next()
-                }
-
-                req.flash('error', `vous n'etes pas autorisé`)
+        Post.findByPk(req.params.id)
+        .then(post => {
+            // Check existence
+            if(!post && !req.user) {
+                req.flash('error', `Publication introuvable ou autorisations insuffisantes`)
                 return res.redirect('/actualites')
-            })
+            }
+
+            // Check ownership
+            if(req.user.username === post.username) {
+                return next()
+            }
+
+            req.flash('error', `vous n'etes pas autorisé`)
+            return res.redirect('/actualites')
         })
+        .catch(err => console.log(err))
     },
 
     isntPending: (req, res, next) => {
-        let command = `SELECT pending FROM posts WHERE id = ?`
-        let params = [req.params.id]
-        
-        pool.getConnection((error, connection) => {
-            if(error) throw error
-
-            connection.query(command, params, (error, rows) => {
-                if(error) throw error
-                
-                connection.release()
-                const post = rows[0]
-                
-                // Check existence
-                if(post === undefined) {
-                    req.flash('error', `Publication introuvable ou autorisations insuffisantes`)
-                    return res.redirect('/actualites')
-                }
-                
-                // Check pending
-                if(post.pending !== 1) {
-                    return next()
-                }
-
+        Post.findByPk(req.params.id)
+        .then(post => {
+            // Check existence
+            if(!post) {
                 req.flash('error', `Publication introuvable ou autorisations insuffisantes`)
                 return res.redirect('/actualites')
-            })
+            }
+            
+            // Check pending
+            if(post.is_pending !== 1) {
+                return next()
+            }
+
+            req.flash('error', `Publication introuvable ou autorisations insuffisantes`)
+            return res.redirect('/actualites')
         })
+        .catch(err => console.log(err))
     }
 }

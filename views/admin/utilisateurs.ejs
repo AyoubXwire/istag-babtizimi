@@ -22,10 +22,10 @@
                             <h6><%= user.email %></h6>
                             <hr style="margin:8px auto">
                             <br>
-                            <% if(user.power === 1) { %>
-                                <a href="/admin/utilisateurs/to_admin/<%= user.id %>"><span class="label mr-50">Definir comme admin</span></a>
+                            <% if(user.power === 0) { %>
+                                <a href="/admin/utilisateurs/to_admin/<%= user.username %>"><span class="label mr-50">Definir comme admin</span></a>
                             <% } else { %>
-                                <a href="/admin/utilisateurs/to_user/<%= user.id %>""><span class="label mr-50">Definir comme utilisateur</span></a>
+                                <a href="/admin/utilisateurs/to_user/<%= user.username %>""><span class="label mr-50">Definir comme utilisateur</span></a>
                             <% } %>
                         </div>
                     </div>

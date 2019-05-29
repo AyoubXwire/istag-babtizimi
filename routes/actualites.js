@@ -2,42 +2,39 @@ const express  = require('express')
 const router   = express.Router()
 const fs = require('fs')
 
+const User = require('../models/User')
+const Post = require('../models/Post')
+const File = require('../models/File')
+
 const { previewString, prettyDateTime, escapeHtml } = require('../helpers/functions')
 const { isAuth, isOwnerOrMasterOrAdmin, isntPending } = require('../helpers/middleware')
 
 router.get('/', (req, res) => {
-    let command = ''
-    let params = []
-
+    let where = {}
     if(req.query.search) {
-        command = `SELECT p.id, title, content, p.created_at, p.user_id, username
-        FROM posts p JOIN users u ON p.user_id = u.id
-        WHERE pending = false AND post_type = 1 AND title LIKE ?
-        ORDER BY p.id DESC`
-        params = [`%${req.query.search}%`]
+        where = {
+            where: {
+                is_pending: false,
+                type: 'A',
+                title: { [Op.like]: '%${req.query.search}%' }
+            }
+        }
     } else {
-        command = `SELECT p.id, title, content, p.created_at, p.user_id, username
-        FROM posts p JOIN users u ON p.user_id = u.id
-        WHERE pending = false AND post_type = 1
-        ORDER BY p.id DESC`
+        where = {
+            where: { is_pending: false, type: 'A' }
+        }
     }
 
-    pool.getConnection((err, connection) => {
-        if(err) return res.render('error', { err })
-
-        connection.query(command, params, (err, rows) => {
-            if(err) return res.render('error', { err })
-            let posts = rows
-
-            posts.forEach(post => {
-                post.content = previewString(post.content)
-                post.created_at = prettyDateTime(post.created_at)
-            })
-            
-            res.render('actualites', { posts })
-            connection.release()
+    Post.findAll(where, { order: [['created_at', 'DESC']] })
+    .then(posts => {
+        posts.forEach(post => {
+            post.content = previewString(post.content)
+            post.created_at = prettyDateTime(post.created_at)
         })
+        
+        res.render('actualites', { posts })
     })
+    .catch(err => res.render('error', { err }))
 })
 
 router.get('/new', isAuth, (req, res) => {
@@ -45,63 +42,51 @@ router.get('/new', isAuth, (req, res) => {
 })
 
 router.post('/new', isAuth, (req, res) => {
-    let command = `INSERT INTO posts (title, content, user_id, pending, post_type) VALUES (?, ?, ?, ?, ?);`
-    let params = [req.body.title, req.body.content, req.user.id, 1]
-    
-    params.push(req.user.power === 1)
-    
-    pool.getConnection((err, connection) => {
-        if(err) return res.render('error', { err })
-
-        connection.query(command, params, (err, rows) => {
-            if(err) return res.render('error', { err })
-
-            if(req.files) {
-                if(Array.isArray(req.files.document)) {
-                    const files = req.files.document
-                    files.forEach(file => {
-                        const prefix = Math.floor(Math.random() * 1000000) + '-'
-                        file.name = prefix + file.name
-
-                        let command = `INSERT INTO files (post_id, name) VALUES (?, ?);`
-                        let params = [rows.insertId, file.name]
-        
-                        file.mv('public/uploads/' + file.name, err => {
-                            if(err) return res.render('error', { err })
-                    
-                            connection.query(command, params, (err, rows) => {
-                                if(err) return res.render('error', { err })
-                            })
-                        })
-                    })
-                } else {
-                    const file = req.files.document
+    Post.create({
+        title: req.body.title,
+        content: req.body.content,
+        username: req.user.username,
+        is_pending: req.user.power === 0,
+        type: 'A'
+    })
+    .then(post => {
+        if(req.files) {
+            if(Array.isArray(req.files.document)) {
+                const files = req.files.document
+                files.forEach(file => {
                     const prefix = Math.floor(Math.random() * 1000000) + '-'
                     file.name = prefix + file.name
 
-                    let command = `INSERT INTO files (post_id, name) VALUES (?, ?);`
-                    let params = [rows.insertId, file.name]
-    
                     file.mv('public/uploads/' + file.name, err => {
                         if(err) return res.render('error', { err })
                 
-                        connection.query(command, params, (err, rows) => {
-                            if(err) return res.render('error', { err })
-                        })
+                        File.create({ post_id: post.id, name: file.name })
+                        .catch(err => res.render('error', { err }))
                     })
-                }
-            }
-
-            if(req.user.power > 1) {
-                req.flash('success', 'Publication envoyée')
+                })
             } else {
-                req.flash('success', 'Suggestion publiée, un administrateur doit la confirmer')
-            }
+                const file = req.files.document
+                const prefix = Math.floor(Math.random() * 1000000) + '-'
+                file.name = prefix + file.name
 
-            res.redirect('/actualites')
-            connection.release()
-        })
+                file.mv('public/uploads/' + file.name, err => {
+                    if(err) return res.render('error', { err })
+            
+                    File.create({ post_id: post.id, name: file.name })
+                    .catch(err => res.render('error', { err }))
+                })
+            }
+        }
+
+        if(req.user.power > 0) {
+            req.flash('success', 'Publication envoyée')
+        } else {
+            req.flash('success', 'Suggestion publiée, un administrateur doit la confirmer')
+        }
+
+        res.redirect('/actualites')
     })
+    .catch(err => res.render('error', { err }))
 })
 
 router.get('/:id', isntPending, (req, res) => {

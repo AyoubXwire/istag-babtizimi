@@ -1,48 +1,34 @@
 const express  = require('express')
 const router   = express.Router()
 
+const Filiere = require('../models/Filiere')
+const Module = require('../models/Module')
+
 router.get('/', (req, res) => {
-    let command
-    let params = []
-    
+    let options = {}
     if(req.query.secteur) {
-        command = `SELECT id, code, nom FROM filieres WHERE id_secteur = ?`
-        params = [req.query.secteur]
-    } else {
-        command = `SELECT id, code, nom FROM filieres`
+        options = { where: { secteur_code: req.query.secteur } }
     }
 
-    pool.getConnection((err, connection) => {
-        if(err) return res.render('error', { err })
-
-        connection.query(command, params, (err, rows) => {
-            if(err) return res.render('error', { err })
-            let filieres = rows
-
-            res.render('filieres', { filieres })
-            connection.release()
-        })
+    Filiere.findAll(options)
+    .then(filieres => {
+        res.render('filieres', { filieres })
     })
+    .catch(err => res.render('error', { err }))
 })
 
-router.get('/:id', (req, res) => {
-    let command = `SELECT code, nom, description FROM filieres WHERE id = ?;
-    SELECT nom FROM modules WHERE id_filiere = ?;`
-    let params = [req.params.id, req.params.id]
+router.get('/:code', (req, res) => {
+    Promise.all([
+        Filiere.findByPk(req.params.code),
+        Module.findAll({ where: { filiere_code: req.params.code } })
+    ])
+    .then(data => {
+        const filiere = data[0]
+        let modules = data[1]
 
-    pool.getConnection((err, connection) => {
-        if(err) return res.render('error', { err })
-
-        connection.query(command, params, (err, rows) => {
-            if(err) return res.render('error', { err })
-            
-            let filiere = rows[0][0]
-            let modules = rows[1]
-            
-            res.render('filiere', { filiere, modules })
-            connection.release()
-        })
+        res.render('filiere', { filiere, modules })
     })
+    .catch(err => res.render('error', { err }))
 })
 
 module.exports = router
