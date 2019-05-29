@@ -56,3 +56,15 @@
     </div>
     
 </footer>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const socket = io()
+    const onlineCounter = document.querySelector('#onlineCounter')
+
+    if(onlineCounter) {
+        socket.on('countUpdated', count => {
+            onlineCounter.innerHTML = count
+        })
+    }
+</script>

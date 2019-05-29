@@ -6,6 +6,7 @@ module.exports = {
         req.flash('error', 'Veuillez vous connecter pour publier')
         res.redirect('/users/login')
     },
+
     isntAuth: (req, res, next) => {
         if(!req.isAuthenticated()) {
             return next()
@@ -13,13 +14,31 @@ module.exports = {
         req.flash('error', 'Veuillez vous deconnecter')
         res.redirect('/')
     },
+
     isAdmin: (req, res, next) => {
+        if(req.user && req.user.power === 2) {
+            return next()
+        }
+        req.flash('error', `vous n'etes pas autorisé`)
+        return res.redirect('/actualites')
+    },
+
+    isMaster: (req, res, next) => {
+        if(req.user && req.user.power === 3) {
+            return next()
+        }
+        req.flash('error', `vous n'etes pas autorisé`)
+        return res.redirect('/actualites')
+    },
+
+    isMasterOrAdmin: (req, res, next) => {
         if(req.user && req.user.power > 1) {
             return next()
         }
         req.flash('error', `vous n'etes pas autorisé`)
         return res.redirect('/actualites')
     },
+
     isOwner: (req, res, next) => {
         let command = `SELECT user_id FROM posts WHERE id = ?`
         let params = [req.params.id]
@@ -49,7 +68,8 @@ module.exports = {
             })
         })
     },
-    isOwnerOrAdmin : (req, res, next) => {
+
+    isOwnerOrMasterOrAdmin : (req, res, next) => {
         if(req.user && req.user.power > 1) {
             return next()
         }
@@ -81,6 +101,7 @@ module.exports = {
             })
         })
     },
+
     isntPending: (req, res, next) => {
         let command = `SELECT pending FROM posts WHERE id = ?`
         let params = [req.params.id]

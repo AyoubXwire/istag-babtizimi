@@ -7,8 +7,10 @@ router.get('/', (req, res, next) => {
     let command = `SELECT id, title, created_at, content
     FROM posts WHERE pending = ?
     ORDER BY id DESC LIMIT 5;
-    SELECT id, code, nom, description FROM secteurs;`
-    let params = [false]
+    SELECT id, code, nom, description FROM secteurs;
+    SELECT COUNT(id) AS users FROM users WHERE power = ?;
+    SELECT COUNT(id) AS admins FROM users WHERE power = ?;`
+    let params = [false, 1, 2]
     
     pool.getConnection((err, connection) => {
         if(err) return res.render('error', { err })
@@ -18,13 +20,15 @@ router.get('/', (req, res, next) => {
 
             let posts = rows[0]
             let secteurs = rows[1]
+            let nombreUtilisateurs = rows[2][0].users
+            let nombreAdministrateurs = rows[3][0].admins
 
             posts.forEach(post => {
                 post.title = previewString(post.title)
                 post.created_at = prettyDateTime(post.created_at)
             })
 
-            res.render('index', { posts, secteurs })
+            res.render('index', { posts, secteurs, nombreUtilisateurs, nombreAdministrateurs })
             connection.release()
         })
     })

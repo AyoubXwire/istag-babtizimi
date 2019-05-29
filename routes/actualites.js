@@ -3,7 +3,7 @@ const router   = express.Router()
 const fs = require('fs')
 
 const { previewString, prettyDateTime, escapeHtml } = require('../helpers/functions')
-const { isAuth, isOwnerOrAdmin, isntPending } = require('../helpers/middleware')
+const { isAuth, isOwnerOrMasterOrAdmin, isntPending } = require('../helpers/middleware')
 
 router.get('/', (req, res) => {
     let command
@@ -131,7 +131,7 @@ router.get('/:id', isntPending, (req, res) => {
     })
 })
 
-router.get('/update/:id', isAuth, isOwnerOrAdmin, (req, res) => {
+router.get('/update/:id', isAuth, isOwnerOrMasterOrAdmin, (req, res) => {
     let command = `SELECT id, title, content FROM posts WHERE id = ?;
     SELECT id, name FROM files WHERE post_id = ?`
     let params = [req.params.id, req.params.id]
@@ -150,7 +150,7 @@ router.get('/update/:id', isAuth, isOwnerOrAdmin, (req, res) => {
     })
 })
 
-router.post('/update/:id', isAuth, isOwnerOrAdmin, (req, res) => {
+router.post('/update/:id', isAuth, isOwnerOrMasterOrAdmin, (req, res) => {
     const command = `Update posts SET title = ?, content = ? WHERE id = ?;`
     const params = [req.body.title, req.body.content, req.params.id]
 
@@ -203,7 +203,7 @@ router.post('/update/:id', isAuth, isOwnerOrAdmin, (req, res) => {
     })
 })
 
-router.get('/delete/:id', isAuth, isOwnerOrAdmin, (req, res) => {
+router.get('/delete/:id', isAuth, isOwnerOrMasterOrAdmin, (req, res) => {
     const command = `DELETE FROM files WHERE post_id = ?;
     DELETE FROM posts WHERE id = ?;`
     const params = [req.params.id, req.params.id]
@@ -221,7 +221,7 @@ router.get('/delete/:id', isAuth, isOwnerOrAdmin, (req, res) => {
     })
 })
 
-router.get('/delete-file/:id', isAuth, isOwnerOrAdmin, (req, res) => {
+router.get('/delete-file/:id', isAuth, isOwnerOrMasterOrAdmin, (req, res) => {
     const command = `SELECT name FROM files WHERE id = ?;`
     const params = [req.params.id]
 

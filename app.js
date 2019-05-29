@@ -6,9 +6,13 @@ const session    = require('express-session')
 const mysqlStore = require('express-mysql-session')(session)
 const flash      = require('connect-flash')
 const fileUpload = require('express-fileupload')
+const http       = require('http')
+const socketio   = require('socket.io')
 const morgan     = require('morgan')
 
-const app = express()
+const app    = express()
+const server = http.createServer(app)
+const io     = socketio(server)
 
 // Config & middleware
 app.use(express.static(path.join(__dirname, 'public')))
@@ -18,16 +22,16 @@ app.use(express.urlencoded({extended: false}))
 app.use(express.json())
 app.use(flash())
 app.use(fileUpload())
-app.use(morgan('short'))
+app.use(morgan('dev'))
 
 // Database
 global.pool = mysql.createPool({
-    connectionLimit : 100,
-    insecureAuth: true,
-    host     : 'localhost',
-    user     : 'root',
-    password : '1234',
-    database : 'babtizimi',
+    connectionLimit   : 100,
+    insecureAuth      : true,
+    host              : 'localhost',
+    user              : 'root',
+    password          : '1234',
+    database          : 'babtizimi',
     multipleStatements: true
 })
 
@@ -49,9 +53,22 @@ require('./config/passport')
 app.use(passport.initialize())
 app.use(passport.session())
 
+// Socket
+let onlineCount = 0
+io.on('connection', socket => {
+    socket.on('disconnect', () => {
+        onlineCount = socket.client.conn.server.clientsCount
+        io.emit('countUpdated', onlineCount)
+    })
+    
+    onlineCount = socket.client.conn.server.clientsCount
+    io.emit('countUpdated', onlineCount)
+})
+
 // Global variables
 app.use((req, res, next) => {
     res.locals.user = req.user || null
+    res.locals.onlineCount = onlineCount
     res.locals.success = req.flash('success')
     res.locals.error = req.flash('error')
     next()
@@ -70,4 +87,4 @@ app.get('*', (req, res) => {
 })
 
 // Listener
-app.listen(3000, () => console.log('server running..'))
+server.listen(3000, () => console.log('server running..'))
