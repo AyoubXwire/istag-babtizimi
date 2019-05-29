@@ -4,6 +4,8 @@ const router   = express.Router()
 const { previewString, prettyDateTime } = require('../helpers/functions')
 
 router.get('/', (req, res, next) => {
+    return res.send('Home')
+
     let command = `SELECT id, title, created_at, content
     FROM posts WHERE pending = ? AND post_type = 1
     ORDER BY id DESC LIMIT 5;

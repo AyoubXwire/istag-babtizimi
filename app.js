@@ -1,7 +1,7 @@
 const path       = require('path')
 const express    = require('express')
 const passport   = require('passport')
-const mysql      = require('mysql')
+const Sequelize  = require('sequelize')
 const session    = require('express-session')
 const mysqlStore = require('express-mysql-session')(session)
 const flash       = require('connect-flash')
@@ -25,15 +25,10 @@ app.use(fileUpload())
 app.use(morgan('dev'))
 
 // Database
-global.pool = mysql.createPool({
-    connectionLimit   : 100,
-    insecureAuth      : true,
-    host              : 'localhost',
-    user              : 'root',
-    password          : '1234',
-    database          : 'babtizimi',
-    multipleStatements: true
-})
+require('./config/sequelize')
+require('./models/User')
+require('./models/Post')
+require('./models/File')
 
 // Session
 app.use(session({
@@ -86,5 +81,9 @@ app.get('*', (req, res) => {
     res.status(404).render('404')
 })
 
-// Listener
-server.listen(3000, () => console.log('server running..'))
+// Server
+sequelize.sync()
+.then(() => {
+    server.listen(3000, () => console.log('server running..'))
+})
+.catch(err => console.log(err))
