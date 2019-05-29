@@ -2,51 +2,33 @@ const passport      = require('passport')
 const localStrategy = require('passport-local').Strategy
 const bcrypt        = require('bcrypt')
 
+const User = require('../models/User')
+
 module.exports = passport.use(
-    new localStrategy({usernameField: 'username'}, (username, password, done) => {
-        const command = `SELECT * FROM users WHERE username = ?`
-        const params = [username]
+    new localStrategy({ usernameField: 'username' }, (username, password, done) => {
+        User.findByPk(username)
+        .then(user => {
+            if(!user) return done(null, false, { message: 'username unregistered' })
 
-        pool.getConnection((error, connection) => {
-            if(error) throw err
-
-            connection.query(command, params, (error, rows) => {
-                if(error) throw err
-    
-                if(rows.length === 0) {
-                    return done(null, false, { message: 'username unregistered' })
+            bcrypt.compare(password, user.password)
+            .then(isMatch => {
+                if(isMatch) {
+                    return done(null, user)
+                } else {
+                    return done(null, false, { message: 'password incorrect' })
                 }
-                bcrypt.compare(password, rows[0].password)
-                .then(isMatch => {
-                    if(isMatch) {
-                        return done(null, rows[0])
-                    } else {
-                        return done(null, false, { message: 'password incorrect' })
-                    }
-                })
-                .catch(err => console.log(err))
-                connection.release()
             })
+            .catch(err => console.log(err))
         })
     })
 )
 
 passport.serializeUser((user, done) => {
-    done(null, user.id)
+    done(null, user.username)
 })
-    
-passport.deserializeUser((id, done) => {
-    const command = `SELECT * FROM users WHERE id = ?`
-    const params = [id]
-    
-    pool.getConnection((error, connection) => {
-        if(error) throw error
 
-        connection.query(command, params, (error, rows) => {
-            if(error) throw error
-            
-            done(null, rows[0])
-            connection.release()
-        })
-    })
+passport.deserializeUser((username, done) => {
+    User.findByPk(username)
+    .then(user => done(null, user))
+    .catch(err => console.log(err))
 })
