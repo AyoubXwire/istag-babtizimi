@@ -6,19 +6,19 @@ const { previewString, prettyDateTime, escapeHtml } = require('../helpers/functi
 const { isAuth, isOwnerOrMasterOrAdmin, isntPending } = require('../helpers/middleware')
 
 router.get('/', (req, res) => {
-    let command
+    let command = ''
     let params = []
 
     if(req.query.search) {
         command = `SELECT p.id, title, content, p.created_at, p.user_id, username
         FROM posts p JOIN users u ON p.user_id = u.id
-        WHERE pending = false AND title LIKE ?
+        WHERE pending = false AND post_type = 1 AND title LIKE ?
         ORDER BY p.id DESC`
         params = [`%${req.query.search}%`]
     } else {
         command = `SELECT p.id, title, content, p.created_at, p.user_id, username
         FROM posts p JOIN users u ON p.user_id = u.id
-        WHERE pending = false
+        WHERE pending = false AND post_type = 1
         ORDER BY p.id DESC`
     }
 
@@ -45,8 +45,8 @@ router.get('/new', isAuth, (req, res) => {
 })
 
 router.post('/new', isAuth, (req, res) => {
-    let command = `INSERT INTO posts (title, content, user_id, pending) VALUES (?, ?, ?, ?);`
-    let params = [req.body.title, req.body.content, req.user.id]
+    let command = `INSERT INTO posts (title, content, user_id, pending, post_type) VALUES (?, ?, ?, ?, ?);`
+    let params = [req.body.title, req.body.content, req.user.id, 1]
     
     params.push(req.user.power === 1)
     

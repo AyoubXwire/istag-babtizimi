@@ -5,7 +5,7 @@ const { previewString, prettyDateTime } = require('../helpers/functions')
 
 router.get('/', (req, res, next) => {
     let command = `SELECT id, title, created_at, content
-    FROM posts WHERE pending = ?
+    FROM posts WHERE pending = ? AND post_type = 1
     ORDER BY id DESC LIMIT 5;
     SELECT id, code, nom, description FROM secteurs;
     SELECT COUNT(id) AS users FROM users WHERE power = ?;

@@ -1,6 +1,5 @@
 -- CREATE DATABASE babtizimi;
 -- USE babtizimi;
--- SET NAMES utf8;
 
 -- create tables
 CREATE TABLE IF NOT EXISTS users (
@@ -13,15 +12,23 @@ CREATE TABLE IF NOT EXISTS users (
     PRIMARY KEY (id)
 );
 
+CREATE TABLE IF NOT EXISTS post_types (
+    id INTEGER NOT NULL auto_increment,
+    name VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id)
+);
+
 CREATE TABLE IF NOT EXISTS posts (
     id INTEGER NOT NULL auto_increment,
     title VARCHAR(255) NOT NULL,
     content TEXT NOT NULL,
+    post_type INT,
     pending BOOL DEFAULT true,
     user_id INTEGER NOT NULL,
     created_at TIMESTAMP DEFAULT NOW(),
     PRIMARY KEY (id),
-    FOREIGN KEY (user_id) REFERENCES users (id)
+    FOREIGN KEY (user_id) REFERENCES users (id),
+    FOREIGN KEY (post_type) REFERENCES post_types (id)
 );
 
 CREATE TABLE IF NOT EXISTS files (
@@ -31,13 +38,6 @@ CREATE TABLE IF NOT EXISTS files (
     created_at TIMESTAMP DEFAULT NOW(),
     PRIMARY KEY (id),
     FOREIGN KEY (post_id) REFERENCES posts (id)
-);
-
-CREATE TABLE IF NOT EXISTS sessions (
-	session_id varchar(128),
-    expires int(11) unsigned,
-    data text,
-    PRIMARY KEY (session_id)
 );
 
 create table IF NOT EXISTS secteurs (
@@ -69,12 +69,16 @@ create table IF NOT EXISTS modules (
 -- create webmaster (Webmaster@123)
 INSERT INTO users(username, email, password, power) VALUES("webmaster", "webmaster@gmail.com", "$2b$10$J4u0fWfKTycMbJ3y6tCV.uxb4yIAxPYtdh.ryXo079DuIHVCB52Me", 3);
 
--- insert in secteur
+-- insert in post_types
+INSERT INTO post_types(name) VALUES("actualite");
+INSERT INTO post_types(name) VALUES("ressource");
+
+-- insert in secteurs
 INSERT INTO secteurs(code, nom, description) VALUES("NTIC", "Technologies de l'information", "Le Maroc est conscient du fait que l’usage des technologies de l’information est un facteur essentiel pour l’émergence de la société du savoir et peut activement contribuer au développement humain, à l’amélioration de la cohésion sociale et à la croissance de l’économie nationale.");
 INSERT INTO secteurs(code, nom, description) VALUES("AGC", "Administration Gestion et Commerce", "Les nouvelles tendances de l’économie mondiale montrent que les métiers du Tertiaire prennent une place de plus en plus importante dans le système de production en général en vue d’une plus grande productivité.");
 INSERT INTO secteurs(code, nom, description) VALUES("TH", "Textile et Habillement", "L’industrie du Textile et de l’Habillement occupe une place stratégique dans l’industrie nationale de transformation aussi bien sur le plan des emplois et des exportations que sur le plan de l’équilibre socio-économique du pays.");
 
--- insert in filiere
+-- insert in filieres
 INSERT INTO filieres(code, nom, description, id_secteur) VALUES('TDI', "Techniques de développement informatiques (TS)", "description du filiere", 1);
 INSERT INTO filieres(code, nom, description, id_secteur) VALUES('TRI', "Techniques des réseaux informatiques (TS)", "description du filiere", 1);
 INSERT INTO filieres(code, nom, description, id_secteur) VALUES('TMSIR', "Technicien en Maintenance et Systèmes Informatiques et Réseaux (T)", "description du filiere", 1);
@@ -86,7 +90,7 @@ INSERT INTO filieres(code, nom, description, id_secteur) VALUES('THI', "Techniqu
 INSERT INTO filieres(code, nom, description, id_secteur) VALUES('TMI', "Technique Modélisme Industriel (T)", "description du filiere", 3);
 INSERT INTO filieres(code, nom, description, id_secteur) VALUES('TMMC', "Techniques Maintenance de Machines à Coudre (T)", "description du filiere", 3);
 
--- insert in module
+-- insert in modules
 INSERT INTO modules(nom, id_filiere) VALUES('arabe', 1);
 INSERT INTO modules(nom, id_filiere) VALUES('arabe', 2);
 INSERT INTO modules(nom, id_filiere) VALUES('arabe', 3);
