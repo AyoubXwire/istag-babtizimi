@@ -1,39 +1,37 @@
 const express  = require('express')
 const router   = express.Router()
 
+const User = require('../models/User')
+const Post = require('../models/Post')
+const Secteur = require('../models/Secteur')
+
 const { previewString, prettyDateTime } = require('../helpers/functions')
 
 router.get('/', (req, res, next) => {
-    return res.send('Home')
+    Promise.all([
+        Post.findAll(
+            { where: { is_pending: false, type: 'A' } },
+            { order: [['created_at', 'DESC']] },
+            { limit: 5 }
+        ),
+        Secteur.findAll(),
+        User.count({ where: { power: 0 } }),
+        User.count({ where: { power: 1 } })
+    ])
+    .then(data => {
+        let posts = data[0]
+        let secteurs = data[1]
+        let nombreUtilisateurs = data[2]
+        let nombreAdministrateurs = data[3]
 
-    let command = `SELECT id, title, created_at, content
-    FROM posts WHERE pending = ? AND post_type = 1
-    ORDER BY id DESC LIMIT 5;
-    SELECT id, code, nom, description FROM secteurs;
-    SELECT COUNT(id) AS users FROM users WHERE power = ?;
-    SELECT COUNT(id) AS admins FROM users WHERE power = ?;`
-    let params = [false, 1, 2]
-    
-    pool.getConnection((err, connection) => {
-        if(err) return res.render('error', { err })
-
-        connection.query(command, params, (err, rows) => {
-            if(err) return res.render('error', { err })
-
-            let posts = rows[0]
-            let secteurs = rows[1]
-            let nombreUtilisateurs = rows[2][0].users
-            let nombreAdministrateurs = rows[3][0].admins
-
-            posts.forEach(post => {
-                post.title = previewString(post.title)
-                post.created_at = prettyDateTime(post.created_at)
-            })
-
-            res.render('index', { posts, secteurs, nombreUtilisateurs, nombreAdministrateurs })
-            connection.release()
+        posts.forEach(post => {
+            post.title = previewString(post.title)
+            post.created_at = prettyDateTime(post.created_at)
         })
+
+        res.render('index', { posts, secteurs, nombreUtilisateurs, nombreAdministrateurs })
     })
+    .catch(err => res.render('error', { err }))
 })
 
 router.get('/inscription', (req, res) => {
@@ -53,7 +51,7 @@ router.get('/contact', (req, res) => {
 })
 
 router.post('/email', (req, res) => {
-    // nodemailer here
+    
 })
 
 router.get('/empty', (req, res) => {

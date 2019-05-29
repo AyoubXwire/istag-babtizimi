@@ -1,6 +1,6 @@
 const Sequelize  = require('sequelize')
 
-const User = sequelize.define('user', {
+const fields = {
     username: {
         type: Sequelize.STRING,
         primaryKey: true,
@@ -19,8 +19,18 @@ const User = sequelize.define('user', {
         type: Sequelize.INTEGER,
         allowNull: false,
         defaultValue: 0
-    },
-})
+    }
+}
+
+const options = {
+    timestamps: true,
+    underscored: true,
+    paranoid: false,
+    freezeTableName: true,
+    tableName: 'users'
+}
+
+const User = sequelize.define('user', fields, options)
 
 User.findOrCreate({
     where: {

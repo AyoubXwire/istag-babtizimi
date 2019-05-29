@@ -1,8 +1,6 @@
 const Sequelize  = require('sequelize')
 
-const User = require('./User')
-
-const Post = sequelize.define('post', {
+const fields = {
     title: {
         type: Sequelize.STRING,
         allowNull: false
@@ -12,22 +10,24 @@ const Post = sequelize.define('post', {
         allowNull: false
     },
     type: {
-        type: Sequelize.CHAR,
+        type: Sequelize.STRING,
         allowNull: false,
     },
-    isPending: {
+    is_pending: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: true
-    },
-    username: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        references: {
-            model: User,
-            key: 'username'
-        }
     }
-})
+}
+
+const options = {
+    timestamps: true,
+    underscored: true,
+    paranoid: false,
+    freezeTableName: true,
+    tableName: 'posts'
+}
+
+const Post = sequelize.define('post', fields, options)
 
 module.exports = Post

@@ -12,23 +12,16 @@ CREATE TABLE IF NOT EXISTS users (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS post_types (
-    id INTEGER NOT NULL auto_increment,
-    name VARCHAR(255) NOT NULL,
-    PRIMARY KEY (id)
-);
-
 CREATE TABLE IF NOT EXISTS posts (
     id INTEGER NOT NULL auto_increment,
     title VARCHAR(255) NOT NULL,
     content TEXT NOT NULL,
-    post_type INT,
+    type VARCHAR(255) NOT NULL,
     pending BOOL DEFAULT true,
     user_id INTEGER NOT NULL,
     created_at TIMESTAMP DEFAULT NOW(),
     PRIMARY KEY (id),
-    FOREIGN KEY (user_id) REFERENCES users (id),
-    FOREIGN KEY (post_type) REFERENCES post_types (id)
+    FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
 CREATE TABLE IF NOT EXISTS files (

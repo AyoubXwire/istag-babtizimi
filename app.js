@@ -26,9 +26,6 @@ app.use(morgan('dev'))
 
 // Database
 require('./config/sequelize')
-require('./models/User')
-require('./models/Post')
-require('./models/File')
 
 // Session
 app.use(session({
@@ -82,8 +79,4 @@ app.get('*', (req, res) => {
 })
 
 // Server
-sequelize.sync()
-.then(() => {
-    server.listen(3000, () => console.log('server running..'))
-})
-.catch(err => console.log(err))
+server.listen(3000, () => console.log('server running..'))

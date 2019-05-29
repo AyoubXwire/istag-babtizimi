@@ -3,18 +3,18 @@ const Sequelize  = require('sequelize')
 const fields = {
     name: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
     }
 }
 
 const options = {
-    timestamps: true,
+    timestamps: false,
     underscored: true,
     paranoid: false,
     freezeTableName: true,
-    tableName: 'files'
+    tableName: 'modules'
 }
 
-const File = sequelize.define('file', fields, options)
+const Module = sequelize.define('module', fields, options)
 
-module.exports = File
+module.exports = Module
