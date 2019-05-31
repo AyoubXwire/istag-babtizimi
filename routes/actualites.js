@@ -9,22 +9,24 @@ const { previewString, prettyDateTime, escapeHtml } = require('../helpers/functi
 const { isAuth, isOwnerOrMasterOrAdmin, isntPending } = require('../helpers/middleware')
 
 router.get('/', (req, res) => {
-    let where = {}
+    let options = {}
     if(req.query.search) {
-        where = {
+        options = {
             where: {
                 is_pending: false,
                 type: 'A',
                 title: { [Op.like]: '%${req.query.search}%' }
-            }
+            },
+            order: [['created_at', 'DESC']]
         }
     } else {
-        where = {
-            where: { is_pending: false, type: 'A' }
+        options = {
+            where: { is_pending: false, type: 'A' },
+            order: [['created_at', 'DESC']]
         }
     }
 
-    Post.findAll(where, { order: [['created_at', 'DESC']] })
+    Post.findAll(options)
     .then(posts => {
         posts.forEach(post => {
             post.title = previewString(post.title)

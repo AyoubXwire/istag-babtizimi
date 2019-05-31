@@ -27,7 +27,10 @@ router.get('/', isAuth, isMasterOrAdmin, (req, res) => {
 })
 
 router.get('/pending', isAuth, isMasterOrAdmin, (req, res) => {
-    Post.findAll({ where: { is_pending: true } }, { order: [['created_at', 'DESC']] })
+    Post.findAll(
+        { where: { is_pending: true } },
+        { order: [['created_at', 'DESC']] }
+    )
     .then(posts => {
         posts.forEach(post => {
             post.content = previewString(post.content)
