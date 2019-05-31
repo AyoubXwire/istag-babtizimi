@@ -19,9 +19,6 @@ const fields = {
 
 const options = {
     timestamps: false,
-    underscored: true,
-    paranoid: false,
-    freezeTableName: true,
     tableName: 'filieres'
 }
 

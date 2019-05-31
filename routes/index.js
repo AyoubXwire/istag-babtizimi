@@ -26,7 +26,7 @@ router.get('/', (req, res, next) => {
 
         posts.forEach(post => {
             post.title = previewString(post.title)
-            post.created_at = prettyDateTime(post.created_at)
+            post.created_at = prettyDateTime(post.createdAt)
         })
 
         res.render('index', { posts, secteurs, nombreUtilisateurs, nombreAdministrateurs })

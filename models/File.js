@@ -9,9 +9,6 @@ const fields = {
 
 const options = {
     timestamps: true,
-    underscored: true,
-    paranoid: false,
-    freezeTableName: true,
     tableName: 'files'
 }
 

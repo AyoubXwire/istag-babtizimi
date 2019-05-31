@@ -31,7 +31,7 @@ router.get('/pending', isAuth, isMasterOrAdmin, (req, res) => {
     .then(posts => {
         posts.forEach(post => {
             post.content = previewString(post.content)
-            post.created_at = prettyDateTime(post.created_at)
+            post.created_at = prettyDateTime(post.createdAt)
         })
 
         res.render('admin/pendings', { posts })
@@ -48,7 +48,7 @@ router.get('/pending/:id', isAuth, isMasterOrAdmin, (req, res) => {
         let post = data[0]
         let files = data[1]
 
-        post.created_at = prettyDateTime(post.created_at)
+        post.created_at = prettyDateTime(post.createdAt)
 
         res.render('admin/pending', { post, files })
     })

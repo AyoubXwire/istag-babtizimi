@@ -1,4 +1,6 @@
 const Sequelize  = require('sequelize')
+const forceTables = false
+const initializeData = false
 
 const options = {
     host: 'localhost',
@@ -9,6 +11,11 @@ const options = {
         min: 0,
         acquire: 30000,
         idle: 10000
+    },
+    define: {
+        underscored: true,
+        paranoid: false,
+        freezeTableName: true
     }
 }
 
@@ -28,11 +35,15 @@ File.belongsTo(Post, { foreignKey: 'post_id' })
 Filiere.belongsTo(Secteur, { foreignKey: 'secteur_code' })
 Module.belongsTo(Filiere, { foreignKey: 'filiere_code' })
 
-sequelize.sync()
-.then(/*() => initializeData()*/ )
+sequelize.sync({ force: forceTables })
+.then(() => {
+    if(initializeData){
+        initialize()
+    }
+})
 .catch(err => console.log(err))
 
-const initializeData = () => {
+const initialize = () => {
     const secteurs = [
         {
             code: 'NTIC',
