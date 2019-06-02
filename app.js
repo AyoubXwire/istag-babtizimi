@@ -69,6 +69,7 @@ app.use((req, res, next) => {
 app.use('/', require('./routes/index'))
 app.use('/users', require('./routes/users'))
 app.use('/actualites', require('./routes/actualites'))
+app.use('/pedagogique', require('./routes/pedagogique'))
 app.use('/filieres', require('./routes/filieres'))
 app.use('/admin', require('./routes/admin'))
 

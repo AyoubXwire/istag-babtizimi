@@ -7,7 +7,7 @@ const Post = require('../models/Post')
 const File = require('../models/File')
 
 const { previewString, prettyDateTime, escapeHtml } = require('../helpers/functions')
-const { isAuth, isOwnerOrMasterOrAdmin, isntPending } = require('../helpers/middleware')
+const { isAuth, isMaster, isOwnerOrMasterOrAdmin, isntPending } = require('../helpers/middleware')
 
 router.get('/', (req, res) => {
     let options = {}
@@ -15,14 +15,14 @@ router.get('/', (req, res) => {
         options = {
             where: {
                 is_pending: false,
-                type: 'A',
+                type: 'P',
                 title: { [Op.like]: `%${req.query.search}%` }
             },
             order: [['created_at', 'DESC']]
         }
     } else {
         options = {
-            where: { is_pending: false, type: 'A' },
+            where: { is_pending: false, type: 'P' },
             order: [['created_at', 'DESC']]
         }
     }
@@ -34,22 +34,22 @@ router.get('/', (req, res) => {
             post.created_at = prettyDateTime(post.createdAt)
         })
         
-        res.render('actualites', { posts })
+        res.render('pedagogique', { posts })
     })
     .catch(err => console.log(err))
 })
 
-router.get('/new', isAuth, (req, res) => {
-    res.render('actualites/editor')
+router.get('/new', isAuth, isMaster, (req, res) => {
+    res.render('pedagogique/editor')
 })
 
-router.post('/new', isAuth, (req, res) => {
+router.post('/new', isAuth, isMaster, (req, res) => {
     Post.create({
         title: req.body.title,
         content: req.body.content,
         username: req.user.username,
         is_pending: req.user.power === 0,
-        type: 'A'
+        type: 'P'
     })
     .then(post => {
         if(req.files) {
@@ -86,7 +86,7 @@ router.post('/new', isAuth, (req, res) => {
             req.flash('success', 'Suggestion publiée, un administrateur doit la confirmer')
         }
 
-        res.redirect('/actualites')
+        res.redirect('/pedagogique')
     })
     .catch(err => console.log(err))
 })
@@ -102,17 +102,17 @@ router.get('/:id', isntPending, (req, res) => {
 
         if (!post) {
             req.flash('error', 'Publication introuvable')
-            return res.redirect('/actualites')
+            return res.redirect('/pedagogique')
         }
         post.created_at = prettyDateTime(post.createdAt)
         post.content = escapeHtml(post.content)
         
-        res.render('actualites/actualite', { post, files })
+        res.render('pedagogique/pedagogique', { post, files })
     })
     .catch(err => console.log(err))
 })
 
-router.get('/update/:id', isAuth, isOwnerOrMasterOrAdmin, (req, res) => {
+router.get('/update/:id', isAuth, isMaster, (req, res) => {
     Promise.all([
         Post.findByPk(req.params.id),
         File.findAll({ where : { post_id: req.params.id } })
@@ -121,12 +121,12 @@ router.get('/update/:id', isAuth, isOwnerOrMasterOrAdmin, (req, res) => {
         let post = data[0]
         let files = data[1]
 
-        res.render('actualites/editor', { post, files })
+        res.render('pedagogique/editor', { post, files })
     })
     .catch(err => console.log(err))
 })
 
-router.post('/update/:id', isAuth, isOwnerOrMasterOrAdmin, (req, res) => {
+router.post('/update/:id', isAuth, isMaster, (req, res) => {
     Post.update({
         title: req.body.title,
         content: req.body.content
@@ -163,23 +163,23 @@ router.post('/update/:id', isAuth, isOwnerOrMasterOrAdmin, (req, res) => {
         }
 
         req.flash('success', 'Publication modifiée')
-        res.redirect('/actualites')
+        res.redirect('/pedagogique')
     })
 })
 
-router.get('/delete/:id', isAuth, isOwnerOrMasterOrAdmin, (req, res) => {
+router.get('/delete/:id', isAuth, isMaster, (req, res) => {
     File.destroy({ where: { post_id: req.params.id } })
     .then(() => {
         Post.destroy({ where: { id: req.params.id } })
         .then(() => {
             req.flash('success', 'Publication supprimée')
-            res.redirect('/actualites')
+            res.redirect('/pedagogique')
         })
     })
     .catch(err => console.log(err))
 })
 
-router.get('/delete-file/:id', isAuth, isOwnerOrMasterOrAdmin, (req, res) => {
+router.get('/delete-file/:id', isAuth, isMaster, (req, res) => {
     File.findByPk(req.params.id)
     .then(file => {
         let fileName = file.name
@@ -190,7 +190,7 @@ router.get('/delete-file/:id', isAuth, isOwnerOrMasterOrAdmin, (req, res) => {
             File.destroy({ where: { id: req.params.id } })
             .then(() => {
                 req.flash('success', 'fichier supprimé')
-                res.redirect('/actualites')
+                res.redirect('/pedagogique')
             })
     
         })

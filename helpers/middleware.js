@@ -22,7 +22,7 @@ module.exports = {
             return next()
         }
         req.flash('error', `vous n'etes pas autorisé`)
-        return res.redirect('/actualites')
+        return res.redirect('/')
     },
 
     isMaster: (req, res, next) => {
@@ -30,7 +30,7 @@ module.exports = {
             return next()
         }
         req.flash('error', `vous n'etes pas autorisé`)
-        return res.redirect('/actualites')
+        return res.redirect('/')
     },
 
     isMasterOrAdmin: (req, res, next) => {
@@ -38,7 +38,7 @@ module.exports = {
             return next()
         }
         req.flash('error', `vous n'etes pas autorisé`)
-        return res.redirect('/actualites')
+        return res.redirect('/')
     },
 
     isOwner: (req, res, next) => {
@@ -47,7 +47,7 @@ module.exports = {
             // Check existence
             if(!post && !req.user) {
                 req.flash('error', `Publication introuvable ou autorisations insuffisantes`)
-                return res.redirect('/actualites')
+                return res.redirect('/')
             }
 
             // Check ownership
@@ -56,7 +56,7 @@ module.exports = {
             }
 
             req.flash('error', `vous n'etes pas autorisé`)
-            return res.redirect('/actualites')
+            return res.redirect('/')
         })
         .catch(err => console.log(err))
     },
@@ -71,7 +71,7 @@ module.exports = {
             // Check existence
             if(!post && !req.user) {
                 req.flash('error', `Publication introuvable ou autorisations insuffisantes`)
-                return res.redirect('/actualites')
+                return res.redirect('/')
             }
 
             // Check ownership
@@ -80,7 +80,7 @@ module.exports = {
             }
 
             req.flash('error', `vous n'etes pas autorisé`)
-            return res.redirect('/actualites')
+            return res.redirect('/')
         })
         .catch(err => console.log(err))
     },
@@ -91,7 +91,7 @@ module.exports = {
             // Check existence
             if(!post) {
                 req.flash('error', `Publication introuvable ou autorisations insuffisantes`)
-                return res.redirect('/actualites')
+                return res.redirect('/')
             }
             
             // Check pending
@@ -100,7 +100,7 @@ module.exports = {
             }
 
             req.flash('error', `Publication introuvable ou autorisations insuffisantes`)
-            return res.redirect('/actualites')
+            return res.redirect('/')
         })
         .catch(err => console.log(err))
     }

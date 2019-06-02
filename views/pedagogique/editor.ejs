@@ -1,0 +1,51 @@
+<%- include ../components/header %>
+<%- include ../components/navbar %>
+
+<div class="testimonials-area section-padding-100" style=" background-color:#fff">
+<div class="container">
+
+    <% if(locals.post) { %>
+        <h2 style="color:#000" class="h2-polish">Modifier publication</h2>
+        <form class="col-md-12" action="/pedagogique/update/<%= post.id %>" method="post" encType="multipart/form-data">
+            <input style="color:black" name="title" type="text" class="feedback-input" value="<%= post.title %>" placeholder="Titre" />
+            <textarea style="color:black; height: 300px;" name="content" class="feedback-input" placeholder="contenu"><%= post.content %></textarea>
+            <hr style="margin:8px auto">
+            <% files.forEach(file => { %>
+                <% if(file.name.includes('pdf')) { %>
+                    <a target="blank" href="/uploads/<%= file.name %>"><img src="/extensions/pdf.png" alt="Ficher"></a>
+                <% } else { %>
+                    <a target="blank" href="/uploads/<%= file.name %>"><img src="/uploads/<%= file.name %>" alt="Ficher"></a>
+                <% } %>
+                <a class="mr-50" href="/pedagogique/delete-file/<%= file.id %>">supprimer</a>
+            <% }) %>
+            <hr style="margin:8px auto">
+            <input style="margin-bottom:20px" class="form-control-file" type="file" name="document" multiple>  
+            <input type="submit" value="Modifier"/>
+        </form>
+    <% } else { %>
+        <h2 style="color:#000" class="h2-polish">Nouvelle publication</h2>
+        <form class="col-md-12" action="/pedagogique/new" method="post" encType="multipart/form-data">
+            <input style="color:black" name="title" type="text" class="feedback-input" placeholder="Titre" />
+            <textarea style="color:black; height: 300px;" name="content" class="feedback-input" placeholder="contenu"></textarea>
+            <input style="margin-bottom:20px" class="form-control-file" type="file" name="document" multiple>  
+            <input type="submit" value="Publier"/>
+        </form>
+    <% } %>
+</div>
+</div>
+
+<%- include ../components/footer %>
+
+<!-- jQuery-2.2.4 js -->
+<script src="/js/jquery/jquery-2.2.4.min.js"></script>
+<!-- Popper js -->
+<script src="/js/bootstrap/popper.min.js"></script>
+<!-- Bootstrap js -->
+<script src="/js/bootstrap/bootstrap.min.js"></script>
+<!-- All Plugins js -->
+<script src="/js/plugins/plugins.js"></script>
+<!-- Active js -->
+<script src="/js/active.js"></script>
+</body>
+
+</html>

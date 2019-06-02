@@ -15,21 +15,21 @@ router.get('/', (req, res, next) => {
             { limit: 5 }
         ),
         Secteur.findAll(),
-        User.count({ where: { power: 0 } }),
-        User.count({ where: { power: 1 } })
+        User.count(),
+        Post.count()
     ])
     .then(data => {
         let posts = data[0]
         let secteurs = data[1]
         let nombreUtilisateurs = data[2]
-        let nombreAdministrateurs = data[3]
+        let nombrePublications = data[3]
 
         posts.forEach(post => {
             post.title = previewString(post.title)
             post.created_at = prettyDateTime(post.createdAt)
         })
 
-        res.render('index', { posts, secteurs, nombreUtilisateurs, nombreAdministrateurs })
+        res.render('index', { posts, secteurs, nombreUtilisateurs, nombrePublications })
     })
     .catch(err => res.render('error', { err }))
 })
