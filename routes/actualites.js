@@ -7,7 +7,7 @@ const Post = require('../models/Post')
 const File = require('../models/File')
 
 const { previewString, prettyDateTime, escapeHtml } = require('../helpers/functions')
-const { isAuth, isOwnerOrMasterOrAdmin, isntPending } = require('../helpers/middleware')
+const { isAuth, isMaster, isntPending } = require('../helpers/middleware')
 
 router.get('/', (req, res) => {
     let options = {}
@@ -112,7 +112,7 @@ router.get('/:id', isntPending, (req, res) => {
     .catch(err => console.log(err))
 })
 
-router.get('/update/:id', isAuth, isOwnerOrMasterOrAdmin, (req, res) => {
+router.get('/update/:id', isAuth, isMaster, (req, res) => {
     Promise.all([
         Post.findByPk(req.params.id),
         File.findAll({ where : { post_id: req.params.id } })
@@ -126,7 +126,7 @@ router.get('/update/:id', isAuth, isOwnerOrMasterOrAdmin, (req, res) => {
     .catch(err => console.log(err))
 })
 
-router.post('/update/:id', isAuth, isOwnerOrMasterOrAdmin, (req, res) => {
+router.post('/update/:id', isAuth, isMaster, (req, res) => {
     Post.update({
         title: req.body.title,
         content: req.body.content
@@ -167,7 +167,7 @@ router.post('/update/:id', isAuth, isOwnerOrMasterOrAdmin, (req, res) => {
     })
 })
 
-router.get('/delete/:id', isAuth, isOwnerOrMasterOrAdmin, (req, res) => {
+router.get('/delete/:id', isAuth, isMaster, (req, res) => {
     File.destroy({ where: { post_id: req.params.id } })
     .then(() => {
         Post.destroy({ where: { id: req.params.id } })
@@ -179,7 +179,7 @@ router.get('/delete/:id', isAuth, isOwnerOrMasterOrAdmin, (req, res) => {
     .catch(err => console.log(err))
 })
 
-router.get('/delete-file/:id', isAuth, isOwnerOrMasterOrAdmin, (req, res) => {
+router.get('/delete-file/:id', isAuth, isMaster, (req, res) => {
     File.findByPk(req.params.id)
     .then(file => {
         let fileName = file.name
