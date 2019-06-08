@@ -18,6 +18,7 @@
   "homepage": "https://github.com/AyoubXwire/istag-babtizimi#readme",
   "dependencies": {
     "bcrypt": "^3.0.5",
+    "compression": "^1.7.4",
     "connect-flash": "^0.1.1",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
