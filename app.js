@@ -1,3 +1,5 @@
+process.env.NODE_ENV = 'production'
+
 const path        = require('path')
 const express     = require('express')
 const compression = require('compression')
@@ -15,7 +17,11 @@ const server = http.createServer(app)
 const io     = socketio(server)
 
 // Config & middleware
-app.use(compression({ level: 9 }))
+app.use(compression({
+    level: 9,
+    threshold: 0,
+    filter: () => true
+}))
 app.use(express.static(path.join(__dirname, 'public')))
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
@@ -36,7 +42,7 @@ app.use(session({
     store: new mysqlStore({
         host     : 'localhost',
         user     : 'root',
-        password : '1234',
+        password : 'password',
         database : 'babtizimi'
     })
 }))
