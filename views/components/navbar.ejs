@@ -89,7 +89,7 @@
 
                                     <li><a href="#">ESPACE ETUDIANT</a>
                                         <ul style="width:200%" class="dropdown">
-                                            <li style="height: 40px;"><a href="/empty">Emplois du temps</a></li>
+                                            <li style="height: 40px;"><a href="/emplois">Emplois du temps</a></li>
                                             <!--Avis aux stagiaires (Rattrapages, Absence des formateurs, …)-->
                                             <li style="height: 40px;"><a href="/empty">Avis aux stagiaires</a></li>
                                             <!--Calendrier des examens (EFF, EFR, EFF)-->
@@ -132,9 +132,9 @@
                             <div class="call-center">
                                 <a class="mr-2" target="blank" href="https://www.istag-babtizimi.ma:444/"><img class="mr-2" src="https://img.icons8.com/material-rounded/50/000000/new-post.png">MESSAGERIE</a>
                                 <% if(locals.user) { %>
-                                    <a class="mr-2" target="blank" href="/users/logout"><img class="mr-2" src="https://img.icons8.com/material-rounded/24/000000/exit.png">Logout</a>
+                                    <a class="mr-2" href="/users/logout"><img class="mr-2" src="https://img.icons8.com/material-rounded/24/000000/exit.png">Logout</a>
                                 <% } else { %>
-                                    <a class="mr-2" target="blank" href="/users/login"><img class="mr-2" src="https://img.icons8.com/ios-glyphs/24/000000/user.png">LOGIN</a>
+                                    <a class="mr-2" href="/users/login"><img class="mr-2" src="https://img.icons8.com/ios-glyphs/24/000000/user.png">LOGIN</a>
                                 <% } %>
                             </div>
                         </div>

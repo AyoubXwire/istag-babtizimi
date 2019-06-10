@@ -1,0 +1,54 @@
+<%- include ../components/header %>
+<%- include ../components/navbar %>
+
+    <div style="margin-top:100px" class="container">
+        <div class="single-blog-post mb-50 wow fadeInUp col-md-12" data-wow-delay="300ms">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="media">
+                        <div class="media-body">
+                            <a><h1 class="media-heading d-inline"><%= post.title %></h1></a>
+                            <br>
+                            <a>Par <%= post.username %> | <%= post.created_at %></a>
+                            <hr>
+                            <p><%- post.content %></p>
+                            <% if(files.length > 0) { %>
+                                <hr style="margin:8px auto">
+                                <% files.forEach(file => { %>
+                                    <% if(file.name.includes('pdf')) { %>
+                                        <a target="blank" href="/uploads/<%= file.name %>"><img src="/extensions/pdf.png" alt="Ficher"></a>
+                                    <% } else { %>
+                                        <a target="blank" href="/uploads/<%= file.name %>"><img src="/uploads/<%= file.name %>" alt="Ficher"></a>
+                                    <% } %>
+                                <% }) %>
+                                <hr style="margin:8px auto">
+                            <% } %>
+                            <% if(locals.user && (user.id === post.user_id) || locals.user && user.power > 1) { %>
+                                <a href="/emplois/update/<%= post.id %>" class="btn academy-btn btn-sm mt-15">Modifier</a>
+                                <a href="/emplois/delete/<%= post.id %>" class="btn academy-btn btn-sm float-right mt-15" id="supp">Supprimer</a>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include ../components/footer %>
+
+    <!-- jQuery-2.2.4 js -->
+    <script src="/js/jquery/jquery-2.2.4.min.js"></script>
+    <!-- Popper js -->
+    <script src="/js/bootstrap/popper.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="/js/bootstrap/bootstrap.min.js"></script>
+    <!-- All Plugins js -->
+    <script src="/js/plugins/plugins.js"></script>
+    <!-- Active js -->
+    <script src="/js/active.js"></script>
+    <!-- Google Maps -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwuyLRa1uKNtbgx6xAJVmWy-zADgegA2s"></script>
+    <script src="/js/google-map/map-active.js"></script>
+</body>
+
+</html>

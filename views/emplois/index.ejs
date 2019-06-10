@@ -1,0 +1,85 @@
+<%- include ../components/header %>
+<%- include ../components/navbar %>
+
+    <!-- ##### Breadcumb Area Start ##### -->
+    <div class="breadcumb-area bg-img" style="background-image: url(img/bg-img/breadcumb.jpg);">
+        <div class="bradcumbContent">
+            <h2>EMPLOIS DU TEMPS</h2>
+        </div>
+    </div>
+    <!-- ##### Breadcumb Area End ##### -->
+
+    <!-- ##### Blog Area Start ##### -->
+    <div class="blog-area mt-50 section-padding-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-8">
+                    <div class="academy-blog-posts">
+                        <div class="row">
+
+                            <!--search bar-->
+                            <div class="col-12">
+                                <div style="height:10%" class="-blog-post mb-50 wow fadeInUp" data-wow-delay="300ms">
+                                    <div class="blog-post-search-widget mb-30">
+                                        <form action="/emplois" method="get">
+                                            <input type="search" name="search" id="Search" placeholder="Chercher">
+                                            <button type="button" onClick="javascript:this.form.submit();"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <% posts.forEach(post => { %>
+                                <div class="single-blog-post mb-50 wow fadeInUp col-md-12" data-wow-delay="300ms">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="media">
+                                                <div class="media-body">
+                                                    <a href="/emplois/<%= post.id %>"><h3 class="media-heading d-inline"><%= post.title %></h3></a>
+                                                    <br>
+                                                    <small>Par <%= post.username %> | <%= post.created_at %></small>
+                                                    <hr>
+                                                    <p><%= post.content %></p>
+                                                    <% if(locals.user && (user.id === post.user_id) || locals.user && user.power > 1) { %>
+                                                        <a href="/emplois/update/<%= post.id %>" class="btn academy-btn btn-sm mt-15">Modifier</a>
+                                                        <a href="/emplois/delete/<%= post.id %>" class="btn academy-btn btn-sm float-right mt-15" id="supp">Supprimer</a>
+                                                    <% } %>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% })%>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top:150px" class="col-12 col-md-4">
+                    <div class="academy-blog-sidebar">
+                        <form>
+                            <a style="margin-bottom:40px" type="button" class="submit-a" href="/emplois/new">Publier</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+    <%- include ../components/flash %>
+    <%- include ../components/footer %>
+
+    <!-- jQuery-2.2.4 js -->
+    <script src="/js/jquery/jquery-2.2.4.min.js"></script>
+    <!-- Popper js -->
+    <script src="/js/bootstrap/popper.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="/js/bootstrap/bootstrap.min.js"></script>
+    <!-- All Plugins js -->
+    <script src="/js/plugins/plugins.js"></script>
+    <!-- Active js -->
+    <script src="/js/active.js"></script>
+</body>
+
+</html>
