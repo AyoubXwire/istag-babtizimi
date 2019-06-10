@@ -78,6 +78,7 @@ app.use('/', require('./routes/index'))
 app.use('/users', require('./routes/users'))
 app.use('/actualites', require('./routes/actualites'))
 app.use('/pedagogique', require('./routes/pedagogique'))
+app.use('/emplois', require('./routes/emplois'))
 app.use('/filieres', require('./routes/filieres'))
 app.use('/admin', require('./routes/admin'))
 
@@ -87,4 +88,4 @@ app.get('*', (req, res) => {
 })
 
 // Server
-server.listen(3000, () => console.log('server running..'))
+server.listen(3000, () => console.log(`server running in ${process.env.NODE_ENV} environment`))

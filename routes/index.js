@@ -1,7 +1,6 @@
 const express  = require('express')
 const router   = express.Router()
 
-const User = require('../models/User')
 const Post = require('../models/Post')
 const Secteur = require('../models/Secteur')
 
@@ -14,22 +13,18 @@ router.get('/', (req, res, next) => {
             { order: [['created_at', 'DESC']] },
             { limit: 5 }
         ),
-        Secteur.findAll(),
-        User.count(),
-        Post.count()
+        Secteur.findAll()
     ])
     .then(data => {
         let posts = data[0]
         let secteurs = data[1]
-        let nombreUtilisateurs = data[2]
-        let nombrePublications = data[3]
 
         posts.forEach(post => {
             post.title = previewString(post.title)
             post.created_at = prettyDateTime(post.createdAt)
         })
 
-        res.render('index', { posts, secteurs, nombreUtilisateurs, nombrePublications })
+        res.render('index', { posts, secteurs })
     })
     .catch(err => res.render('error', { err }))
 })
