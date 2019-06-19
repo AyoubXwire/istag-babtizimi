@@ -1,4 +1,4 @@
-process.env.NODE_ENV = 'production'
+process.env.NODE_ENV = 'development'
 
 const path        = require('path')
 const express     = require('express')
@@ -15,6 +15,7 @@ const morgan      = require('morgan')
 const app    = express()
 const server = http.createServer(app)
 const io     = socketio(server)
+const keys = require('./config/keys')
 
 // Config & middleware
 app.use(compression({
@@ -32,7 +33,7 @@ app.use(fileUpload())
 app.use(morgan('dev'))
 
 // Database
-require('./config/sequelize')
+//require('./config/sequelize')
 
 // Session
 app.use(session({
@@ -41,9 +42,9 @@ app.use(session({
     saveUninitialized: false,
     store: new mysqlStore({
         host     : 'localhost',
-        user     : 'root',
-        password : 'password',
-        database : 'babtizimi'
+        user     : keys.dbUser,
+        password : keys.dbPassword,
+        database : keys.dbName
     })
 }))
 

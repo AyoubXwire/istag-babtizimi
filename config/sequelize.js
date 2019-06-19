@@ -1,4 +1,5 @@
 const Sequelize  = require('sequelize')
+const keys = require('./keys')
 const forceTables = false
 
 const options = {
@@ -18,21 +19,16 @@ const options = {
     }
 }
 
-global.sequelize = new Sequelize('babtizimi', 'root', '1234', options)
+global.sequelize = new Sequelize(keys.dbName, keys.dbUser, keys.dbPassword, options)
 
 // Load models
 const User = require('../models/User')
 const Post = require('../models/Post')
 const File = require('../models/File')
-const Secteur = require('../models/Secteur')
-const Filiere = require('../models/Filiere')
-const Module = require('../models/Module')
 
 // Associations
 Post.belongsTo(User, { foreignKey: 'username' })
 File.belongsTo(Post, { foreignKey: 'post_id' })
-Filiere.belongsTo(Secteur, { foreignKey: 'secteur_code' })
-Module.belongsTo(Filiere, { foreignKey: 'filiere_code' })
 
 sequelize.sync({ force: forceTables })
 .catch(err => console.log(err))
